@@ -8,13 +8,54 @@ body {
   padding-top: 30px;
 
 }
+
+// css pour l'auth et sign-up
+
+.auth-container {
+
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+
+    
+  }
+
+  input {
+    width: 300px;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 0.1em solid #282c34;
+  }
+
+  
+  
+}
+
+button {
+  width: 300px;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 0.1em solid #282c34;
+}
+
+button:hover {
+  background-color: #282c34;
+  color: whitesmoke;
+  cursor: pointer;
+}
 .centered-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: calc(100vh - 60px);
 }
+
 
 
 
@@ -27,3 +68,30 @@ li {
   list-style-type: none;
 
 }
+
+.cookies-popup {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+.cookies-popup button {
+    margin-top: 10px;
+    padding: 5px 10px;
+    background: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.user-menu {
+    position: relative;
+    cursor: pointer;
+}
+
+

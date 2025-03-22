@@ -11,4 +11,42 @@ nav {
     align-items: center;
     padding: 0 2vw;
     color: whitesmoke;
+
+    ul {
+        display: flex;
+        list-style-type: none;
+
+        li {
+        margin: 0 10px;
+
+        }
+    }
+
+    .dropdown-menu {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        margin-top: 16px;
+        background: rgb(37, 35, 35);
+        padding: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        padding: 0;
+        z-index: 1000;
+
+        button {
+            background-color: inherit;
+            color: whitesmoke;
+            border: none;
+            margin: 0;
+            border-radius: 0;
+        }
+
+        li, button:hover {
+            background-color: white;
+            color: rgb(37, 35, 35);
+            cursor: pointer;
+        }
+    }
+
+    
 }

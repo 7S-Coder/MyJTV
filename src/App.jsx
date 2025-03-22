@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.scss';
 import Home from './pages/Home.jsx';
 import Error from './components/Error.jsx';
@@ -7,19 +7,10 @@ import Navbar from './components/Navbar.jsx';
 import Footer from './components/Footer.jsx';
 import Admin from './pages/Admin.jsx';
 import { StreamProvider } from './context/StreamContext.jsx';
-import { AuthProvider, useAuth } from './context/AuthContext.jsx';
+import { AuthProvider } from './context/AuthContext.jsx';
 import Auth from './pages/Auth.jsx';
-import { auth, signInWithGoogle } from './firebase/firebaseConfig';
-
-const ProtectedRoute = ({ children }) => {
-    const user = auth.currentUser;
-
-    if (!user) {
-        return <Navigate to="/signup" />;
-    }
-
-    return children;
-};
+import { signInWithGoogle } from './firebase/firebaseConfig';
+import ProtectedRoute from './components/ProtectedRoute.jsx'; // Utilisez uniquement cette version
 
 const SignUp = () => {
     return (
@@ -37,7 +28,14 @@ function App() {
                 <Router>
                     <Navbar />
                     <Routes>
-                        <Route path="/" element={<Home />} />
+                        <Route
+                            path="/"
+                            element={
+                                <ProtectedRoute>
+                                    <Home />
+                                </ProtectedRoute>
+                            }
+                        />
                         <Route
                             path="/admin"
                             element={
@@ -46,7 +44,14 @@ function App() {
                                 </ProtectedRoute>
                             }
                         />
-                        <Route path="/protected" element={<ProtectedRoute><div>Contenu protégé</div></ProtectedRoute>} />
+                        <Route
+                            path="/protected"
+                            element={
+                                <ProtectedRoute>
+                                    <div>Contenu protégé</div>
+                                </ProtectedRoute>
+                            }
+                        />
                         <Route path="/signup" element={<SignUp />} />
                         <Route path="/login" element={<Auth />} />
                         <Route path="*" element={<Error />} />
