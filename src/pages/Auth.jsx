@@ -8,16 +8,29 @@ import { useNavigate } from 'react-router-dom';
 const Auth = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isLogin, setIsLogin] = useState(true);
+  const [isLogin, setIsLogin] = useState(true); // Toggle between login and signup
   const [cookiesAccepted, setCookiesAccepted] = useState(Cookies.get('cookiesAccepted') === 'true');
-  const navigate = useNavigate(); // Hook pour la navigation
+  const [errorMessage, setErrorMessage] = useState(''); // State for error messages
+  const navigate = useNavigate();
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@(gmail|hotmail|outlook)\.(fr|com)$/;
+    return emailRegex.test(email);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setErrorMessage(''); // Reset error message
     if (!cookiesAccepted) {
       alert('Vous devez accepter les cookies pour continuer.');
       return;
     }
+
+    if (!validateEmail(email)) {
+      setErrorMessage("L'email n'est pas correcte.");
+      return;
+    }
+
     try {
       let userCredential;
       if (isLogin) {
@@ -28,6 +41,11 @@ const Auth = () => {
       setUserCookies(userCredential.user); // Stocke les données utilisateur dans les cookies
       navigate('/'); // Redirige vers la page d'accueil
     } catch (error) {
+      if (error.code === 'auth/weak-password') {
+        setErrorMessage('Le mot de passe doit contenir au moins 6 caractères.');
+      } else {
+        setErrorMessage('Une erreur est survenue. Veuillez réessayer.');
+      }
       console.error('Authentication error:', error);
     }
   };
@@ -46,6 +64,7 @@ const Auth = () => {
         </div>
       )}
       <h2>{isLogin ? 'Connexion' : 'Inscription'}</h2>
+      {errorMessage && <p className="error-message">{errorMessage}</p>} {/* Display error message */}
       <form onSubmit={handleSubmit}>
         <input
           type="email"

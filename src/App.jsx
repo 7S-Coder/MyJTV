@@ -2,24 +2,14 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.scss';
 import Home from './pages/Home.jsx';
-import Error from './components/Error.jsx';
+import Error from './pages/Error.jsx';
 import Navbar from './components/Navbar.jsx';
 import Footer from './components/Footer.jsx';
 import Admin from './pages/Admin.jsx';
 import { StreamProvider } from './context/StreamContext.jsx';
 import { AuthProvider } from './context/AuthContext.jsx';
 import Auth from './pages/Auth.jsx';
-import { signInWithGoogle } from './firebase/firebaseConfig';
-import ProtectedRoute from './components/ProtectedRoute.jsx'; // Utilisez uniquement cette version
-
-const SignUp = () => {
-    return (
-        <div>
-            <h1>Inscription</h1>
-            <button onClick={signInWithGoogle}>S'inscrire avec Google</button>
-        </div>
-    );
-};
+import ProtectedRoute from './components/ProtectedRoute.jsx';
 
 function App() {
     return (
@@ -28,6 +18,7 @@ function App() {
                 <Router>
                     <Navbar />
                     <Routes>
+                        <Route path="/login" element={<Auth />} /> {/* Page de connexion et inscription */}
                         <Route
                             path="/"
                             element={
@@ -52,8 +43,6 @@ function App() {
                                 </ProtectedRoute>
                             }
                         />
-                        <Route path="/signup" element={<SignUp />} />
-                        <Route path="/login" element={<Auth />} />
                         <Route path="*" element={<Error />} />
                     </Routes>
                     <Footer />

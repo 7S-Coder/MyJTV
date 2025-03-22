@@ -5,7 +5,7 @@ import VideoPlayer from'../components/VideoPlayer.jsx';
 
 const Home = () => {
   return (
-    <main>
+    <main >
       <VideoPlayer />
       <Chat />
     </main>
