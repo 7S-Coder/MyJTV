@@ -1,10 +1,12 @@
+@import './_variables';
+
 Footer {
-    background-color: rgb(37, 35, 35);
+    background-color: $primary;
     position: absolute;
     bottom: 0;  
     left: 0;
     right: 0;
-    color: whitesmoke;
+    color: $secondary;
 
     display: flex;
     justify-content: center;

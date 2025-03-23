@@ -1,14 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+@import './css/_variables';
 
 root {
   font-family: 'Roboto', Arial, sans-serif;
-  background-color: #282c34;
-  color: whitesmoke;
+  background-color: $primary;
+  color: $secondary;
+  height: 100vh;
+  overflow: hidden; // Prevent scrolling
 }
 
 body {
   padding-top: 30px;
-
+  margin: 0;
+  height: 100vh;
+  overflow: hidden; // Prevent scrolling
 }
 
 // css pour l'auth et sign-up
@@ -46,8 +51,8 @@ button {
 }
 
 button:hover {
-  background-color: #282c34;
-  color: whitesmoke;
+  background-color: $primary;
+  color: $secondary;
   cursor: pointer;
 }
 .centered-container {
@@ -72,7 +77,7 @@ li {
     position: fixed;
     bottom: 20px;
     left: 20px;
-    background: #fff;
+    background: $secondary;
     border: 1px solid #ccc;
     padding: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
@@ -82,7 +87,7 @@ li {
 .cookies-popup button {
     margin-top: 10px;
     padding: 5px 10px;
-    background: #007bff;
+    background: $link;
     color: #fff;
     border: none;
     cursor: pointer;

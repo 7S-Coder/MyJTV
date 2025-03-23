@@ -1,4 +1,5 @@
 import React from 'react';
+import '../css/chat.scss';
 
 const Chat = () => {
   const messages = [
@@ -7,18 +8,22 @@ const Chat = () => {
   ];
 
   const handleSendMessage = () => {
-    console.log('Message sent!');
+    console.log('Message envoyé!');
   };
 
   return (
-    <div>
-      <ul>
+    <div className="chat-container">
+      <div className="messages">
         {messages.map((message) => (
-          <li key={message.id}>{message.text}</li>
+          <div key={message.id} className="message">
+            <strong>User:</strong> {message.text}
+          </div>
         ))}
-      </ul>
-      <input type="text" placeholder="Envoyer un message" />
-      <button onClick={handleSendMessage}>Envoyer</button>
+      </div>
+      <div className="message-form">
+        <input type="text" placeholder="Envoyer un message" />
+        <button onClick={handleSendMessage}>Envoyer</button>
+      </div>
     </div>
   );
 };
