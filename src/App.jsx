@@ -10,6 +10,8 @@ import { StreamProvider } from './context/StreamContext.jsx';
 import { AuthProvider } from './context/AuthContext.jsx';
 import Auth from './pages/Auth.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
+import Chat from './pages/Chat.jsx'; // Import the Chat page
+import LaunchStream from './pages/admin/launchstream.jsx'; // Import the LaunchStream page
 
 function App() {
     return (
@@ -28,10 +30,26 @@ function App() {
                             }
                         />
                         <Route
+                            path="/chat"
+                            element={
+                                <ProtectedRoute>
+                                    <Chat />
+                                </ProtectedRoute>
+                            }
+                        />
+                        <Route
                             path="/admin"
                             element={
                                 <ProtectedRoute>
                                     <Admin />
+                                </ProtectedRoute>
+                            }
+                        />
+                        <Route
+                            path="/admin/launchstream"
+                            element={
+                                <ProtectedRoute>
+                                    <LaunchStream />
                                 </ProtectedRoute>
                             }
                         />

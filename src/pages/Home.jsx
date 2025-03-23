@@ -2,6 +2,7 @@
 import React from'react';
 import Chat from'../components/Chat.jsx';
 import VideoPlayer from'../components/VideoPlayer.jsx';
+import '../css/Home.scss';
 
 const Home = () => {
   return (
