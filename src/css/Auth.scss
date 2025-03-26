@@ -32,22 +32,27 @@
             margin: 0.5rem 0;
             padding: 0.8rem 1.2rem;
             border: none;
-            border-radius: 5px;
-            background-color: $primary;
-            color: $secondary;
+            color: $primary;
             font-size: 1rem;
             font-weight: bold;
             text-align: center;
             transition: background-color 0.3s ease, transform 0.2s ease;
-            border-radius: 0px;
 
 
             &:hover {
-                background-color: #ffffff;
-                color: $primary;
+                background-color: $primary;
+                color: $secondary;
                 transform: translateY(-2px);
                 cursor: pointer;
             }
+        }
+        
+        button:first-child {
+            border-radius: 5px 0 0 5px;
+        }
+
+        button:nth-child(2) {
+            border-radius: 0 5px 5px 0;
         }
     }
 
@@ -55,7 +60,6 @@
         width: 90%;
         margin: 0.8rem 0;
         padding: 0.8rem;
-        border-radius: 5px;
         border: 1px solid #ccc;
         font-size: 1rem;
         transition: border-color 0.3s ease;
@@ -64,6 +68,10 @@
             border-color: #007bff;
             outline: none;
         }
+    }
+
+    button, .google-auth-button, input {
+        border-radius: 5px;
     }
 
     .cookies-popup {
