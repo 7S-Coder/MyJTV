@@ -4,6 +4,7 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'fire
 import Cookies from 'js-cookie';
 import { setUserCookies } from '../firebase/firebaseConfig';
 import { useNavigate } from 'react-router-dom';
+import '../css/Auth.scss';
 
 const Auth = () => {
   const [email, setEmail] = useState('');
@@ -78,12 +79,13 @@ const Auth = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
+
+        <div>
         <button type="submit">{isLogin ? 'Se connecter' : "S'inscrire"}</button>
-      </form>
-      <button onClick={() => setIsLogin(!isLogin)}>
+        <button onClick={() => setIsLogin(!isLogin)}>
         {isLogin ? "Créer un compte" : 'Se connecter'}
       </button>
-      <hr />
+        </div>
       <button
         onClick={async () => {
           await signInWithGoogle();
@@ -93,6 +95,9 @@ const Auth = () => {
       >
         Se connecter avec Google
       </button>
+      </form>
+      
+      
     </div>
   );
 };

@@ -16,31 +16,7 @@ body {
   overflow: hidden; // Prevent scrolling
 }
 
-// css pour l'auth et sign-up
 
-.auth-container {
-
-  form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-
-    
-  }
-
-  input {
-    width: 300px;
-    margin: 10px;
-    padding: 10px;
-    border-radius: 5px;
-    border: 0.1em solid #282c34;
-  }
-
-  
-  
-}
 
 button {
   width: 300px;
