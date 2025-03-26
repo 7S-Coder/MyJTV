@@ -44,8 +44,8 @@ nav {
         }
 
         li, button:hover {
-            background-color: $secondary;
-            color: $primary;
+            background-color: $link;
+            color: $secondary;
             cursor: pointer;
         }
     }
