@@ -37,7 +37,7 @@ const Navbar = () => {
 
     return (
         <nav>
-            <h1>JeezyTv</h1>
+            <Link to="/"><img src="public\jeezy.png" alt=""  /></Link>
             <ul>
                 <li><Link to="/">Accueil</Link></li>
                 {user ? (

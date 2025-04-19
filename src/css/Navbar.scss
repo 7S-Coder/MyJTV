@@ -14,6 +14,11 @@ nav {
     padding: 0 2vw;
     color: $secondary;
 
+    img {
+        width: 40px;
+        border-radius: 50%;
+    }
+
     ul {
         display: flex;
         list-style-type: none;
