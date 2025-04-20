@@ -1,4 +1,4 @@
-@import './_variables';
+@use './_variables' as vars;
 
 .chat-container {
   display: flex;
@@ -32,7 +32,7 @@
 
 .message strong {
   display: inline;
-  color: $link;
+  color: vars.$link;
 }
 
 .message-form {
@@ -69,8 +69,8 @@
 }
 
 .message-form button:hover {
-  background-color: $link;
-  color: $secondary
+  background-color: vars.$link;
+  color: vars.$secondary;
 }
 
 .message-form button:disabled {

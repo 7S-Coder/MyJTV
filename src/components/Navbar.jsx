@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import '../css/Navbar.scss';
-import { auth } from '../firebase/firebaseConfig';
-import { onAuthStateChanged } from 'firebase/auth';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 const Navbar = () => {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -12,7 +11,7 @@ const Navbar = () => {
 
     useEffect(() => {
         // Écoute les changements d'état de l'utilisateur
-        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+        const unsubscribe = onAuthStateChanged(getAuth(), (currentUser) => {
             if (currentUser) {
                 setUser({
                     email: currentUser.email,
@@ -31,7 +30,7 @@ const Navbar = () => {
     }, [navigate]);
 
     const handleLogout = () => {
-        auth.signOut();
+        getAuth().signOut();
         setMenuOpen(false); // Ferme le menu après la déconnexion
     };
 

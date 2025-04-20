@@ -1,12 +1,12 @@
-@import './_variables';
+@use './_variables' as vars;
 
 Footer {
-    background-color: $primary;
+    background-color: vars.$primary;
     position: absolute;
     bottom: 0;  
     left: 0;
     right: 0;
-    color: $secondary;
+    color: vars.$secondary;
 
     display: flex;
     justify-content: center;

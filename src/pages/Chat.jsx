@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { db, auth } from '../firebase/firebaseConfig';
 import { collection, addDoc, query, orderBy, onSnapshot, serverTimestamp } from 'firebase/firestore';
-import '../css/Chat.scss';
+import '../css/chat.scss'; // Ensure this matches the renamed file
 
 const Chat = () => {
   const [messages, setMessages] = useState([]);

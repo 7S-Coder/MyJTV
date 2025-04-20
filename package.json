@@ -16,7 +16,8 @@
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.4.0",
     "scss": "^0.2.4",
-    "video.js": "^8.22.0"
+    "video.js": "^8.22.0",
+    "firebase": "^9.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",

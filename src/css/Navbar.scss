@@ -1,7 +1,7 @@
-@import './_variables';
+@use './_variables' as vars;
 
 nav {
-    background-color: $primary;
+    background-color: vars.$primary;
     position: absolute;
     top: 0;
     left: 0;
@@ -12,7 +12,7 @@ nav {
     justify-content: space-between;
     align-items: center;
     padding: 0 2vw;
-    color: $secondary;
+    color: vars.$secondary;
 
     img {
         width: 40px;
@@ -34,7 +34,7 @@ nav {
         top: 100%;
         right: 0;
         margin-top: 16px;
-        background: $primary;
+        background: vars.$primary;
         padding: 10px;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         padding: 0;
@@ -42,15 +42,15 @@ nav {
 
         button {
             background-color: inherit;
-            color: $secondary;
+            color: vars.$secondary;
             border: none;
             margin: 0;
             border-radius: 0;
         }
 
         li, button:hover {
-            background-color: $link;
-            color: $secondary;
+            background-color: vars.$link;
+            color: vars.$secondary;
             cursor: pointer;
         }
     }

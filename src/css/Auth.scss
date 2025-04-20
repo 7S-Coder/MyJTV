@@ -1,4 +1,4 @@
-@import './_variables';
+@use './_variables' as vars;
 
 .auth-container {
     display: flex;
@@ -32,16 +32,15 @@
             margin: 0.5rem 0;
             padding: 0.8rem 1.2rem;
             border: none;
-            color: $primary;
+            color: vars.$primary;
             font-size: 1rem;
             font-weight: bold;
             text-align: center;
             transition: background-color 0.3s ease, transform 0.2s ease;
 
-
             &:hover {
-                background-color: $link;
-                color: $secondary;
+                background-color: vars.$link;
+                color: vars.$secondary;
                 transform: translateY(-2px);
                 cursor: pointer;
             }
@@ -95,7 +94,7 @@
             padding: 0.5rem 1rem;
             border: none;
             border-radius: 5px;
-            background-color: $primary;
+            background-color: vars.$primary;
             color: white;
             font-size: 0.9rem;
             font-weight: bold;
