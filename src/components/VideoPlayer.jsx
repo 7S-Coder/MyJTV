@@ -1,28 +1,31 @@
 import React, { useEffect, useRef, useContext } from 'react';
-import videojs from 'video.js';
-import 'video.js/dist/video-js.css';
+import flvjs from 'flv.js';
 import { StreamContext } from '../context/StreamContext.jsx';
 import '../css/VideoPlayer.scss';
 
 const VideoPlayer = () => {
   const { stream } = useContext(StreamContext);
   const videoRef = useRef(null);
-  let player = useRef(null);
+  let flvPlayer = useRef(null);
 
   useEffect(() => {
-    if (videoRef.current && stream) {
-      // Initialise Video.js si ce n'est pas déjà fait
-      player.current = videojs(videoRef.current, {
-        controls: true,
-        autoplay: true,
-        fluid: true,
-        responsive: true,
-        sources: [{ src: stream, type: 'application/x-mpegURL' }],
+    if (videoRef.current && flvjs.isSupported()) {
+      // Utilise une URL par défaut si aucun stream n'est défini
+      const streamUrl = stream || 'rtmp://localhost/live/stream';
+
+      // Initialise flv.js pour lire le flux RTMP
+      flvPlayer.current = flvjs.createPlayer({
+        type: 'flv',
+        url: streamUrl,
       });
+      flvPlayer.current.attachMediaElement(videoRef.current);
+      flvPlayer.current.load();
+      flvPlayer.current.play();
 
       return () => {
-        if (player.current) {
-          player.current.dispose();
+        if (flvPlayer.current) {
+          flvPlayer.current.destroy();
+          flvPlayer.current = null;
         }
       };
     }
@@ -30,11 +33,7 @@ const VideoPlayer = () => {
 
   return (
     <div className="video-container">
-      {stream ? (
-        <video ref={videoRef} className="video-js vjs-default-skin" />
-      ) : (
-        <p>Le stream commence bientôt</p>
-      )}
+      <video ref={videoRef} className="video-player" controls />
     </div>
   );
 };
