@@ -7,8 +7,11 @@ import '../css/Home.scss';
 const Home = () => {
   return (
     <main >
-      <VideoPlayer />
-      <Chat />
+      <div className='box'>
+        <VideoPlayer />
+        <Chat />
+      </div>
+      
     </main>
   );
 };

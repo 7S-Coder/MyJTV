@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
-import { auth, signInWithGoogle } from '../firebase/firebaseConfig';
+import { auth } from '../firebase/firebaseConfig';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import Cookies from 'js-cookie';
-import { setUserCookies } from '../firebase/firebaseConfig';
+import { setUserCookies, signUpWithEmailAndPseudo } from '../firebase/firebaseConfig';
 import { useNavigate } from 'react-router-dom';
 import '../css/Auth.scss';
 
 const Auth = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [pseudo, setPseudo] = useState(''); // New state for pseudo
   const [isLogin, setIsLogin] = useState(true); // Toggle between login and signup
   const [cookiesAccepted, setCookiesAccepted] = useState(Cookies.get('cookiesAccepted') === 'true');
   const [errorMessage, setErrorMessage] = useState(''); // State for error messages
@@ -33,13 +34,12 @@ const Auth = () => {
     }
 
     try {
-      let userCredential;
       if (isLogin) {
-        userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        setUserCookies(userCredential.user); // Stocke les données utilisateur dans les cookies
       } else {
-        userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        await signUpWithEmailAndPseudo(email, password, pseudo); // Use the new function
       }
-      setUserCookies(userCredential.user); // Stocke les données utilisateur dans les cookies
       navigate('/'); // Redirige vers la page d'accueil
     } catch (error) {
       if (error.code === 'auth/weak-password') {
@@ -67,37 +67,42 @@ const Auth = () => {
       <h2>{isLogin ? 'Connexion' : 'Inscription'}</h2>
       {errorMessage && <p className="error-message">{errorMessage}</p>} {/* Display error message */}
       <form onSubmit={handleSubmit}>
+        {!isLogin && (
+          <input
+            type="text"
+            placeholder="Pseudo"
+            value={pseudo}
+            onChange={(e) => setPseudo(e.target.value)}
+            autoComplete="username"
+          />
+        )}
         <input
           type="email"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          autoComplete="email"
         />
         <input
           type="password"
           placeholder="Mot de passe"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          autoComplete="current-password"
         />
-
         <div>
-        <button type="submit">{isLogin ? 'Se connecter' : "S'inscrire"}</button>
-        <button onClick={() => setIsLogin(!isLogin)}>
-        {isLogin ? "Créer un compte" : 'Se connecter'}
-      </button>
+          <button type="submit">{isLogin ? 'Se connecter' : "S'inscrire"}</button>
+          <button
+            type="button" // Change type to "button" to prevent form submission
+            onClick={(e) => {
+              e.preventDefault(); // Prevent default behavior
+              setIsLogin(!isLogin);
+            }}
+          >
+            {isLogin ? "Créer un compte" : 'Se connecter'}
+          </button>
         </div>
-      <button
-        onClick={async () => {
-          await signInWithGoogle();
-          navigate('/'); // Redirige vers la page d'accueil après la connexion Google
-        }}
-        className="google-auth-button"
-      >
-        Se connecter avec Google
-      </button>
       </form>
-      
-      
     </div>
   );
 };

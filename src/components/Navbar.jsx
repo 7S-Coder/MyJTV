@@ -3,45 +3,46 @@ import { Link, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import '../css/Navbar.scss';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { fetchUserData } from '../firebase/firebaseConfig';
 
 const Navbar = () => {
     const [menuOpen, setMenuOpen] = useState(false);
     const [user, setUser] = useState(null);
-    const navigate = useNavigate(); // Hook pour la navigation
+    const navigate = useNavigate();
 
     useEffect(() => {
-        // Écoute les changements d'état de l'utilisateur
-        const unsubscribe = onAuthStateChanged(getAuth(), (currentUser) => {
+        const unsubscribe = onAuthStateChanged(getAuth(), async (currentUser) => {
             if (currentUser) {
+                const userData = await fetchUserData(currentUser.uid); // Récupère les données utilisateur
                 setUser({
                     email: currentUser.email,
                     uid: currentUser.uid,
+                    pseudo: userData?.pseudo || 'Utilisateur', // Utilise le pseudo ou un fallback
                 });
-                Cookies.set('user', JSON.stringify({ email: currentUser.email, uid: currentUser.uid }), { expires: 7 });
+                Cookies.set('user', JSON.stringify({ email: currentUser.email, uid: currentUser.uid, pseudo: userData?.pseudo }), { expires: 7 });
             } else {
                 setUser(null);
                 Cookies.remove('user');
-                navigate('/login'); // Redirige vers la page de connexion après déconnexion
+                navigate('/login');
             }
         });
 
-        // Nettoyage de l'écouteur
         return () => unsubscribe();
     }, [navigate]);
 
     const handleLogout = () => {
         getAuth().signOut();
-        setMenuOpen(false); // Ferme le menu après la déconnexion
+        setMenuOpen(false);
     };
 
     return (
         <nav>
-            <Link to="/"><img src="public\jeezy.png" alt=""  /></Link>
+            <Link to="/"><img src="public/jeezy.png" alt="Logo" /></Link>
             <ul>
                 <li><Link to="/">Accueil</Link></li>
                 {user ? (
                     <li className="user-menu" onClick={() => setMenuOpen(!menuOpen)}>
-                        {user.email}
+                        {user.pseudo} {/* Affiche le pseudo */}
                         {menuOpen && (
                             <div className="dropdown-menu">
                                 <button onClick={handleLogout}>Déconnexion</button>
