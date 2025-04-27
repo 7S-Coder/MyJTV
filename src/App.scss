@@ -3,10 +3,14 @@
 
 root {
   font-family: 'Roboto', Arial, sans-serif;
-  background-color: vars.$primary;
   color: vars.$secondary;
   height: 100vh;
   overflow: hidden; // Prevent scrolling
+}
+
+main {
+  background-color: vars.$primary;
+
 }
 
 body {

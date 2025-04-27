@@ -1,7 +1,7 @@
 @use './_variables' as vars;
 
 Footer {
-    background-color: vars.$primary;
+    background-color: vars.$primary--dark;
     position: absolute;
     bottom: 0;  
     left: 0;

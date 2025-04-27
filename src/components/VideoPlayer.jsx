@@ -6,7 +6,7 @@ import '../css/VideoPlayer.scss';
 const VideoPlayer = () => {
   const videoRef = useRef(null);
   const playerRef = useRef(null);
-  const [errorMessage, setErrorMessage] = useState(null);
+  const [isStreamAvailable, setIsStreamAvailable] = useState(true); // Suivi de la disponibilité du flux
   const streamUrl = 'http://168.231.107.30/hls/test.m3u8';
 
   useEffect(() => {
@@ -26,16 +26,16 @@ const VideoPlayer = () => {
 
         playerRef.current.on('error', () => {
           console.error('Erreur lors de la lecture du flux HLS.');
-          setErrorMessage('Impossible de lire le flux. Vérifiez la connexion ou l’URL.');
+          setIsStreamAvailable(false); // Marquer le flux comme indisponible
         });
       }
     };
 
-    // Delay initialization slightly to ensure the DOM is ready
+    // Initialisation différée pour s'assurer que le DOM est prêt
     const timeoutId = setTimeout(initializePlayer, 0);
 
     return () => {
-      clearTimeout(timeoutId); // Clear timeout if the component unmounts
+      clearTimeout(timeoutId); // Nettoyage si le composant est démonté
       if (playerRef.current) {
         playerRef.current.dispose();
         playerRef.current = null;
@@ -45,10 +45,16 @@ const VideoPlayer = () => {
 
   return (
     <div className="video-container">
-      {errorMessage && <div className="error-message">{errorMessage}</div>}
-      <div data-vjs-player>
-        <video ref={videoRef} className="video-js vjs-default-skin fixed-size-video" />
-      </div>
+      {!isStreamAvailable && (
+        <div className="stream-message">
+          Le stream commence bientôt
+        </div>
+      )}
+      {isStreamAvailable && (
+        <div data-vjs-player>
+          <video ref={videoRef} className="video-js vjs-default-skin fixed-size-video" />
+        </div>
+      )}
     </div>
   );
 };

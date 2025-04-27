@@ -30,6 +30,20 @@ const Navbar = () => {
         return () => unsubscribe();
     }, [navigate]);
 
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (menuOpen && !event.target.closest('.user-menu')) {
+                setMenuOpen(false);
+            }
+        };
+
+        document.addEventListener('click', handleClickOutside);
+
+        return () => {
+            document.removeEventListener('click', handleClickOutside);
+        };
+    }, [menuOpen]);
+
     const handleLogout = () => {
         getAuth().signOut();
         setMenuOpen(false);
@@ -39,7 +53,6 @@ const Navbar = () => {
         <nav>
             <Link to="/"><img src="src\assets\jeezy.png" alt="Logo" /></Link>
             <ul>
-                <li><Link to="/">Accueil</Link></li>
                 {user ? (
                     <li className="user-menu" onClick={() => setMenuOpen(!menuOpen)}>
                         {user.pseudo} {/* Affiche le pseudo */}
