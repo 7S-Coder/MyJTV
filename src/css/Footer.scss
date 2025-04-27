@@ -6,8 +6,18 @@ Footer {
     bottom: 0;  
     left: 0;
     right: 0;
-    color: vars.$secondary;
+    color: vars.$white;
+    font-size: 0.8rem;
 
     display: flex;
     justify-content: center;
+
+    a:hover {
+        color: vars.$logo;
+    }
+
+    p {
+    font-weight:100;
+
+    }
 }

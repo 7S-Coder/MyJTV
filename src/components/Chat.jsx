@@ -8,6 +8,12 @@ const Chat = () => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
   const [userPseudo, setUserPseudo] = useState('');
+  const [userColors, setUserColors] = useState({});
+
+  const generateRandomColor = () => {
+    const colors = ['#FF4500', '#32CD32', '#1E90FF', '#FFD700', '#FF69B4', '#8A2BE2', '#00CED1'];
+    return colors[Math.floor(Math.random() * colors.length)];
+  };
 
   useEffect(() => {
     // Récupérer les messages en temps réel depuis Firestore
@@ -36,6 +42,21 @@ const Chat = () => {
     fetchPseudo();
   }, []);
 
+  useEffect(() => {
+    // Assign random colors to users dynamically
+    const assignColors = () => {
+      const newColors = {};
+      messages.forEach((message) => {
+        if (!newColors[message.pseudo]) {
+          newColors[message.pseudo] = generateRandomColor();
+        }
+      });
+      setUserColors((prevColors) => ({ ...prevColors, ...newColors }));
+    };
+
+    assignColors();
+  }, [messages]);
+
   const handleSendMessage = async () => {
     if (newMessage.trim() === '') return;
 
@@ -62,7 +83,13 @@ const Chat = () => {
       <div className="messages">
         {messages.map((message) => (
           <div key={message.id} className="message">
-            <strong>{message.pseudo || 'User'}:</strong> {message.text}
+            <strong
+              className="user-color"
+              style={{ color: userColors[message.pseudo] || '#fff' }}
+            >
+              {message.pseudo || 'User'}:
+            </strong>{' '}
+            {message.text}
           </div>
         ))}
       </div>

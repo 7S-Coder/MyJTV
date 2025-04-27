@@ -32,7 +32,12 @@
 
 .message strong {
   display: inline;
-  color: vars.$link;
+  color: inherit; /* Use the inherited color for user-specific colors */
+}
+
+// Add a class for user-specific colors
+.user-color {
+  color: inherit; /* Placeholder for dynamic inline styles */
 }
 
 .message-form {
@@ -70,7 +75,7 @@
 
 .message-form button:hover {
   background-color: vars.$link;
-  color: vars.$secondary;
+  color: vars.$logo;
 }
 
 .message-form button:disabled {

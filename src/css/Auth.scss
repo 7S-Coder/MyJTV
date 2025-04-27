@@ -6,7 +6,9 @@
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    background-color: #f7f7f8;
+    background-color: vars.$primary;
+    color: vars.$white;
+    
 
     form {
         display: flex;
@@ -16,8 +18,8 @@
         width: 100%;
         max-width: 400px;
         padding: 2rem;
-        background-color: #ffffff;
-        border: 1px solid #dadce0;
+        background-color: vars.$primary;
+        border: 1px solid vars.$primary--dark;
         border-radius: 8px;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 
@@ -35,11 +37,11 @@
             border: 1px solid #dadce0;
             border-radius: 4px;
             font-size: 1rem;
-            background-color: #f7f7f8;
+            background-color: vars.$white--smooth2;
             transition: border-color 0.2s ease;
 
             &:focus {
-                border-color: #9147ff;
+                border-color: vars.$logo;
                 outline: none;
             }
         }
@@ -52,12 +54,13 @@
             border-radius: 4px;
             font-size: 1rem;
             font-weight: bold;
-            color: #ffffff;
-            background-color: #9147ff;
+            color: vars.$white;
+            background-color: vars.$logo;
             transition: background-color 0.2s ease, transform 0.1s ease;
 
             &:hover {
-                background-color: #772ce8;
+                background-color: vars.$logo;
+                color: vars.$white;
                 cursor: pointer;
             }
 
@@ -66,15 +69,8 @@
             }
         }
 
-        .secondary-button {
-            background-color: #f7f7f8;
-            color: #9147ff;
-            border: 1px solid #dadce0;
-
-            &:hover {
-                background-color: #e5e5e5;
-            }
-        }
+       
+        
     }
 
     .cookies-popup {
@@ -82,7 +78,7 @@
         bottom: 1rem;
         left: 50%;
         transform: translateX(-50%);
-        background-color: #ffffff;
+        background-color: vars.$white;
         padding: 1rem 2rem;
         border-radius: 8px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -98,14 +94,14 @@
             padding: 0.5rem 1rem;
             border: none;
             border-radius: 5px;
-            background-color: #9147ff;
-            color: white;
+            background-color: vars.$logo;
+            color: vars.$white;
             font-size: 0.9rem;
             font-weight: bold;
             transition: background-color 0.3s ease;
 
             &:hover {
-                background-color: #772ce8;
+                background-color:  vars.$logo;
                 cursor: pointer;
             }
         }

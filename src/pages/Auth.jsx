@@ -57,53 +57,55 @@ const Auth = () => {
   };
 
   return (
-    <div className='centered-container auth-container'>
-      {!cookiesAccepted && (
-        <div className="cookies-popup">
-          <p>Nous utilisons des cookies pour améliorer votre expérience. Acceptez-vous les cookies ?</p>
-          <button onClick={handleAcceptCookies}>Accepter</button>
-        </div>
-      )}
-      <h2>{isLogin ? 'Connexion' : 'Inscription'}</h2>
-      {errorMessage && <p className="error-message">{errorMessage}</p>} {/* Display error message */}
-      <form onSubmit={handleSubmit}>
-        {!isLogin && (
-          <input
-            type="text"
-            placeholder="Pseudo"
-            value={pseudo}
-            onChange={(e) => setPseudo(e.target.value)}
-            autoComplete="username"
-          />
+    <main>
+      <div className='centered-container auth-container'>
+        {!cookiesAccepted && (
+          <div className="cookies-popup">
+            <p>Nous utilisons des cookies pour améliorer votre expérience. Acceptez-vous les cookies ?</p>
+            <button onClick={handleAcceptCookies}>Accepter</button>
+          </div>
         )}
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          autoComplete="email"
-        />
-        <input
-          type="password"
-          placeholder="Mot de passe"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          autoComplete="current-password"
-        />
-        <div>
-          <button type="submit">{isLogin ? 'Se connecter' : "S'inscrire"}</button>
-          <button
-            type="button" // Change type to "button" to prevent form submission
-            onClick={(e) => {
-              e.preventDefault(); // Prevent default behavior
-              setIsLogin(!isLogin);
-            }}
-          >
-            {isLogin ? "Créer un compte" : 'Se connecter'}
-          </button>
-        </div>
-      </form>
-    </div>
+        <h2>{isLogin ? 'Connexion' : 'Inscription'}</h2>
+        {errorMessage && <p className="error-message">{errorMessage}</p>} {/* Display error message */}
+        <form onSubmit={handleSubmit}>
+          {!isLogin && (
+            <input
+              type="text"
+              placeholder="Pseudo"
+              value={pseudo}
+              onChange={(e) => setPseudo(e.target.value)}
+              autoComplete="username"
+            />
+          )}
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            autoComplete="email"
+          />
+          <input
+            type="password"
+            placeholder="Mot de passe"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            autoComplete="current-password"
+          />
+          <div>
+            <button type="submit">{isLogin ? 'Se connecter' : "S'inscrire"}</button>
+            <button
+              type="button" // Change type to "button" to prevent form submission
+              onClick={(e) => {
+                e.preventDefault(); // Prevent default behavior
+                setIsLogin(!isLogin);
+              }}
+            >
+              {isLogin ? "Créer un compte" : 'Se connecter'}
+            </button>
+          </div>
+        </form>
+      </div>
+    </main>
   );
 };
 
