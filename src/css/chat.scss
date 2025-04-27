@@ -3,12 +3,12 @@
 .chat-container {
   display: flex;
   flex-direction: column;
+  height: 100%; /* Ensure the chat fills the height of its container */
+  overflow-y: auto; /* Enable scrolling for long messages */
+  background-color: #18181b; /* Ensure consistent background color */
   max-width: 400px;
-  height: 60vh;
-
   margin: 0 auto;
   border: none;
-  background-color: #18181b;
   color: #e3e3e3;
   font-family: Arial, sans-serif;
 }

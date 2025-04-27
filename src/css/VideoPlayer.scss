@@ -4,3 +4,16 @@ div {
         font-size: larger;
     }
 }
+
+.fixed-size-video {
+  width: 100%; /* Take up full width of the container */
+  height: 100%; /* Take up full height of the container */
+  object-fit: cover; /* Ensure the video scales properly */
+}
+
+.video-container {
+  position: relative;
+  height: 100%; /* Ensure the container fills the height */
+  width: 100%; /* Ensure the container fills the width */
+  background-color: black; /* Add a background color for the video area */
+}

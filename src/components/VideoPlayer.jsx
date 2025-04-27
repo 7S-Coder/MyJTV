@@ -1,62 +1,54 @@
-import React, { useEffect, useRef, useContext, useState } from 'react';
-import flvjs from 'flv.js';
-import { StreamContext } from '../context/StreamContext.jsx';
+import React, { useEffect, useRef, useState } from 'react';
+import videojs from 'video.js';
+import 'video.js/dist/video-js.css';
 import '../css/VideoPlayer.scss';
 
 const VideoPlayer = () => {
-  const { stream } = useContext(StreamContext);
   const videoRef = useRef(null);
-  let flvPlayer = useRef(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-
-  const handlePlay = () => {
-    setIsPlaying(true);
-    if (videoRef.current && flvjs.isSupported()) {
-      const streamUrl = stream || 'http://192.168.1.20/live/stream.flv';
-
-      // Vérifie si l'URL du flux est accessible
-      fetch(streamUrl, { method: 'HEAD' })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error(`Flux inaccessible : ${response.statusText}`);
-          }
-
-          // Initialise flv.js pour lire le flux
-          flvPlayer.current = flvjs.createPlayer({
-            type: 'flv',
-            url: streamUrl,
-          });
-          flvPlayer.current.attachMediaElement(videoRef.current);
-          flvPlayer.current.load();
-          flvPlayer.current.play();
-
-          flvPlayer.current.on(flvjs.Events.ERROR, (errorType, errorDetail) => {
-            console.error(`Erreur FLV.js : ${errorType}, détail : ${errorDetail}`);
-          });
-        })
-        .catch((error) => {
-          console.error('Erreur lors de l’accès au flux :', error.message);
-        });
-    }
-  };
+  const playerRef = useRef(null);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const streamUrl = 'http://168.231.107.30/hls/test.m3u8';
 
   useEffect(() => {
+    const initializePlayer = () => {
+      if (videoRef.current && !playerRef.current) {
+        playerRef.current = videojs(videoRef.current, {
+          controls: true,
+          autoplay: true,
+          preload: 'auto',
+          sources: [
+            {
+              src: streamUrl,
+              type: 'application/x-mpegURL',
+            },
+          ],
+        });
+
+        playerRef.current.on('error', () => {
+          console.error('Erreur lors de la lecture du flux HLS.');
+          setErrorMessage('Impossible de lire le flux. Vérifiez la connexion ou l’URL.');
+        });
+      }
+    };
+
+    // Delay initialization slightly to ensure the DOM is ready
+    const timeoutId = setTimeout(initializePlayer, 0);
+
     return () => {
-      if (flvPlayer.current) {
-        flvPlayer.current.destroy();
-        flvPlayer.current = null;
+      clearTimeout(timeoutId); // Clear timeout if the component unmounts
+      if (playerRef.current) {
+        playerRef.current.dispose();
+        playerRef.current = null;
       }
     };
   }, []);
 
   return (
     <div className="video-container">
-      {!isPlaying && (
-        <button className="play-button" onClick={handlePlay}>
-          Play
-        </button>
-      )}
-      <video ref={videoRef} className="video-player" controls style={{ display: isPlaying ? 'block' : 'none' }} />
+      {errorMessage && <div className="error-message">{errorMessage}</div>}
+      <div data-vjs-player>
+        <video ref={videoRef} className="video-js vjs-default-skin fixed-size-video" />
+      </div>
     </div>
   );
 };

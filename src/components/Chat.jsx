@@ -51,6 +51,12 @@ const Chat = () => {
     }
   };
 
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSendMessage();
+    }
+  };
+
   return (
     <div className="chat-container">
       <div className="messages">
@@ -66,8 +72,8 @@ const Chat = () => {
           placeholder="Envoyer un message"
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
+          onKeyPress={handleKeyPress} // Trigger message send on Enter key press
         />
-        <button onClick={handleSendMessage}>Envoyer</button>
       </div>
     </div>
   );
