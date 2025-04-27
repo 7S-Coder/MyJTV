@@ -30,6 +30,7 @@ main {
     height: 100%; /* Fill the height of the box */
     overflow-y: auto; /* Enable scrolling for long content */
     border-left: 1px solid #2a2a2e; /* Add a separator between video and chat */
+    overflow-y: none; /* Disable vertical scrolling */
 }
 
 @media screen and (max-width: 950px) {
@@ -48,6 +49,11 @@ main {
         flex: none; /* Reset flex properties for stacking */
         height: 50%; /* Each takes up half the height */
     }
+
+    .chat-container {
+        width: 80%;
+        height: 42%;
+    }
     
 }
 
@@ -62,6 +68,5 @@ main {
     .chat-container {
         flex: none; /* Reset flex properties */
         width: 100%; /* Take full width */
-        height: 100%; /* Take full height */
     }
 }
