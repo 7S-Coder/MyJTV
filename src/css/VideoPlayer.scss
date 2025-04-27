@@ -16,6 +16,8 @@ div {
   height: 100%; /* Ensure the container fills the height */
   width: 100%; /* Ensure the container fills the width */
   background-color: black; /* Add a background color for the video area */
+  aspect-ratio: 16 / 9; /* Maintain 16:9 aspect ratio */
+  max-height: 100%; /* Prevent overflow */
 }
 
 .stream-message {
@@ -27,13 +29,8 @@ div {
   font-size: 1.5rem;
   background-color: black; /* Match the video container background */
   text-align: center;
+  aspect-ratio: 16 / 9; /* Maintain 16:9 aspect ratio */
+  width: 100%; /* Full width */
+  max-height: 100%; /* Prevent overflow */
 }
 
-@media screen and (max-width: 600px) {
-  .stream-message {
-    font-size: 1rem; /* Adjust font size for smaller screens */
-    margin: 4px;
-    height: auto;
-    padding-top: 35%;
-  }
-}
