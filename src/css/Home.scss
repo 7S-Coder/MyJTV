@@ -31,3 +31,37 @@ main {
     overflow-y: auto; /* Enable scrolling for long content */
     border-left: 1px solid #2a2a2e; /* Add a separator between video and chat */
 }
+
+@media screen and (max-width: 950px) {
+    .box {
+        flex-direction: column; /* Stack video player and chat vertically on smaller screens */
+        width: 100%; /* Take up full width */
+        height: 100%; /* Take up full height */
+    }
+
+    .video-container, .stream-message {
+        margin-top: 50px;
+
+    }
+
+    .video-container, .chat-container {
+        flex: none; /* Reset flex properties for stacking */
+        height: 50%; /* Each takes up half the height */
+    }
+    
+}
+
+@media screen and (max-width: 600px) {
+    .box {
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+    }
+
+    
+
+    .chat-container {
+        flex: none; /* Reset flex properties */
+        width: 100%; /* Take full width */
+        height: 100%; /* Take full height */
+    }
+}

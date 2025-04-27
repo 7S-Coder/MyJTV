@@ -28,3 +28,12 @@ div {
   background-color: black; /* Match the video container background */
   text-align: center;
 }
+
+@media screen and (max-width: 600px) {
+  .stream-message {
+    font-size: 1rem; /* Adjust font size for smaller screens */
+    margin: 4px;
+    height: auto;
+    padding-top: 35%;
+  }
+}
