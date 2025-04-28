@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { collection, addDoc, onSnapshot, query, orderBy } from 'firebase/firestore';
 import { db } from '../firebase/firebaseConfig'; // Assurez-vous que le chemin est correct
 import { auth, fetchUserData } from '../firebase/firebaseConfig'; // Importer fetchUserData pour récupérer le pseudo
@@ -9,6 +9,7 @@ const Chat = () => {
   const [newMessage, setNewMessage] = useState('');
   const [userPseudo, setUserPseudo] = useState('');
   const [userColors, setUserColors] = useState({});
+  const messagesEndRef = useRef(null); // Reference to the end of the messages container
 
   const generateRandomColor = (pseudo) => {
     const colors = ['#FF4500', '#32CD32', '#1E90FF', '#FFD700', '#FF69B4', '#8A2BE2', '#00CED1'];
@@ -58,6 +59,13 @@ const Chat = () => {
     assignColors();
   }, [messages]);
 
+  useEffect(() => {
+    // Scroll to the most recent message
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [messages]); // Trigger scrolling when messages change
+
   const handleSendMessage = async () => {
     if (newMessage.trim() === '') return;
 
@@ -100,6 +108,7 @@ const Chat = () => {
             {message.text}
           </div>
         ))}
+        <div ref={messagesEndRef} /> {/* Invisible div to scroll into view */}
       </div>
       <div className="message-form">
         <input
