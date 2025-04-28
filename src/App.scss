@@ -12,11 +12,10 @@ main {
 }
 
 body {
-  font-family: Arial, sans-serif;
   padding-top: 50px;
   margin: 0;
   height: 100vh;
-  overflow: hidden; // Prevent scrolling
+  // Removed duplicate font-family and overflow
 }
 
 button {
