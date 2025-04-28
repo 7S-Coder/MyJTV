@@ -10,9 +10,10 @@ const Chat = () => {
   const [userPseudo, setUserPseudo] = useState('');
   const [userColors, setUserColors] = useState({});
 
-  const generateRandomColor = () => {
+  const generateRandomColor = (pseudo) => {
     const colors = ['#FF4500', '#32CD32', '#1E90FF', '#FFD700', '#FF69B4', '#8A2BE2', '#00CED1'];
-    return colors[Math.floor(Math.random() * colors.length)];
+    const pseudoHash = pseudo.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+    return colors[pseudoHash % colors.length];
   };
 
   useEffect(() => {
@@ -43,12 +44,12 @@ const Chat = () => {
   }, []);
 
   useEffect(() => {
-    // Assign random colors to users dynamically
+    // Assign colors to users based on their pseudo
     const assignColors = () => {
       const newColors = {};
       messages.forEach((message) => {
-        if (!newColors[message.pseudo]) {
-          newColors[message.pseudo] = generateRandomColor();
+        if (!newColors[message.pseudo] && !userColors[message.pseudo]) {
+          newColors[message.pseudo] = generateRandomColor(message.pseudo);
         }
       });
       setUserColors((prevColors) => ({ ...prevColors, ...newColors }));
@@ -83,11 +84,18 @@ const Chat = () => {
       <div className="messages">
         {messages.map((message) => (
           <div key={message.id} className="message">
+            {/* Affiche l'heure du message */}
+            <span className="timestamp">
+              {new Date(message.timestamp?.toDate()).toLocaleTimeString([], {
+                hour: '2-digit',
+                minute: '2-digit',
+              })} : 
+            </span>
             <strong
               className="user-color"
               style={{ color: userColors[message.pseudo] || '#fff' }}
             >
-              {message.pseudo || 'User'}:
+              <strong>{message.pseudo || 'User'}</strong>:
             </strong>{' '}
             {message.text}
           </div>
