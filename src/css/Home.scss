@@ -11,12 +11,11 @@ main {
     display: flex;
     flex-direction: row; /* Arrange video player and chat side by side */
     width: 90%; /* Use a percentage for fluid width */
-    height: auto; /* Adjust height dynamically */
+    height: 70vh; /* Adjust height dynamically */
     border: 1px solid #2a2a2e; /* Optional: Add a border for better visibility */
     background-color: #18181b; /* Optional: Add a background color */
     position: relative;
     top: -30px;
-    background-color: red;
 }
 
 .video-container {
@@ -52,7 +51,6 @@ main {
         flex: none; /* Reset flex properties for stacking */
         width: 100%; /* Full width */
         height: auto; /* Adjust height dynamically */
-        margin-top: 20px; /* Add spacing */
     }
 
     .stream-message {
@@ -64,7 +62,6 @@ main {
         height: auto; /* Adjust height dynamically */
         max-height: 50vh; /* Limit height to half the viewport */
 
-        display: none;
     }
 
     footer {
@@ -72,6 +69,32 @@ main {
         p {
             font-size: 0.8rem; /* Adjust font size for smaller screens */
         }
+    }
+}
+
+
+@media screen and (max-width: 2560px) {
+    .message {
+        font-size: 0.9rem; /* Adjust font size for larger screens */
+    }
+}
+
+@media screen and (max-width: 1440px) {
+    .message {
+        font-size: 0.85rem; /* Adjust font size for larger screens */
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .video-container, .stream-message {
+        width: 60%; /* Take up full width */
+        display: flex; /* Ensure it stays in flow */
+        align-items: center; /* Center the video player */
+        justify-content: center; /* Center the video player */
+    }
+
+    .message {
+        font-size: 0.7rem; /* Adjust font size for larger screens */
     }
 }
 
@@ -99,8 +122,8 @@ main {
 
     .chat-container {
         display: flex; /* Ensure chat is displayed */
-        max-height: 43vh; /* Limit height to 45% of the viewport */
-        margin-top: 15px; /* Add spacing */
+        height: calc(100vh - 250px - 40px); /* Full height minus video player and footer */
+        padding-bottom: 74px;
     }
 }
 
@@ -109,28 +132,32 @@ main {
         height: 150px; /* Adjust height dynamically */
         aspect-ratio: 4 / 3; /* Change aspect ratio for smaller screens */
     }
+    
     .chat-container {
-        max-height: 58vh; /* Limit height to 40% of the viewport */
+        display: flex; /* Ensure chat is displayed */
+        height: calc(100vh - 150px - 40px); /* Full height minus video player and footer */
+        padding-bottom: 0; /* Remove padding */
     }
 }
 
-@media screen and (max-width: 375px) {
+@media screen and (max-width: 376px) {
     .video-container, .stream-message {
         height: 160px; /* Adjust height dynamically */
         aspect-ratio: 4 / 3; /* Change aspect ratio for smaller screens */
     }
+
     .chat-container {
-        max-height: 35vh; /* Limit height to 35% of the viewport */
+        height: calc(100vh - 100px - 40px); /* Full height minus video player and footer */
     }
-    
+   
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 321px) {
     .video-container, .stream-message {
-        height: 120px; /* Adjust height dynamically */
         aspect-ratio: 4 / 3; /* Change aspect ratio for smaller screens */
     }
+    
     .chat-container {
-        max-height: 63vh; /* Limit height to 40% of the viewport */
+        height: calc(100vh - 60px - 40px); /* Full height minus video player and footer */
     }
 }

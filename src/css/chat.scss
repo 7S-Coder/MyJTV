@@ -6,8 +6,7 @@
   height: 100%; /* Ensure the chat fills the height of its container */
   overflow-y: auto; /* Enable scrolling for long messages */
   background-color: #18181b; /* Ensure consistent background color */
-  max-width: 400px;
-  margin: 0 auto;
+  width: 300px;
   border: none;
   color: #e3e3e3;
   font-family: Arial, sans-serif;
@@ -83,4 +82,5 @@
   background-color: #5c5c5c;
   cursor: not-allowed;
 }
+
 
