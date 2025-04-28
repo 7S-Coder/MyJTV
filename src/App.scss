@@ -1,8 +1,7 @@
 @use './css/_variables' as vars;
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
 
 root {
-  font-family: 'Inter', Arial, sans-serif;
+  font-family: Arial, sans-serif;
   height: 100vh;
   overflow: hidden; // Prevent scrolling
 }
@@ -13,7 +12,7 @@ main {
 }
 
 body {
-  font-family: 'Inter', Arial, sans-serif;
+  font-family: Arial, sans-serif;
   padding-top: 50px;
   margin: 0;
   height: 100vh;

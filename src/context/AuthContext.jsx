@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { auth } from '../firebase/firebaseConfig';
-import { onAuthStateChanged, signOut } from 'firebase/auth';
+import { onAuthStateChanged, signOut, signInWithEmailAndPassword } from 'firebase/auth';
 
 const AuthContext = createContext();
 
@@ -20,8 +20,21 @@ export const AuthProvider = ({ children }) => {
     await signOut(auth);
   };
 
+  const login = async (email, password) => {
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+    } catch (error) {
+      if (error.code === 'auth/network-request-failed') {
+        console.error("Network error: Please check your internet connection.");
+      } else {
+        console.error("Authentication error:", error.message);
+      }
+      throw error; // Re-throw the error for further handling
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ user, loading, logout }}>
+    <AuthContext.Provider value={{ user, loading, logout, login }}>
       {!loading && children}
     </AuthContext.Provider>
   );

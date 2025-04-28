@@ -51,7 +51,7 @@ const Navbar = () => {
 
     return (
         <nav>
-            <Link to="/"><img src="src\assets\jeezy.png" alt="Logo" /></Link>
+            <Link to="/"><img src="/jeezy.png" alt="Logo" /></Link>
             <ul>
                 {user ? (
                     <li className="user-menu" onClick={() => setMenuOpen(!menuOpen)}>
