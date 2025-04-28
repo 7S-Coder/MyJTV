@@ -2,7 +2,7 @@
 
 Footer {
     background-color: vars.$primary--dark;
-    position: absolute;
+    position: fixed; /* Changed to fixed to keep footer at the bottom */
     bottom: 0;  
     left: 0;
     right: 0;
@@ -18,7 +18,6 @@ Footer {
     }
 
     p {
-    font-weight:100;
-
+        font-weight: 100;
     }
 }
