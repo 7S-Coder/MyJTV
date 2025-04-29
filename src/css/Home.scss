@@ -1,43 +1,72 @@
 @use './_variables';
 
+body {
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+    justify-content: flex-start; /* Align content at the top */
+    align-items: center; /* Center content horizontally */
+    background-color: #18181b; /* Set a dark background color */
+    box-sizing: border-box; /* Include padding and border in element's total width and height */
+    font-family: "Poppins", sans-serif; /* Use a modern font */
+
+}
+
+#root {
+    height: 100%; /* Ensure root takes full height of the viewport */
+    display: flex; /* Enable flexbox for its children */
+    flex-direction: column; /* Stack children vertically */
+}
+
 main {
     display: flex;
-    justify-content: center; /* Center the box horizontally */
-    align-items: center; /* Center the box vertically */
-    height: 100vh; /* Make main container fill the viewport height */
+    flex-direction: column; /* Stack content vertically */
+    flex-grow: 1; /* Allow main to grow and fill available space */
+    justify-content: space-between; /* Ensure content is spaced properly */
+    height: 100%; /* Ensure main takes full height of its parent */
+    width: 100%; /* Full width */
+    padding-top: 30px; /* Remove top margin */
 }
 
 .box {
     display: flex;
-    flex-direction: row; /* Arrange video player and chat side by side */
-    width: 90%; /* Use a percentage for fluid width */
-    height: 70vh; /* Adjust height dynamically */
+    flex-direction: row; /* Arrange children side by side */
+    justify-content: space-between; /* Space out children */
+    align-items: center; /* Center children vertically */
+    height: 60vh; /* Adjust height dynamically */
+    max-width: 70vw; /* Limit width */
     border: 1px solid #2a2a2e; /* Optional: Add a border for better visibility */
-    background-color: #18181b; /* Optional: Add a background color */
-    position: relative;
-    top: -30px;
 }
 
-.video-container {
-    flex: 2; /* Video player takes up 2/3 of the box */
-    aspect-ratio: 16 / 9; /* Maintain 16:9 aspect ratio */
-    width: 100%; /* Full width */
-    max-height: 100%; /* Prevent overflow */
+@media screen and (min-width: 768px) {
+    .chat-container {
+        display: flex;
+        flex-direction: column; /* Stack chat messages vertically */
+        justify-content: flex-start; /* Align messages at the top */
+        overflow-y: auto; /* Enable scrolling for long messages */
+        width: 400px; /* Fixed width */
+        height: 100%; /* Full height of the parent */
+        border: none;
+        font-family: Arial, sans-serif;
+    }
 }
 
-.chat-container {
-    flex: 1; /* Chat takes up 1/3 of the box */
-    overflow-y: auto; /* Enable scrolling for long content */
-    border-left: 1px solid #2a2a2e; /* Add a separator between video and chat */
-    height: auto; /* Adjust height dynamically */
-    max-height: 100%; /* Prevent overflow */
-    position: relative; /* Ensure it stays above other elements */
+@media screen and (max-width: 1440px) {
+    .message {
+        font-size: 0.85rem; /* Adjust font size for larger screens */
+    }
 }
 
-.stream-message {
-    aspect-ratio: 16 / 9; /* Maintain 16:9 aspect ratio */
-    width: 100%; /* Full width */
-    max-height: 100%; /* Prevent overflow */
+@media screen and (max-width: 1024px) {
+    .video-container, .stream-message {
+        width: 60%; /* Take up full width */
+        display: flex; /* Ensure it stays in flow */
+        align-items: center; /* Center the video player */
+        justify-content: center; /* Center the video player */
+    }
+
+    .message {
+        font-size: 0.7rem; /* Adjust font size for larger screens */
+    }
 }
 
 @media screen and (max-width: 950px) {
@@ -61,103 +90,43 @@ main {
         width: 100%; /* Full width */
         height: auto; /* Adjust height dynamically */
         max-height: 50vh; /* Limit height to half the viewport */
-
     }
 
     footer {
-
         p {
             font-size: 0.8rem; /* Adjust font size for smaller screens */
         }
     }
 }
 
-
-@media screen and (max-width: 2560px) {
-    .message {
-        font-size: 0.9rem; /* Adjust font size for larger screens */
-    }
-}
-
-@media screen and (max-width: 1440px) {
-    .message {
-        font-size: 0.85rem; /* Adjust font size for larger screens */
-    }
-}
-
-@media screen and (max-width: 1024px) {
-    .video-container, .stream-message {
-        width: 60%; /* Take up full width */
-        display: flex; /* Ensure it stays in flow */
-        align-items: center; /* Center the video player */
-        justify-content: center; /* Center the video player */
-    }
-
-    .message {
-        font-size: 0.7rem; /* Adjust font size for larger screens */
-    }
-}
-
 @media screen and (max-width: 768px) {
-
     main {
-        align-items: normal; /* Reset vertical alignment for smaller screens */
+        flex-direction: column; /* Stack content vertically */
+        align-items: stretch; /* Allow children to stretch */
+        width: 100vw; /* Full width */
+        padding-top: 0; /* Remove top margin */
+        height: 100%; /* Ensure main takes full height in tablet view */
     }
+
     .box {
         flex-direction: column; /* Stack elements vertically */
         width: 100%; /* Full width */
+        max-width: 100vw; /* Full width */
         height: auto; /* Adjust height dynamically */
-        position: relative; /* Ensure it stays in flow */
-        top: 0; /* Reset top positioning */
-        margin-bottom: 20px; /* Add spacing above the footer */
     }
 
     .video-container, .stream-message {
         width: 100%; /* Full width */
-        height: 250px; /* Adjust height dynamically */
-        aspect-ratio: 4 / 3; /* Change aspect ratio for smaller screens */
-        align-self: flex-start; /* Ensure it stays at the top */
-        margin-top: 0; /* Remove top margin */
+        height: 40vh; /* Adjust height dynamically */
     }
 
     .chat-container {
-        display: flex; /* Ensure chat is displayed */
-        height: calc(100vh - 250px - 40px); /* Full height minus video player and footer */
-        padding-bottom: 74px;
+        width: 100%; /* Full width */
+        height: auto; /* Adjust height dynamically */
+    }
+
+    footer {
+        display: none !important; /* Force hiding the footer */
     }
 }
 
-@media screen and (max-width: 425px) {
-    .video-container, .stream-message {
-        height: 150px; /* Adjust height dynamically */
-        aspect-ratio: 4 / 3; /* Change aspect ratio for smaller screens */
-    }
-    
-    .chat-container {
-        display: flex; /* Ensure chat is displayed */
-        height: calc(100vh - 150px - 40px); /* Full height minus video player and footer */
-        padding-bottom: 0; /* Remove padding */
-    }
-}
-
-@media screen and (max-width: 376px) {
-    .video-container, .stream-message {
-        height: 160px; /* Adjust height dynamically */
-        aspect-ratio: 4 / 3; /* Change aspect ratio for smaller screens */
-    }
-
-    .chat-container {
-        height: calc(100vh - 100px - 40px); /* Full height minus video player and footer */
-    }
-   
-}
-
-@media screen and (max-width: 321px) {
-    .video-container, .stream-message {
-        aspect-ratio: 4 / 3; /* Change aspect ratio for smaller screens */
-    }
-    
-    .chat-container {
-        height: calc(100vh - 60px - 40px); /* Full height minus video player and footer */
-    }
-}

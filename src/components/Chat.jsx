@@ -88,7 +88,7 @@ const Chat = () => {
   };
 
   return (
-    <div className="chat-container">
+    <div className="chat-container scroller">
       <div className="messages">
         {messages.map((message) => (
           <div key={message.id} className="message">

@@ -1,16 +1,6 @@
 @use './_variables' as vars;
 
-.chat-container {
-  display: flex;
-  flex-direction: column;
-  height: 100%; /* Ensure the chat fills the height of its container */
-  overflow-y: auto; /* Enable scrolling for long messages */
-  background-color: #18181b; /* Ensure consistent background color */
-  width: 300px;
-  border: none;
-  color: #e3e3e3;
-  font-family: Arial, sans-serif;
-}
+
 
 .messages {
   flex: 1;
@@ -26,7 +16,7 @@
   padding: 0 10px;
   border-radius: 4px;
   color: #fff;
-  font-size: 0.75rem;
+  font-size: 0.80rem;
   font-family: 'Roobert', Arial, sans-serif; /* Use Twitch's chat font */
 }
 

@@ -15,7 +15,6 @@ nav {
     color: vars.$white;
     z-index: 9999;
 
-
     img {
         width: 40px;
         border-radius: 50%;
@@ -25,13 +24,10 @@ nav {
         display: flex;
         list-style-type: none;
 
-
         li {
-        margin: 0 10px;
-        font-size: 1.0.9;
-        font-weight: bold;
-
-
+            margin: 0 10px;
+            font-size: 1rem; /* Adjust font size for better readability */
+            font-weight: bold;
         }
     }
 
@@ -52,6 +48,7 @@ nav {
             border: none;
             margin: 0;
             border-radius: 0;
+            font-family: "Poppins", sans-serif; /* Ensure consistency */
         }
 
         li, button:hover {
@@ -60,6 +57,4 @@ nav {
             background-color: vars.$white--smooth;
         }
     }
-
-    
 }
