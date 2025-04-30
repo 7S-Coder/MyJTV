@@ -61,6 +61,11 @@
         }
     }
 
+    .auth-form {
+        padding: 0 10px; /* Réduit le padding pour les petits écrans */
+        box-sizing: border-box; /* Inclut le padding dans la largeur/hauteur totale */
+    }
+
     Footer {
         display: none !important; /* Cache le footer */
     }
