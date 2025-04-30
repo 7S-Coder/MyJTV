@@ -1,23 +1,23 @@
-@use './_variables' as vars;
+// @use './_variables' as vars;
 
-Footer {
-    background-color: vars.$primary--dark;
-    position: fixed; /* Changed to fixed to keep footer at the bottom */
-    bottom: 0;  
-    left: 0;
-    right: 0;
-    color: vars.$white;
-    font-size: 0.8rem;
-    height: 40px;
+// Footer {
+//     background-color: vars.$primary--dark;
+//     position: fixed; /* Changed to fixed to keep footer at the bottom */
+//     bottom: 0;  
+//     left: 0;
+//     right: 0;
+//     color: vars.$white;
+//     font-size: 0.8rem;
+//     height: 40px;
 
-    display: flex;
-    justify-content: center;
+//     display: flex;
+//     justify-content: center;
 
-    a:hover {
-        color: vars.$logo;
-    }
+//     a:hover {
+//         color: vars.$logo;
+//     }
 
-    p {
-        font-weight: 100;
-    }
-}
+//     p {
+//         font-weight: 100;
+//     }
+// }

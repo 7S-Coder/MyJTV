@@ -3,12 +3,10 @@
 
 
 .messages {
-  flex: 1;
-  padding: 10px;
-  overflow-y: auto;
-  background-color: #1f1f23;
-  
-
+    flex: 1; /* Prend tout l'espace disponible dans .chat-container */
+    padding: 10px;
+    overflow-y: auto; /* Active le défilement vertical si nécessaire */
+    background-color: #1f1f23;
 }
 
 .message {
@@ -59,7 +57,7 @@
 }
 
 .message-form button:hover {
-  background-color: vars.$link;
+  background-color: vars.$logo;
   color: vars.$logo;
 }
 

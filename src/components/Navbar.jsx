@@ -54,13 +54,14 @@ const Navbar = () => {
             <Link to="/"><img src="/jeezy.png" alt="Logo" /></Link>
             <ul>
                 {user ? (
-                    <li className="user-menu" onClick={() => setMenuOpen(!menuOpen)}>
+                    <li 
+                        className={`user-menu ${menuOpen ? 'open' : ''}`} 
+                        onClick={() => setMenuOpen(!menuOpen)}
+                    >
                         {user.pseudo} {/* Affiche le pseudo */}
-                        {menuOpen && (
-                            <div className="dropdown-menu">
-                                <button onClick={handleLogout}>Déconnexion</button>
-                            </div>
-                        )}
+                        <div className="dropdown-menu">
+                            <button onClick={handleLogout}>Déconnexion</button>
+                        </div>
                     </li>
                 ) : (
                     <li><Link to="/login">Connexion</Link></li>

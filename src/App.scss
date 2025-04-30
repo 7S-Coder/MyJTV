@@ -1,17 +1,25 @@
 @use './css/_variables' as vars;
 
-root {
-  height: 100vh;
-  overflow: hidden; // Prevent scrolling
-}
+// root {
+//   height: 100vh;
+//   overflow: hidden; // Prevent scrolling
+// }
 
 
 
 
 body {
-  padding-top: 50px;
-  margin: 0;
-  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* prendre la hauteur de la fenêtre */
+  margin: 0; /* supprimer les marges par défaut */
+  // background-color: vars.$primary; /* couleur de fond sombre */
+}
+
+main {
+  max-width: 1350px; /* largeur maximale de la fenêtre principale */
+  margin: 40px auto 0; /* centrer la fenêtre principale horizontalement */
+  border: 1px solid red
 }
 
 button {
@@ -24,7 +32,7 @@ button {
 
 button:hover {
   background-color: vars.$primary;
-  color: vars.$link;
+  color: vars.$logo;
   cursor: pointer;
 }
 
@@ -50,7 +58,7 @@ li {
     position: fixed;
     bottom: 20px;
     left: 20px;
-    background: vars.$link;
+    background: vars.$logo;
     border: 1px solid #ccc;
     padding: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
@@ -60,7 +68,7 @@ li {
 .cookies-popup button {
     margin-top: 10px;
     padding: 5px 10px;
-    background: vars.$link;
+    background: vars.$logo;
     color: #fff;
     border: none;
     cursor: pointer;

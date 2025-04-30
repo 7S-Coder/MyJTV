@@ -1,19 +1,18 @@
 @use './_variables' as vars;
 
 nav {
-    background-color: vars.$primary--dark;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 50px;
 
+    flex: 0 0 60px; /* définir la hauteur de la navbar */
+        
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 2vw;
+    padding: 0 2vw; /* Conserver le padding si nécessaire */
+        
+    background-color: vars.$primary--dark;
     color: vars.$white;
-    z-index: 9999;
+    
+
 
     img {
         width: 40px;
@@ -24,37 +23,61 @@ nav {
         display: flex;
         list-style-type: none;
 
+
         li {
-            margin: 0 10px;
-            font-size: 1rem; /* Adjust font size for better readability */
-            font-weight: bold;
+        margin: 0 10px;
+        font-size: 1.0.9;
+        font-weight: bold;
+        }
+
+        li:hover {
+            cursor: pointer;
         }
     }
 
     .dropdown-menu {
         position: absolute;
-        top: 100%;
-        right: 0;
-        margin-top: 16px;
-        background: vars.$primary--dark;
+        top: 100%; /* Positionner sous le parent */
+        right: calc(-2vw); /* Compense le padding de nav */
+        margin: 0; /* Supprimer les marges */
         padding: 10px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        padding: 0;
+        background: vars.$primary--dark;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 4px;
         z-index: 1000;
-
-        button {
-            background-color: inherit;
-            color: vars.$white;
-            border: none;
-            margin: 0;
-            border-radius: 0;
-            font-family: "Poppins", sans-serif; /* Ensure consistency */
-        }
-
-        li, button:hover {
-            color: vars.$primary--dark;
-            cursor: pointer;
-            background-color: vars.$white--smooth;
-        }
+        display: none; /* Masquer par défaut */
+        box-sizing: border-box; /* Inclure padding dans la largeur */
     }
+
+    .user-menu {
+        position: relative; /* Nécessaire pour que .dropdown-menu utilise right: 0 */
+    }
+
+    .user-menu.open .dropdown-menu {
+        display: block; /* Afficher le menu déroulant */
+    }
+
+    li:hover .dropdown-menu {
+        display: none; /* Remove hover behavior */
+    }
+
+    
+
+    .dropdown-menu button {
+        background-color: inherit;
+        color: vars.$white;
+        border: none;
+        margin: 0;
+        border-radius: 0;
+        padding: 8px 12px; /* Add padding for better click area */
+        text-align: left; /* Align text to the left */
+        width: 100%; /* Full width for buttons */
+    }
+
+    .dropdown-menu li, .dropdown-menu button:hover {
+        color: vars.$logo;
+        cursor: pointer;
+    }
+
+    
 }
