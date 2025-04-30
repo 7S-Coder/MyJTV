@@ -32,6 +32,9 @@
         display: flex; /* Enable flexbox for its children */
         flex-direction: column; /* Stack children vertically */
 
+        input, textarea {
+            font-size: 16px; /* Empêche le zoom automatique sur les champs d'entrée */
+        }
     }
 }
 
