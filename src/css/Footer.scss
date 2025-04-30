@@ -17,9 +17,18 @@ Footer {
     color: vars.$white;
     font-size: 0.8rem;
     height: 40px;
+    padding: 10px 0;
 
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center; /* Center content horizontally */
+
+    img {
+        width: 25px;
+        height: 25px;
+        margin-right: 5px;
+    }
 
     a:hover {
         color: vars.$logo;
@@ -28,4 +37,6 @@ Footer {
     p {
         font-weight: 100;
     }
+
+    
 }

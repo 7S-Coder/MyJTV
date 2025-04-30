@@ -2,6 +2,7 @@
 
 nav {
 
+    font-family: vars.$font; /* Applique la police définie dans les variables */
     flex: 0 0 60px; /* définir la hauteur de la navbar */
         
     display: flex;

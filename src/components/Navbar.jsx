@@ -51,7 +51,7 @@ const Navbar = () => {
 
     return (
         <nav>
-            <Link to="/"><img src="/jeezy.png" alt="Logo" /></Link>
+            <Link to="/"><img src="/jeezy.jpg" alt="Logo" /></Link>
             <ul>
                 {user ? (
                     <li 

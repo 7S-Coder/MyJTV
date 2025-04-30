@@ -1,6 +1,5 @@
 @use './_variables';
 
-
 .box {
     display: flex;
     flex-direction: row; /* Arrange children side by side */
@@ -35,111 +34,31 @@
     }
 }
 
-// @media screen and (min-width: 768px) {
-//     .chat-container {
-//         display: flex;
-//         flex-direction: column; /* Stack chat messages vertically */
-//         justify-content: flex-start; /* Align messages at the top */
-//         overflow-y: auto; /* Enable scrolling for long messages */
-//         width: 400px; /* Fixed width */
-//         height: 100%; /* Full height of the parent */
-//         border: none;
-//         font-family: Arial, sans-serif;
-//     }
-// }
+@media (max-width: 768px) {
+    main {
+        margin: 0; /* Remove margin for smaller screens */
+    }
+    .box {
+        height: auto; /* Retire la hauteur fixe */
+        flex-direction: column; /* Place les enfants en colonne */
+        justify-content: flex-start; /* Aligne les enfants en haut */
+        height: calc(100vh - 60px); /* Ajuste la hauteur dynamique */
 
-// @media screen and (max-width: 1440px) {
-//     .message {
-//         font-size: 0.85rem; /* Adjust font size for larger screens */
-//     }
-// }
+        .video-container, .stream-message {
+            width: 100%; /* Prend toute la largeur */
+            height: auto; /* Ajuste la hauteur automatiquement */
+            max-height: 40vh; /* Limite la hauteur à 50% de l'écran */
+            flex: none; /* Désactive le partage d'espace */
+        }
 
-// @media screen and (max-width: 1024px) {
-//     .video-container, .stream-message {
-//         width: 60%; /* Take up full width */
-//         display: flex; /* Ensure it stays in flow */
-//         align-items: center; /* Center the video player */
-//         justify-content: center; /* Center the video player */
-//     }
+        .chat-container {
+            width: 100% !important; /* Force la largeur à 100% */
+            max-width: 100%; /* Empêche toute limitation de largeur */
+            overflow-y: auto; /* Ajoute un défilement vertical si nécessaire */
+        }
+    }
 
-//     .message {
-//         font-size: 0.7rem; /* Adjust font size for larger screens */
-//     }
-// }
-
-// @media screen and (max-width: 950px) {
-//     .box {
-//         flex-direction: column; /* Stack video player and chat vertically on smaller screens */
-//         width: 100%; /* Take up full width */
-//         height: auto; /* Adjust height dynamically */
-//     }
-
-//     .video-container, .stream-message {
-//         flex: none; /* Reset flex properties for stacking */
-//         width: 100%; /* Full width */
-//         height: auto; /* Adjust height dynamically */
-//     }
-
-//     .stream-message {
-//         font-size: 0.9rem; /* Adjust font size for smaller screens */
-//     }
-
-//     .chat-container {
-//         width: 100%; /* Full width */
-//         height: auto; /* Adjust height dynamically */
-//         max-height: 50vh; /* Limit height to half the viewport */
-//     }
-
-//     footer {
-//         p {
-//             font-size: 0.8rem; /* Adjust font size for smaller screens */
-//         }
-//     }
-// }
-
-// @media screen and (max-width: 768px) {
-//     main {
-//         flex-direction: column; /* Stack content vertically */
-//         align-items: stretch; /* Allow children to stretch */
-//         width: 100vw; /* Full width */
-//         padding-top: 0; /* Remove top margin */
-//     }
-
-//     .box {
-//         flex-direction: column; /* Stack elements vertically */
-//         width: 100%; /* Full width */
-//         max-width: 100vw; /* Full width */
-//         height: auto; /* Adjust height dynamically */
-//     }
-
-//     .video-container, .stream-message {
-//         width: 100%; /* Full width */
-//         height: 40vh; /* Adjust height dynamically */
-//     }
-
-//     .chat-container {
-//         width: 100%; /* Full width */
-//         height: auto; /* Adjust height dynamically */
-//     }
-
-//     footer {
-//         display: none !important; /* Force hiding the footer */
-//     }
-// }
-
-// @media screen and (max-width: 425px) {
-
-    
-        
-//     .message {
-//         font-size: 0.7rem; /* Adjust font size for smaller screens */
-//     }
-
-
-
-//     .chat-container {
-//         width: 100%; /* Full width */
-//         overflow: hidden;
-//     }
-    
-// }
+    Footer {
+        display: none !important; /* Cache le footer */
+    }
+}
