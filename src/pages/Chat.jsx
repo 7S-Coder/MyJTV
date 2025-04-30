@@ -62,15 +62,16 @@ const Chat = () => {
       </div>
       <form className="message-form" onSubmit={handleSendMessage}>
         <input
-          id="message-input" // Ajout d'un id
-          name="message" // Ajout d'un name
+          id="message-input"
+          name="message"
           type="text"
           placeholder="Écrivez un message..."
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
         />
         <button
-          type="submit"
+          type="button"
+          onClick={handleSendMessage} // Trigger message sending
           disabled={!user}
         >
           Envoyer
