@@ -31,6 +31,10 @@
         overflow: hidden; /* Prevent content overflow */
         display: flex; /* Enable flexbox for its children */
         flex-direction: column; /* Stack children vertically */
+
+        input {
+            margin-right: 0; /* Enlève la marge à droite */
+        }
     }
 }
 
@@ -56,9 +60,7 @@
             max-width: 100%; /* Empêche toute limitation de largeur */
             overflow-y: auto; /* Ajoute un défilement vertical si nécessaire */
 
-            input {
-                margin-right: 0; /* Enlève la marge à droite */
-            }
+            
         }
     }
 
