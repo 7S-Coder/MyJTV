@@ -1,116 +1,211 @@
 @use './_variables' as vars;
 
+
+
 .auth-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
-    background-color: vars.$primary;
     color: vars.$white;
-    
 
-    form {
+    .auth-header {
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center;
-        width: 100%;
-        max-width: 400px;
-        padding: 2rem;
-        background-color: vars.$primary;
-        border: 1px solid vars.$primary--dark;
-        border-radius: 8px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 
         h2 {
             font-size: 1.5rem;
             font-weight: bold;
-            color: #1f1f23;
-            margin-bottom: 1.5rem;
-        }
-
-        input {
-            width: 100%;
-            margin: 0.5rem 0;
-            padding: 0.8rem;
-            border: 1px solid #dadce0;
-            border-radius: 4px;
-            font-size: 1rem;
-            background-color: vars.$white--smooth2;
-            transition: border-color 0.2s ease;
-
-            &:focus {
-                border-color: vars.$logo;
-                outline: none;
-            }
-        }
-
-        button {
-            width: 100%;
-            margin: 1rem 0;
-            padding: 0.8rem;
-            border: none;
-            border-radius: 4px;
-            font-size: 1rem;
-            font-weight: bold;
             color: vars.$white;
-            background-color: vars.$logo;
-            transition: background-color 0.2s ease, transform 0.1s ease;
+            margin-bottom: 0.5rem; // Reduce space below the heading
+        }
 
-            &:hover {
-                background-color: vars.$logo;
-                color: vars.$white;
-                cursor: pointer;
+        p {
+            font-size: 0.875rem;
+            color: vars.$white--smooth;
+            margin-top: 0; // Remove any additional space above the paragraph
+        }
+    }
+
+    .auth-form {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+        max-width: 400px;
+        padding: 1.5rem;
+        background-color: vars.$primary--dark;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 1rem;
+
+            label {
+                font-size: 0.8rem;
+                color: vars.$white--smooth;
+                margin-bottom: 0.5rem;
             }
 
-            &:active {
-                transform: scale(0.98);
+            input {
+                width: 100%;
+                padding: 0.6rem;
+                border: 1px solid vars.$white--smooth2;
+                border-radius: 4px;
+                font-size: 0.9rem;
+                background-color: vars.$white--smooth2;
+                box-sizing: border-box; // Fix input overflow
+                transition: border-color 0.2s ease;
+
+                &:focus {
+                    border-color: vars.$logo;
+                    outline: none;
+                }
             }
         }
 
-       
-        
+        .forgot-password {
+            display: flex;
+            margin-bottom: 1rem;
+
+            a {
+                font-size: 0.8rem;
+                color: vars.$logo;
+                text-decoration: none;
+                transition: color 0.2s ease;
+
+                &:hover {
+                    color: vars.$white--smooth;
+                }
+            }
+        }
+
+        .form-actions {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch; // Ensure buttons align properly within the container
+            justify-content: center; // Center content vertically if needed
+            gap: 0.8rem;
+
+            .primary-button {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+                border: none;
+                border-radius: 4px;
+                font-size: 0.9rem;
+                font-weight: bold;
+                color: vars.$white;
+                background-color: vars.$logo;
+                transition: background-color 0.2s ease, transform 0.1s ease;
+                box-sizing: border-box; // Ensure padding and border are included in width
+                margin: 0; // Reset margin to avoid overflow;
+
+                &:hover {
+                    cursor: pointer;
+                }
+
+                &:active {
+                    transform: scale(0.98);
+                }
+            }
+
+            .secondary-button {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 0.6rem;
+                border: 1px solid vars.$logo;
+                border-radius: 4px;
+                font-size: 0.9rem;
+                font-weight: bold;
+                color: vars.$logo;
+                background-color: transparent;
+                transition: background-color 0.2s ease, color 0.2s ease;
+                box-sizing: border-box; // Ensure consistent sizing
+
+                &:hover {
+                    background-color: vars.$white--smooth;
+                    color: vars.$black;
+                    cursor: pointer;
+                }
+            }
+
+            .switch-auth-mode {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.5rem; // Add spacing between <p> and <a>
+
+                p, a {
+                    font-size: 0.8rem; // Ensure both have the same font size
+                    color: vars.$white--smooth; // Default color for <p>
+                }
+
+                a {
+                    color: vars.$logo; // Override color for <a>
+                    text-decoration: none;
+                    transition: color 0.2s ease;
+
+                    &:hover {
+                        color: vars.$white--smooth;
+                    }
+                }
+            }
+        }
     }
 
     .cookies-popup {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         position: fixed;
         bottom: 1rem;
         left: 50%;
         transform: translateX(-50%);
         background-color: vars.$white;
-        padding: 1rem 2rem;
+        padding: 0.8rem 1.5rem;
         border-radius: 8px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         text-align: center;
 
         p {
-            margin-bottom: 1rem;
-            font-size: 0.9rem;
+            margin-bottom: 0.8rem;
+            font-size: 0.8rem;
             color: #333;
         }
 
         button {
-            padding: 0.5rem 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0.4rem 0.8rem;
             border: none;
             border-radius: 5px;
             background-color: vars.$logo;
             color: vars.$white;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             font-weight: bold;
             transition: background-color 0.3s ease;
 
             &:hover {
-                background-color:  vars.$logo;
+                background-color: vars.$white--smooth;
                 cursor: pointer;
             }
         }
     }
 
     .error-message {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         color: #e91916;
-        font-size: 0.9rem;
-        margin-bottom: 1rem;
+        font-size: 0.8rem;
+        margin-bottom: 0.8rem;
         text-align: center;
     }
 }

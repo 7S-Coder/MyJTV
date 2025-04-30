@@ -12,6 +12,7 @@ import Auth from './pages/Auth.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 import Chat from './pages/Chat.jsx'; // Import the Chat page
 import LaunchStream from './pages/admin/launchstream.jsx'; // Import the LaunchStream page
+import ForgetPassword from './pages/ForgetPassword.jsx'; // Assurez-vous que le nom correspond
 
 function App() {
     return (
@@ -21,6 +22,7 @@ function App() {
                     <Navbar />
                     <Routes>
                         <Route path="/login" element={<Auth />} /> {/* Page de connexion et inscription */}
+                        <Route path="/forgot-password" element={<ForgetPassword />} /> {/* Route correcte */}
                         <Route
                             path="/"
                             element={
