@@ -113,10 +113,16 @@ const Chat = () => {
       <div className="message-form">
         <input
           type="text"
-          placeholder="Envoyer un message"
+          placeholder="Écrivez votre message..."
+          enterKeyHint="send" // Affiche "Envoyer" sur le clavier
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
-          onKeyPress={handleKeyPress} // Trigger message send on Enter key press
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              handleSendMessage(); // Fonction pour envoyer le message
+              e.preventDefault(); // Empêche le saut de ligne
+            }
+          }}
         />
       </div>
     </div>
