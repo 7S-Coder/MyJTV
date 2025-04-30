@@ -78,7 +78,7 @@ const Auth = () => {
     <main className="auth-page">
       <div className="auth-container">
         <div className="auth-header">
-          <h2>{isLogin ? "Ah t'es là ?" : 'Créer un compte'}</h2>
+          <h2>{isLogin ? "T'es là ?" : 'Créer un compte'}</h2>
           <p>{isLogin ? 'Quel plaisir de te revoir. Ne rate pas le RDV !' : 'Rejoignez-nous dès maintenant.'}</p>
         </div>
         {errorMessage && <p className="error-message">{errorMessage}</p>}
