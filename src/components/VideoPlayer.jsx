@@ -7,7 +7,7 @@ const VideoPlayer = () => {
   const videoRef = useRef(null);
   const playerRef = useRef(null);
   const [isStreamAvailable, setIsStreamAvailable] = useState(true); // Suivi de la disponibilité du flux
-  const streamUrl = 'https://168.231.107.30/hls/test.m3u8';
+  const streamUrl = 'https://stream.dontono.fr/hls/test.m3u8';
 
   useEffect(() => {
     const initializePlayer = () => {
