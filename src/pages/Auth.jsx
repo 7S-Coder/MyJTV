@@ -98,7 +98,7 @@ const Auth = () => {
             </div>
           )}
           <div className="form-group">
-            <label htmlFor="email">Email</label>
+            <label htmlFor="email">Email <span>*</span></label>
             <input
               id="email"
               type="email"
@@ -110,7 +110,7 @@ const Auth = () => {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="password">Mot de passe</label>
+            <label htmlFor="password">Mot de passe <span>*</span></label>
             <input
               id="password"
               type="password"
