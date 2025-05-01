@@ -15,6 +15,8 @@ const VideoPlayer = () => {
       if (!videoRef.current || playerRef.current) return;
 
       const options = {
+        fluid: true,
+        liveui: true,
         controls: true,
         autoplay: true,
         preload: 'auto',
@@ -23,22 +25,25 @@ const VideoPlayer = () => {
             overrideNative: true,
             withCredentials: false,
             enableLowInitialPlaylist: true,
-            backBufferLength: 60
+            backBufferLength: 60,
+            experimentalLLHLS: false // Désactivé si problème de compatibilité
           },
           nativeAudioTracks: false,
           nativeVideoTracks: false
         },
         sources: [{
           src: streamUrl,
-          type: 'application/x-mpegURL'
-        }]
+          type: 'application/x-mpegURL',
+          withCredentials: false
+        }],
+        techOrder: ['html5'] // Force l'utilisation du lecteur HTML5
       };
 
       const player = playerRef.current = videojs(videoRef.current, options, () => {
-        console.log('Player is ready');
+        console.log('Player initialized');
       });
 
-      // Gestion des événements
+      // Gestion des événements améliorée
       player.on('loadedmetadata', () => {
         console.log('Metadata loaded');
         setStreamStatus('ready');
@@ -49,16 +54,23 @@ const VideoPlayer = () => {
         console.error('Player error:', error);
         setStreamStatus('error');
         
-        if (error.code === 2 || error.code === 4) {
+        if ([2, 4, 5].includes(error.code)) { // Codes d'erreur réseau/format
           setTimeout(() => {
-            player.src({ src: streamUrl, type: 'application/x-mpegURL' });
+            player.src({
+              src: `${streamUrl}?t=${Date.now()}`, // Cache busting
+              type: 'application/x-mpegURL'
+            });
             player.load();
-          }, 5000);
+          }, 3000);
         }
       });
 
       player.on('playing', () => {
         setStreamStatus('ready');
+      });
+
+      player.on('waiting', () => {
+        setStreamStatus('loading');
       });
     };
 
@@ -76,20 +88,25 @@ const VideoPlayer = () => {
   return (
     <div className="video-container">
       {streamStatus === 'error' && (
-        <div className="stream-message">
-          Le stream sera disponible prochainement
+        <div className="stream-message error">
+          Le stream n'est pas disponible actuellement. Reconnexion en cours...
+        </div>
+      )}
+      
+      {streamStatus === 'loading' && (
+        <div className="stream-message loading">
+          Chargement du stream...
         </div>
       )}
       
       <div data-vjs-player>
         <video
           ref={videoRef}
-          className="video-js vjs-default-skin fixed-size-video"
+          className="video-js vjs-default-skin vjs-fluid"
           crossOrigin="anonymous"
-          playsInline={true}
+          playsInline
           webkit-playsinline="true"
           x-webkit-airplay="allow"
-          data-setup='{}'
         />
       </div>
     </div>
