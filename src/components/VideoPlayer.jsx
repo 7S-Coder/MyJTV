@@ -8,7 +8,7 @@ const VideoPlayer = () => {
   const videoRef = useRef(null);
   const playerRef = useRef(null);
   const [streamStatus, setStreamStatus] = useState('loading');
-  const streamUrl = 'https://stream.dontono.fr/hls/test.m3u8';
+  const streamUrl = 'https://stream.dontono.fr/hls/test/test.m3u8';
 
   useEffect(() => {
     const initializePlayer = () => {
