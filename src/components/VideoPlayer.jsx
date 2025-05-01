@@ -26,7 +26,15 @@ const VideoPlayer = () => {
             withCredentials: false,
             enableLowInitialPlaylist: true,
             backBufferLength: 60,
-            experimentalLLHLS: false // Désactivé si problème de compatibilité
+            experimentalLLHLS: false,
+            // Ajout des options pour gérer les erreurs
+            handlePartialData: true,
+            limitRenditionByPlayerDimensions: false,
+            smoothQualityChange: true,
+            bandwidth: {
+              // Augmentation de la bande passante par défaut
+              default: 2000000
+            }
           },
           nativeAudioTracks: false,
           nativeVideoTracks: false
@@ -36,7 +44,7 @@ const VideoPlayer = () => {
           type: 'application/x-mpegURL',
           withCredentials: false
         }],
-        techOrder: ['html5'] // Force l'utilisation du lecteur HTML5
+        techOrder: ['html5']
       };
 
       const player = playerRef.current = videojs(videoRef.current, options, () => {
@@ -54,10 +62,10 @@ const VideoPlayer = () => {
         console.error('Player error:', error);
         setStreamStatus('error');
         
-        if ([2, 4, 5].includes(error.code)) { // Codes d'erreur réseau/format
+        if ([2, 4, 5].includes(error.code)) {
           setTimeout(() => {
             player.src({
-              src: `${streamUrl}?t=${Date.now()}`, // Cache busting
+              src: `${streamUrl}?t=${Date.now()}`,
               type: 'application/x-mpegURL'
             });
             player.load();
@@ -70,7 +78,16 @@ const VideoPlayer = () => {
       });
 
       player.on('waiting', () => {
-        setStreamStatus('loading');
+        setStreamStatus('buffering');
+      });
+
+      // Nouveau gestionnaire pour les problèmes de segment
+      player.on('segmentmetadata', () => {
+        console.log('Segment metadata loaded');
+      });
+
+      player.on('retryplaylist', () => {
+        console.log('Retrying playlist');
       });
     };
 
@@ -96,6 +113,12 @@ const VideoPlayer = () => {
       {streamStatus === 'loading' && (
         <div className="stream-message loading">
           Chargement du stream...
+        </div>
+      )}
+      
+      {streamStatus === 'buffering' && (
+        <div className="stream-message loading">
+          Mise en mémoire tampon...
         </div>
       )}
       
