@@ -30,12 +30,17 @@ Footer {
         margin-right: 5px;
     }
 
+    a {
+        text-decoration: underline;
+    }
+
     a:hover {
         color: vars.$logo;
     }
 
     p {
         font-weight: 100;
+
     }
 
     

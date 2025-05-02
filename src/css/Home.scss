@@ -3,14 +3,9 @@
 .box {
     display: flex;
     flex-direction: row; /* Arrange les enfants côte à côte */
-//     justify-content: space-between; /* Espace entre les enfants */
     align-items: stretch; /* Étire les enfants pour qu'ils aient la même hauteur */
-//     width: 100%; /* Prend toute la largeur disponible */
     max-width: 1200px; /* Limite la largeur maximale de la box */
-//     margin: 0 auto; /* Centre la box horizontalement */
     height: 60vh; /* Ajuste la hauteur pour ne pas dépasser la fenêtre visible */
-//     overflow: hidden; /* Empêche tout débordement */
-
 
     .video-container {
         flex: 2; /* Prend 2 parts de l'espace disponible */
@@ -21,7 +16,6 @@
         height: 100%; /* Prend toute la hauteur de la box */
         background-color: $primary--dark;
         color: $white; /* Change la couleur du texte à blanc */
-        
     }
 
     .chat-container {
@@ -30,12 +24,7 @@
         flex-direction: column; /* Empile les enfants verticalement */
         height: 100%; /* Prend toute la hauteur de la box */
         max-width: 400px; /* Limite la largeur à 400px */
-//         overflow-y: auto; /* Ajoute un défilement vertical si nécessaire */
         background-color: #1e1e1e; /* Ajoute un fond pour le chat */
-
-//         input, textarea {
-//             font-size: 16px; /* Empêche le zoom automatique sur les champs d'entrée */
-        // }
     }
 }
 
@@ -50,13 +39,16 @@
         .video-container {
             flex: none; /* Désactive le partage d'espace */
             width: 100%; /* Prend toute la largeur */
-            height: 60%; /* Limite la hauteur à 60% de l'écran */
+            height: 40%; /* Réduit la hauteur à 40% de l'écran */
         }
 
         .chat-container {
             flex: none; /* Désactive le partage d'espace */
+            display: flex; /* Active le flexbox */
+            flex-grow: 1; /* Permet au chat de prendre l'espace restant */
+            width: 100%; /* Prend toute la largeur */
+            height: 60%; /* Augmente la hauteur à 60% de l'écran */
             max-width: 100%; /* Enlève la limite de largeur */
-            height: 40%; /* Limite la hauteur à 40% de l'écran */
         }
     }
 
@@ -69,3 +61,4 @@
         display: none !important; /* Cache le footer */
     }
 }
+
