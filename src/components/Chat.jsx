@@ -11,12 +11,6 @@ const Chat = () => {
   const [userColors, setUserColors] = useState({});
   const messagesEndRef = useRef(null); // Reference to the end of the messages container
 
-  const generateRandomColor = (pseudo) => {
-    const colors = ['#FF4500', '#32CD32', '#1E90FF', '#FFD700', '#FF69B4', '#8A2BE2', '#00CED1'];
-    const pseudoHash = pseudo.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-    return colors[pseudoHash % colors.length];
-  };
-
   useEffect(() => {
     // Récupérer les messages en temps réel depuis Firestore
     const q = query(collection(db, 'messages'), orderBy('timestamp', 'asc'));
@@ -45,14 +39,18 @@ const Chat = () => {
   }, []);
 
   useEffect(() => {
-    // Assign colors to users based on their pseudo
-    const assignColors = () => {
+    // Assign colors to users based on their Firestore data
+    const assignColors = async () => {
       const newColors = {};
-      messages.forEach((message) => {
+      for (const message of messages) {
         if (!newColors[message.pseudo] && !userColors[message.pseudo]) {
-          newColors[message.pseudo] = generateRandomColor(message.pseudo);
+          const userData = await fetchUserData(message.uid); // Récupère les données utilisateur
+          if (userData && userData.color) {
+            newColors[message.pseudo] = userData.color; // Utilise la couleur stockée
+            console.log(`Couleur assignée à ${message.pseudo}: ${userData.color}`); // Log pour vérifier
+          }
         }
-      });
+      }
       setUserColors((prevColors) => ({ ...prevColors, ...newColors }));
     };
 
@@ -101,9 +99,9 @@ const Chat = () => {
             </span>
             <strong
               className="user-color"
-              style={{ color: userColors[message.pseudo] || '#fff' }}
+              style={{ color: userColors[message.pseudo] || '#fff' }} // Applique la couleur récupérée
             >
-              <strong>{message.pseudo || 'User'}</strong>:
+              {message.pseudo || 'User'}:
             </strong>{' '}
             {message.text}
           </div>

@@ -1,11 +1,14 @@
 @use './_variables' as *; // Importe toutes les variables pour les rendre accessibles
 
+
+
 .box {
     display: flex;
     flex-direction: row; /* Arrange les enfants côte à côte */
     align-items: stretch; /* Étire les enfants pour qu'ils aient la même hauteur */
     max-width: 1200px; /* Limite la largeur maximale de la box */
     height: 60vh; /* Ajuste la hauteur pour ne pas dépasser la fenêtre visible */
+    margin: 0 auto; /* Centre la box horizontalement */
 
     .video-container {
         flex: 2; /* Prend 2 parts de l'espace disponible */

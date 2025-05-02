@@ -22,6 +22,11 @@ const Auth = () => {
     return emailRegex.test(email);
   };
 
+  const generateRandomColor = () => {
+    const colors = ['#FF4500', '#32CD32', '#1E90FF', '#FFD700', '#FF69B4', '#8A2BE2', '#00CED1'];
+    return colors[Math.floor(Math.random() * colors.length)];
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrorMessage('');
@@ -43,10 +48,12 @@ const Auth = () => {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
 
-        // Stocke le pseudo dans Firestore
+        // Stocke le pseudo et la couleur dans Firestore
+        const userColor = generateRandomColor();
         await setDoc(doc(db, 'users', user.uid), {
           pseudo,
           email,
+          color: userColor, // Ajout de la couleur
           createdAt: new Date()
         });
 

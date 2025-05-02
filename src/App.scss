@@ -14,7 +14,11 @@ body {
   height: 100vh; /* prendre la hauteur de la fenêtre */
   margin: 0; /* supprimer les marges par défaut */
   background-color: vars.$primary; /* couleur de fond sombre */
-  font: vars.$font; /* police de caractères */
+}
+
+// Ajout de la règle globale pour la police
+* {
+  font-family: vars.$font;
 }
 
 main {
