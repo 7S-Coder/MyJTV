@@ -43,6 +43,10 @@ const Chat = () => {
     const assignColors = async () => {
       const newColors = {};
       for (const message of messages) {
+        if (!message.uid) {
+          console.warn(`Message sans UID détecté :`, message);
+          continue;
+        }
         if (!newColors[message.pseudo] && !userColors[message.pseudo]) {
           const userData = await fetchUserData(message.uid); // Récupère les données utilisateur
           if (userData && userData.color) {

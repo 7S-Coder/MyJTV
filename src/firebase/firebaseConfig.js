@@ -36,12 +36,16 @@ export const signUpWithEmailAndPseudo = async (email, password, pseudo) => {
 // Fonction pour récupérer les données utilisateur depuis Firestore
 export const fetchUserData = async (uid) => {
     try {
+        if (!uid) {
+            console.error('UID non défini. Impossible de récupérer les données utilisateur.');
+            return null;
+        }
         const userDoc = await getDoc(doc(db, 'users', uid));
         if (userDoc.exists()) {
-            console.log(`Données utilisateur pour ${uid}:`, userDoc.data()); // Log pour vérifier
+            console.log(`Données utilisateur pour ${uid}:`, userDoc.data());
             return userDoc.data();
         } else {
-            console.error('Aucun document trouvé pour cet utilisateur.');
+            console.error(`Aucun document trouvé pour l'utilisateur avec UID: ${uid}`);
             return null;
         }
     } catch (error) {
