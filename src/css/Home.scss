@@ -1,40 +1,41 @@
-@use './_variables';
+@use './_variables' as *; // Importe toutes les variables pour les rendre accessibles
 
 .box {
     display: flex;
-    flex-direction: row; /* Arrange children side by side */
-    justify-content: center; /* Center children horizontally */
-    align-items: center; /* Center children vertically */
-    height: 70vh; /* Adjust height dynamically */
-    max-width: 100%; /* Limit width */
-    border: 1px solid #2a2a2e; /* Optional: Add a border for better visibility */
-    flex-wrap: nowrap; /* Prevent wrapping of children */
-    margin: auto; /* Center the box horizontally and vertically */
-    position: relative; /* Ensure proper centering within the parent */
+    flex-direction: row; /* Arrange les enfants côte à côte */
+//     justify-content: space-between; /* Espace entre les enfants */
+    align-items: stretch; /* Étire les enfants pour qu'ils aient la même hauteur */
+//     width: 100%; /* Prend toute la largeur disponible */
+    max-width: 1200px; /* Limite la largeur maximale de la box */
+//     margin: 0 auto; /* Centre la box horizontalement */
+    height: 60vh; /* Ajuste la hauteur pour ne pas dépasser la fenêtre visible */
+//     overflow: hidden; /* Empêche tout débordement */
 
-    .video-container, .stream-message {
-        flex: 1; /* Permet de prendre tout l'espace disponible */
-        display: flex; /* Active le flexbox pour ses enfants */
-        align-items: center; /* Centre verticalement */
+
+    .video-container {
+        flex: 2; /* Prend 2 parts de l'espace disponible */
+        display: flex; /* Active le flexbox pour centrer la vidéo */
         justify-content: center; /* Centre horizontalement */
-        aspect-ratio: 16 / 9; /* Maintient un ratio 16:9 */
-        max-width: 100%; /* Empêche de dépasser la largeur du parent */
-        max-height: 100%; /* Empêche de dépasser la hauteur du parent */
-        width: auto; /* Ajuste la largeur automatiquement */
-        height: 100%; /* Ajuste la hauteur automatiquement */
+        align-items: center; /* Centre verticalement */
+        width: auto; /* Prend toute la largeur */
+        height: 100%; /* Prend toute la hauteur de la box */
+        background-color: $primary--dark;
+        color: $white; /* Change la couleur du texte à blanc */
+        
     }
 
     .chat-container {
-        flex: 1; /* Take the remaining space */
-        height: 100%; /* Ensure it occupies the full height of the parent */
-        max-width: 400px; /* Limit width to 400px */
-        overflow: hidden; /* Prevent content overflow */
-        display: flex; /* Enable flexbox for its children */
-        flex-direction: column; /* Stack children vertically */
+        display: flex; /* Active le flexbox pour ses enfants */
+        flex: 1; /* Prend 1 part de l'espace disponible */
+        flex-direction: column; /* Empile les enfants verticalement */
+        height: 100%; /* Prend toute la hauteur de la box */
+        max-width: 400px; /* Limite la largeur à 400px */
+//         overflow-y: auto; /* Ajoute un défilement vertical si nécessaire */
+        background-color: #1e1e1e; /* Ajoute un fond pour le chat */
 
-        input, textarea {
-            font-size: 16px; /* Empêche le zoom automatique sur les champs d'entrée */
-        }
+//         input, textarea {
+//             font-size: 16px; /* Empêche le zoom automatique sur les champs d'entrée */
+        // }
     }
 }
 
@@ -43,24 +44,19 @@
         margin: 0; /* Remove margin for smaller screens */
     }
     .box {
-        height: auto; /* Retire la hauteur fixe */
         flex-direction: column; /* Place les enfants en colonne */
-        justify-content: flex-start; /* Aligne les enfants en haut */
-        height: calc(100vh - 60px); /* Ajuste la hauteur dynamique */
+        height: calc(100vh - 60px); /* Ajuste la hauteur pour ne pas dépasser la fenêtre visible */
 
-        .video-container, .stream-message {
-            width: 100%; /* Prend toute la largeur */
-            height: auto; /* Ajuste la hauteur automatiquement */
-            max-height: 40vh; /* Limite la hauteur à 50% de l'écran */
+        .video-container {
             flex: none; /* Désactive le partage d'espace */
+            width: 100%; /* Prend toute la largeur */
+            height: 60%; /* Limite la hauteur à 60% de l'écran */
         }
 
         .chat-container {
-            width: 100% !important; /* Force la largeur à 100% */
-            max-width: 100%; /* Empêche toute limitation de largeur */
-            overflow-y: auto; /* Ajoute un défilement vertical si nécessaire */
-
-            
+            flex: none; /* Désactive le partage d'espace */
+            max-width: 100%; /* Enlève la limite de largeur */
+            height: 40%; /* Limite la hauteur à 40% de l'écran */
         }
     }
 

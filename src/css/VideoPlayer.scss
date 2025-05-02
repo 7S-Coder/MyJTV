@@ -1,36 +1,6 @@
-div {
-    p {
-        font-weight: 700;
-        font-size: larger;
-    }
-}
-
-.fixed-size-video {
-  width: 100%; /* Take up full width of the container */
-  height: 100%; /* Take up full height of the container */
-  object-fit: cover; /* Ensure the video scales properly */
-}
-
-.video-container {
-  position: relative;
-  height: 100%; /* Ensure the container fills the height */
-  width: 100%; /* Ensure the container fills the width */
-  background-color: black; /* Add a background color for the video area */
-  aspect-ratio: 16 / 9; /* Maintain 16:9 aspect ratio */
-  max-height: 100%; /* Prevent overflow */
-}
-
-.stream-message {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%; /* Fill the video container */
-  color: white;
-  font-size: 1.5rem;
-  background-color: black; /* Match the video container background */
-  text-align: center;
-  aspect-ratio: 16 / 9; /* Maintain 16:9 aspect ratio */
-  width: 100%; /* Full width */
-  max-height: 100%; /* Prevent overflow */
-}
+// .fixed-size-video {
+//     width: 100%; /* Ajuste automatiquement la largeur au conteneur */
+//     height: 100%; /* Ajuste automatiquement la hauteur au conteneur */
+//     object-fit: contain; /* Maintient les proportions de la vidéo sans débordement */
+// }
 
