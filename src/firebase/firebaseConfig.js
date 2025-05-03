@@ -1,10 +1,10 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
 import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore';
 import Cookies from 'js-cookie';
 
 const firebaseConfig = {
-    apiKey: import.meta.env.VITE_FIREBASE_API_KEY, // Ensure this key is correctly set in your environment variables
+    apiKey: import.meta.env.VITE_FIREBASE_API_KEY, 
     authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
     projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
     storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
@@ -17,7 +17,7 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 
-// Fonction pour inscrire un utilisateur avec un pseudo
+// Fonction pour inscrire un utilisateur avec un pseudo et envoyer un email de vérification
 export const signUpWithEmailAndPseudo = async (email, password, pseudo) => {
     try {
         const { user } = await createUserWithEmailAndPassword(auth, email, password);
@@ -27,6 +27,9 @@ export const signUpWithEmailAndPseudo = async (email, password, pseudo) => {
             pseudo: pseudo,
             createdAt: new Date(),
         });
+        // Envoyer un email de vérification
+        await sendEmailVerification(user);
+        console.log('Email de vérification envoyé.');
     } catch (error) {
         console.error('Erreur lors de la création de l\'utilisateur :', error);
     }
