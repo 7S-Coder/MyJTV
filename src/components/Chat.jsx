@@ -13,7 +13,7 @@ const Chat = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const messagesEndRef = useRef(null);
 
-  const forbiddenWords = ['hitler', ''];
+  const forbiddenWords = ['hitler'];
 
   const isModerator = (user) => {
     return user?.role === 'moderator';
