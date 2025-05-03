@@ -1,21 +1,16 @@
 import React, { useRef, useState, useEffect } from 'react';
+import videojs from 'video.js'; // Importez la bibliothèque video.js
+import 'video.js/dist/video-js.css'; // Importez les styles de video.js
 
 const VideoPlayer = () => {
   const videoRef = useRef(null);
   const playerRef = useRef(null);
   const [streamStatus, setStreamStatus] = useState('loading');
-  const streamUrl = import.meta.env.VITE_STREAM_URL;
-  const streamEnabled = import.meta.env.VITE_STREAM_ENABLED === 'true'; // Nouvelle variable
+  const streamUrl = import.meta.env.VITE_STREAM_URL; // URL du flux depuis le .env
   const maxAttempts = 2;
   const [attempts, setAttempts] = useState(0);
 
   useEffect(() => {
-    if (!streamEnabled) {
-      console.warn('Le flux est désactivé. Aucune vérification ne sera effectuée.');
-      setStreamStatus('not_available');
-      return;
-    }
-
     const checkStreamAvailability = async () => {
       if (attempts >= maxAttempts) {
         console.warn('Nombre maximum de tentatives atteint. Arrêt des vérifications.');
@@ -24,8 +19,10 @@ const VideoPlayer = () => {
       }
 
       try {
-        const response = await fetch(streamUrl, { method: 'HEAD' });
+        console.log('Vérification de la disponibilité du flux...');
+        const response = await fetch(streamUrl, { method: 'HEAD' }); // Vérifie si le flux est accessible
         if (response.ok) {
+          console.log('Le flux est disponible. Initialisation du lecteur...');
           initializePlayer();
         } else {
           console.warn('Le flux n\'est pas disponible. Nouvelle tentative...');
@@ -33,7 +30,7 @@ const VideoPlayer = () => {
           setStreamStatus('not_available');
         }
       } catch (error) {
-        console.warn('Erreur lors de la vérification du flux. Nouvelle tentative...');
+        console.warn('Erreur lors de la vérification du flux. Nouvelle tentative...', error);
         setAttempts((prev) => prev + 1);
         setStreamStatus('not_available');
       }
@@ -62,7 +59,7 @@ const VideoPlayer = () => {
       };
 
       const player = (playerRef.current = videojs(videoRef.current, options, () => {
-        console.log('Player initialized');
+        console.log('Lecteur vidéo initialisé.');
       }));
 
       player.on('loadedmetadata', () => {
@@ -91,7 +88,7 @@ const VideoPlayer = () => {
         playerRef.current = null;
       }
     };
-  }, [streamUrl, attempts, streamEnabled]);
+  }, [streamUrl, attempts]);
 
   return (
     <div className="video-container">
