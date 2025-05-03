@@ -1,18 +1,21 @@
-import React, { useEffect, useRef, useState } from 'react';
-import videojs from 'video.js';
-import 'video.js/dist/video-js.css';
-import '@videojs/http-streaming';
-import '../css/VideoPlayer.scss';
+import React, { useRef, useState, useEffect } from 'react';
 
 const VideoPlayer = () => {
   const videoRef = useRef(null);
   const playerRef = useRef(null);
   const [streamStatus, setStreamStatus] = useState('loading');
   const streamUrl = import.meta.env.VITE_STREAM_URL;
-  const maxAttempts = 2; // Nombre maximum de tentatives
+  const streamEnabled = import.meta.env.VITE_STREAM_ENABLED === 'true'; // Nouvelle variable
+  const maxAttempts = 2;
   const [attempts, setAttempts] = useState(0);
 
   useEffect(() => {
+    if (!streamEnabled) {
+      console.warn('Le flux est désactivé. Aucune vérification ne sera effectuée.');
+      setStreamStatus('not_available');
+      return;
+    }
+
     const checkStreamAvailability = async () => {
       if (attempts >= maxAttempts) {
         console.warn('Nombre maximum de tentatives atteint. Arrêt des vérifications.');
@@ -88,7 +91,7 @@ const VideoPlayer = () => {
         playerRef.current = null;
       }
     };
-  }, [streamUrl, attempts]);
+  }, [streamUrl, attempts, streamEnabled]);
 
   return (
     <div className="video-container">
