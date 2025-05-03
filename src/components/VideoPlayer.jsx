@@ -11,76 +11,66 @@ const VideoPlayer = () => {
   const [attempts, setAttempts] = useState(0);
 
   useEffect(() => {
-    const checkStreamAvailability = async () => {
+    const checkAndInitializePlayer = async () => {
       if (attempts >= maxAttempts) {
-        console.warn('Nombre maximum de tentatives atteint. Arrêt des vérifications.');
         setStreamStatus('not_available');
         return;
       }
 
       try {
-        console.log('Vérification de la disponibilité du flux...');
         const response = await fetch(streamUrl, { method: 'HEAD' }); // Vérifie si le flux est accessible
         if (response.ok) {
-          console.log('Le flux est disponible. Initialisation du lecteur...');
-          initializePlayer();
+          setStreamStatus('ready');
+
+          if (!videoRef.current || playerRef.current) return;
+
+          const options = {
+            fluid: false,
+            liveui: true,
+            controls: true,
+            autoplay: true,
+            preload: 'auto',
+            html5: {
+              vhs: {
+                overrideNative: true,
+              },
+            },
+            sources: [
+              {
+                src: streamUrl,
+                type: 'application/x-mpegURL',
+              },
+            ],
+          };
+
+          const player = (playerRef.current = videojs(videoRef.current, options));
+
+          player.on('loadedmetadata', () => {
+            setStreamStatus('ready');
+          });
+
+          player.on('error', () => {
+            setStreamStatus('not_available');
+          });
+
+          player.on('playing', () => {
+            setStreamStatus('ready');
+          });
+
+          player.on('waiting', () => {
+            setStreamStatus('buffering');
+          });
         } else {
-          console.warn('Le flux n\'est pas disponible. Nouvelle tentative...');
           setAttempts((prev) => prev + 1);
           setStreamStatus('not_available');
         }
       } catch (error) {
-        console.warn('Erreur lors de la vérification du flux. Nouvelle tentative...', error);
         setAttempts((prev) => prev + 1);
         setStreamStatus('not_available');
       }
     };
 
-    const initializePlayer = () => {
-      if (!videoRef.current || playerRef.current) return;
-
-      const options = {
-        fluid: false,
-        liveui: true,
-        controls: true,
-        autoplay: true,
-        preload: 'auto',
-        html5: {
-          vhs: {
-            overrideNative: true,
-          },
-        },
-        sources: [
-          {
-            src: streamUrl,
-            type: 'application/x-mpegURL',
-          },
-        ],
-      };
-
-      const player = (playerRef.current = videojs(videoRef.current, options, () => {
-        console.log('Lecteur vidéo initialisé.');
-      }));
-
-      player.on('loadedmetadata', () => {
-        setStreamStatus('ready');
-      });
-
-      player.on('error', () => {
-        console.warn('Erreur lors de la lecture du flux.');
-        setStreamStatus('not_available');
-      });
-
-      player.on('playing', () => {
-        setStreamStatus('ready');
-      });
-
-      player.on('waiting', () => {
-        setStreamStatus('buffering');
-      });
-    };
-
-    checkStreamAvailability();
+    checkAndInitializePlayer();
 
     return () => {
       if (playerRef.current) {
