@@ -128,11 +128,11 @@ const Auth = () => {
               required
             />
           </div>
-          {/* {isLogin && (
+          {isLogin && (
             <div className="forgot-password">
               <a href="/forgot-password">Mot de passe oublié ?</a>
             </div>
-          )} */}
+          )}
           <div className="form-actions">
             <button type="submit" className="primary-button">
               {isLogin ? 'Se connecter' : "S'inscrire"}
