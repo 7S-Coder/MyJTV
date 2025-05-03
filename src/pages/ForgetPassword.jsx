@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { sendPasswordResetEmail } from 'firebase/auth';
 import { auth } from '../firebase/firebaseConfig';
 
-const ForgetPassword = () => { // Renommé pour correspondre au fichier
+const ForgetPassword = () => {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
@@ -11,10 +11,6 @@ const ForgetPassword = () => { // Renommé pour correspondre au fichier
     e.preventDefault();
     setMessage('');
     setError('');
-    if (!auth) {
-      setError("Erreur de configuration Firebase.");
-      return;
-    }
     try {
       await sendPasswordResetEmail(auth, email);
       setMessage('Un email de réinitialisation a été envoyé.');
@@ -47,4 +43,4 @@ const ForgetPassword = () => { // Renommé pour correspondre au fichier
   );
 };
 
-export default ForgetPassword; // Renommé pour correspondre au fichier
+export default ForgetPassword;

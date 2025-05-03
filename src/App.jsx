@@ -9,18 +9,21 @@ import { StreamProvider } from './context/StreamContext.jsx';
 import { AuthProvider } from './context/AuthContext.jsx';
 import Auth from './pages/Auth.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
-import Chat from './pages/Chat.jsx'; // Import the Chat page
-import ForgetPassword from './pages/ForgetPassword.jsx'; // Assurez-vous que le nom correspond
+import Chat from './pages/Chat.jsx';
+import ForgetPassword from './pages/ForgetPassword.jsx';
 
 function App() {
     return (
-        <AuthProvider>
-            <StreamProvider>
-                <Router>
+        <Router>
+            <AuthProvider>
+                <StreamProvider>
                     <Navbar />
                     <Routes>
-                        <Route path="/login" element={<Auth />} /> {/* Page de connexion et inscription */}
-                        <Route path="/forgot-password" element={<ForgetPassword />} /> {/* Route correcte */}
+                        {/* Route publique pour mot de passe oublié */}
+                        <Route path="/forgot-password" element={<ForgetPassword />} />
+                        
+                        {/* Routes protégées et autres */}
+                        <Route path="/login" element={<Auth />} />
                         <Route
                             path="/"
                             element={
@@ -40,9 +43,9 @@ function App() {
                         <Route path="*" element={<Error />} />
                     </Routes>
                     <Footer />
-                </Router>
-            </StreamProvider>
-        </AuthProvider>
+                </StreamProvider>
+            </AuthProvider>
+        </Router>
     );
 }
 

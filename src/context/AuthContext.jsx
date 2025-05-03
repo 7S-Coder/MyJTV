@@ -8,6 +8,9 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // Liste des routes publiques
+  const publicRoutes = ['/forgot-password', '/login'];
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
@@ -33,9 +36,13 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // Vérifiez si la route actuelle est publique
+  const isPublicRoute = publicRoutes.includes(window.location.pathname);
+
   return (
     <AuthContext.Provider value={{ user, loading, logout, login }}>
-      {!loading && children}
+      {/* Affiche les enfants immédiatement pour les routes publiques */}
+      {isPublicRoute ? children : !loading && children}
     </AuthContext.Provider>
   );
 };
