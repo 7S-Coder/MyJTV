@@ -68,3 +68,37 @@
 }
 
 
+.modal { 
+  background-color: #1f1f23; /* Match primary site background */
+  border: 1px solid #2a2a2e; /* Subtle border for contrast */
+  color: #fff; /* Match text color */
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Slight shadow for depth */
+}
+
+.modal-content h3 {
+  color: #fff; /* Match site text color */
+}
+
+.modal-content p {
+  color: #a3a3a3; /* Match placeholder text color */
+}
+
+.modal-content button:first-of-type {
+  background-color: #e74c3c; /* Highlight for delete button */
+  color: #fff;
+}
+
+.modal-content button:first-of-type:hover {
+  background-color: #c0392b; /* Darker hover effect */
+}
+
+.modal-content button:last-of-type {
+  background-color: #2a2a2e; /* Match input background */
+  color: #fff;
+}
+
+.modal-content button:last-of-type:hover {
+  background-color: #3a3a3e; /* Slightly lighter hover effect */
+}

@@ -17,22 +17,20 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 
-// Fonction pour inscrire un utilisateur avec un pseudo et envoyer un email de vérification
-export const signUpWithEmailAndPseudo = async (email, password, pseudo) => {
-    try {
-        const { user } = await createUserWithEmailAndPassword(auth, email, password);
-        // Enregistrer le pseudo dans Firestore
-        await setDoc(doc(db, 'users', user.uid), {
-            email: user.email,
-            pseudo: pseudo,
-            createdAt: new Date(),
-        });
-        // Envoyer un email de vérification
-        await sendEmailVerification(user);
-        console.log('Email de vérification envoyé.');
-    } catch (error) {
-        console.error('Erreur lors de la création de l\'utilisateur :', error);
+// Fonction pour gérer les cookies utilisateur
+export const setUserCookies = (user) => {
+    if (user) {
+        console.log('Stockage des données utilisateur dans les cookies :', user);
+        Cookies.set('user', JSON.stringify(user), { expires: 7 });
+    } else {
+        Cookies.remove('user');
     }
+};
+
+// Fonction pour récupérer les données utilisateur depuis les cookies
+export const getUserFromCookies = () => {
+    const userCookie = Cookies.get('user');
+    return userCookie ? JSON.parse(userCookie) : null;
 };
 
 // Fonction pour récupérer les données utilisateur depuis Firestore
@@ -55,22 +53,104 @@ export const fetchUserData = async (uid) => {
     }
 };
 
-// Fonction pour gérer les cookies utilisateur (ajout de la couleur)
-export const setUserCookies = (user) => {
-    if (user) {
-        Cookies.set('user', JSON.stringify({
-            email: user.email,
-            uid: user.uid,
-            pseudo: user.pseudo,
-            color: user.color, // Ajout de la couleur
-        }), { expires: 7 });
-    } else {
-        Cookies.remove('user');
+// Fonction centralisée pour gérer la récupération et le stockage des données utilisateur
+export const handleUserAfterAuth = async (user) => {
+    try {
+        const userRef = doc(db, 'users', user.uid);
+        const userDoc = await getDoc(userRef);
+
+        if (userDoc.exists()) {
+            const userData = userDoc.data();
+            console.log('Données utilisateur récupérées depuis Firestore :', userData);
+
+            const userWithRole = {
+                email: user.email,
+                uid: user.uid,
+                pseudo: userData.pseudo || 'User',
+                color: userData.color || '#fff',
+                role: userData.role || 'user',
+            };
+
+            setUserCookies(userWithRole); // Stocker l'utilisateur avec le rôle dans les cookies
+            return userWithRole;
+        } else {
+            console.error('Aucun document trouvé pour cet utilisateur dans Firestore.');
+            return null;
+        }
+    } catch (error) {
+        console.error('Erreur lors de la gestion de l\'utilisateur après authentification :', error);
+        return null;
     }
 };
 
-// Fonction pour récupérer les données utilisateur depuis les cookies
-export const getUserFromCookies = () => {
-    const userCookie = Cookies.get('user');
-    return userCookie ? JSON.parse(userCookie) : null;
+// Fonction pour inscrire un utilisateur avec un pseudo et gérer ses données
+export const signUpWithEmailAndPseudo = async (email, password, pseudo) => {
+    try {
+        const { user } = await createUserWithEmailAndPassword(auth, email, password);
+        const userColor = generateRandomColor();
+
+        // Enregistrer les données utilisateur dans Firestore
+        await setDoc(doc(db, 'users', user.uid), {
+            email: user.email,
+            pseudo,
+            color: userColor,
+            role: 'user',
+            createdAt: new Date(),
+        });
+
+        // Gérer l'utilisateur après l'inscription
+        return await handleUserAfterAuth(user);
+    } catch (error) {
+        console.error('Erreur lors de la création de l\'utilisateur :', error);
+        throw error;
+    }
+};
+
+// Fonction pour connecter un utilisateur et gérer ses données
+export const signInWithEmailAndPasswordAndFetchRole = async (email, password) => {
+    try {
+        const { user } = await signInWithEmailAndPassword(auth, email, password);
+        console.log('Utilisateur connecté :', user);
+
+        // Gérer l'utilisateur après la connexion
+        return await handleUserAfterAuth(user);
+    } catch (error) {
+        console.error('Erreur lors de la connexion :', error);
+        throw error;
+    }
+};
+
+// Fonction utilitaire pour générer une couleur aléatoire
+export const generateRandomColor = () => {
+    const colors = ['#FF4500', '#32CD32', '#1E90FF', '#FFD700', '#FF69B4', '#8A2BE2', '#00CED1'];
+    return colors[Math.floor(Math.random() * colors.length)];
+};
+
+export const setUserInCookies = async (user) => {
+    try {
+        const userRef = doc(db, 'users', user.uid);
+        const userDoc = await getDoc(userRef);
+
+        if (userDoc.exists()) {
+            const userData = userDoc.data();
+            const userWithRole = {
+                email: user.email,
+                uid: user.uid,
+                pseudo: userData.pseudo || 'User',
+                color: userData.color || '#fff',
+                role: userData.role || 'user',
+            };
+
+            Cookies.set('user', JSON.stringify(userWithRole), { expires: 7 });
+            console.log('Utilisateur stocké dans les cookies avec rôle :', userWithRole);
+
+            return userWithRole;
+        } else {
+            console.error('Aucun document trouvé pour cet utilisateur dans Firestore.');
+            return null;
+        }
+    } catch (error) {
+        console.error('Erreur lors de la gestion de l\'utilisateur après authentification :', error);
+        return null;
+    }
 };

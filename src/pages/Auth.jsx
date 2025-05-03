@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { auth } from '../firebase/firebaseConfig';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import Cookies from 'js-cookie';
-import { setUserCookies } from '../firebase/firebaseConfig';
+import { setUserCookies, setUserInCookies, handleUserAfterAuth } from '../firebase/firebaseConfig';
 import { useNavigate } from 'react-router-dom';
 import '../css/Auth.scss';
 import { doc, setDoc } from 'firebase/firestore';
@@ -41,24 +41,33 @@ const Auth = () => {
     }
 
     try {
+      let user;
       if (isLogin) {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        setUserCookies(userCredential.user);
+        user = userCredential.user;
+
+        // Mettez à jour les cookies uniquement si nécessaire
+        await setUserInCookies(user);
       } else {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        const user = userCredential.user;
+        user = userCredential.user;
 
-        // Stocke le pseudo et la couleur dans Firestore
         const userColor = generateRandomColor();
-        await setDoc(doc(db, 'users', user.uid), {
+        const userData = {
           pseudo,
           email,
-          color: userColor, // Ajout de la couleur
-          createdAt: new Date()
-        });
+          color: userColor,
+          role: 'user', // Rôle par défaut
+          createdAt: new Date(),
+        };
 
-        setUserCookies(user);
+        await setDoc(doc(db, 'users', user.uid), userData);
+
+        // Parsez immédiatement les cookies avec les données utilisateur
+        Cookies.set('user', JSON.stringify({ ...user, ...userData }), { expires: 7 });
+        console.log('Utilisateur inscrit et stocké dans les cookies :', { ...user, ...userData });
       }
+
       navigate('/');
     } catch (error) {
       if (error.code === 'auth/weak-password') {
@@ -128,11 +137,6 @@ const Auth = () => {
               required
             />
           </div>
-          {/* {isLogin && (
-            <div className="forgot-password">
-              <a href="/forgot-password">Mot de passe oublié ?</a>
-            </div>
-          )} */}
           <div className="form-actions">
             <button type="submit" className="primary-button">
               {isLogin ? 'Se connecter' : "S'inscrire"}

@@ -20,6 +20,7 @@ const Navbar = () => {
 
         const unsubscribe = onAuthStateChanged(getAuth(), async (currentUser) => {
             if (currentUser) {
+                console.log('Utilisateur connecté :', currentUser.uid);
                 const userData = await fetchUserData(currentUser.uid); // Récupère les données utilisateur
                 const userWithColor = {
                     email: currentUser.email,
@@ -31,6 +32,7 @@ const Navbar = () => {
                 setUserColor(userWithColor.color);
                 setUserCookies(userWithColor); // Stocke les données utilisateur dans les cookies
             } else {
+                console.log('Aucun utilisateur connecté.');
                 setUser(null);
                 setUserColor('#fff'); // Réinitialise la couleur par défaut
                 Cookies.remove('user');
