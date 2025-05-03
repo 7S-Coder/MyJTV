@@ -6,7 +6,7 @@ const VideoPlayer = () => {
   const videoRef = useRef(null);
   const playerRef = useRef(null);
   const [streamStatus, setStreamStatus] = useState('loading');
-  const streamUrl = import.meta.env.VITE_STREAM_URL; // URL du flux depuis le .env
+  const streamUrl = 'https://stream.dontono.fr/hls/test/test.m3u8'; // URL du flux depuis le .env
   const maxAttempts = 2;
   const [attempts, setAttempts] = useState(0);
 
