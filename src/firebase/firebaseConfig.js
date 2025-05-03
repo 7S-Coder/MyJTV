@@ -27,7 +27,6 @@ export const signUpWithEmailAndPseudo = async (email, password, pseudo) => {
             pseudo: pseudo,
             createdAt: new Date(),
         });
-        console.log('Utilisateur créé avec succès :', user);
     } catch (error) {
         console.error('Erreur lors de la création de l\'utilisateur :', error);
     }
@@ -42,7 +41,6 @@ export const fetchUserData = async (uid) => {
         }
         const userDoc = await getDoc(doc(db, 'users', uid));
         if (userDoc.exists()) {
-            console.log(`Données utilisateur pour ${uid}:`, userDoc.data());
             return userDoc.data();
         } else {
             console.error(`Aucun document trouvé pour l'utilisateur avec UID: ${uid}`);
@@ -54,15 +52,22 @@ export const fetchUserData = async (uid) => {
     }
 };
 
-// Fonction pour gérer les cookies utilisateur
+// Fonction pour gérer les cookies utilisateur (ajout de la couleur)
 export const setUserCookies = (user) => {
     if (user) {
         Cookies.set('user', JSON.stringify({
             email: user.email,
             uid: user.uid,
             pseudo: user.pseudo,
+            color: user.color, // Ajout de la couleur
         }), { expires: 7 });
     } else {
         Cookies.remove('user');
     }
+};
+
+// Fonction pour récupérer les données utilisateur depuis les cookies
+export const getUserFromCookies = () => {
+    const userCookie = Cookies.get('user');
+    return userCookie ? JSON.parse(userCookie) : null;
 };

@@ -3,25 +3,36 @@ import { Link, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import '../css/Navbar.scss';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { fetchUserData } from '../firebase/firebaseConfig';
+import { fetchUserData, setUserCookies, getUserFromCookies } from '../firebase/firebaseConfig';
 
 const Navbar = () => {
     const [menuOpen, setMenuOpen] = useState(false);
     const [user, setUser] = useState(null);
+    const [userColor, setUserColor] = useState('#fff'); // State for user color
     const navigate = useNavigate();
 
     useEffect(() => {
+        const savedUser = getUserFromCookies(); // Récupère l'utilisateur depuis les cookies
+        if (savedUser) {
+            setUser(savedUser);
+            setUserColor(savedUser.color || '#fff'); // Utilise la couleur depuis les cookies
+        }
+
         const unsubscribe = onAuthStateChanged(getAuth(), async (currentUser) => {
             if (currentUser) {
                 const userData = await fetchUserData(currentUser.uid); // Récupère les données utilisateur
-                setUser({
+                const userWithColor = {
                     email: currentUser.email,
                     uid: currentUser.uid,
-                    pseudo: userData?.pseudo || 'Utilisateur', // Utilise le pseudo ou un fallback
-                });
-                Cookies.set('user', JSON.stringify({ email: currentUser.email, uid: currentUser.uid, pseudo: userData?.pseudo }), { expires: 7 });
+                    pseudo: userData?.pseudo || 'Utilisateur',
+                    color: userData?.color || '#fff', // Ajoute la couleur
+                };
+                setUser(userWithColor);
+                setUserColor(userWithColor.color);
+                setUserCookies(userWithColor); // Stocke les données utilisateur dans les cookies
             } else {
                 setUser(null);
+                setUserColor('#fff'); // Réinitialise la couleur par défaut
                 Cookies.remove('user');
                 navigate('/login');
             }
@@ -58,7 +69,7 @@ const Navbar = () => {
                         className={`user-menu ${menuOpen ? 'open' : ''}`} 
                         onClick={() => setMenuOpen(!menuOpen)}
                     >
-                        {user.pseudo} {/* Affiche le pseudo */}
+                        <span style={{ color: userColor }}>{user.pseudo}</span> {/* Affiche le pseudo avec couleur */}
                         <div className="dropdown-menu">
                             <button onClick={handleLogout}>Déconnexion</button>
                         </div>
