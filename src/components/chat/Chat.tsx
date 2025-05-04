@@ -147,8 +147,6 @@ const Chat: React.FC = () => {
 
           if (isAdmin(savedUser)) {
             handleOpenModal(message);
-          } else {
-            alert('Vous n\'avez pas les permissions nécessaires.');
           }
         }}
         isModerator={isModerator(getUserFromCookies())}
