@@ -1,5 +1,6 @@
 import { doc, updateDoc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase/firebaseConfig';
+import Chat from './chat/Chat';
 
 export const assignModeratorRole = async (userId) => {
   try {

@@ -1,6 +1,6 @@
 // Home.js
 import React from 'react';
-import Chat from '../components/Chat.jsx';
+import Chat from '../components/chat/Chat'; 
 import VideoPlayer from '../components/VideoPlayer.jsx';
 import '../css/Home.scss';
 

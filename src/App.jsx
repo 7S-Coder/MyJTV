@@ -9,7 +9,7 @@ import { StreamProvider } from './context/StreamContext.jsx';
 import { AuthProvider } from './context/AuthContext.jsx';
 import Auth from './pages/Auth.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
-import Chat from './pages/Chat.jsx';
+import Chat from './components/chat/Chat'; // Corrigez le chemin ici
 import ForgetPassword from './pages/ForgetPassword.jsx';
 import ErrorBoundary from './components/ErrorBoundary.jsx'; // Import ErrorBoundary
 
