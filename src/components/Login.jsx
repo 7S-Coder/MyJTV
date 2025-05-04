@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth, setUserInCookies } from '../firebase/firebaseConfig';
+import { doc, setDoc, getDoc } from 'firebase/firestore';
+import { db, generateRandomColor } from '../firebase/firebaseConfig';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -13,9 +15,23 @@ const Login = () => {
             const { user } = await signInWithEmailAndPassword(auth, email, password);
             console.log('Connexion réussie, utilisateur :', user);
 
-            // Mettez à jour les cookies uniquement si nécessaire
-            const userWithRole = await setUserInCookies(user);
+            const userRef = doc(db, 'users', user.uid);
+            const userDoc = await getDoc(userRef);
 
+            if (!userDoc.exists()) {
+                // Si l'utilisateur n'a pas encore de document dans Firestore, créez-le
+                const color = generateRandomColor();
+                await setDoc(userRef, {
+                    email: user.email,
+                    pseudo: 'Utilisateur',
+                    color,
+                    role: 'user',
+                    createdAt: new Date(),
+                });
+                console.log('Document utilisateur créé avec un pseudo par défaut.');
+            }
+
+            const userWithRole = await setUserInCookies(user);
             if (userWithRole) {
                 console.log('Utilisateur connecté avec rôle :', userWithRole);
                 // Redirigez ou mettez à jour l'état de l'application après la connexion

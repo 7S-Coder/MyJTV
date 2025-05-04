@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { auth } from '../firebase/firebaseConfig';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
 import Cookies from 'js-cookie';
 import { setUserCookies, setUserInCookies, handleUserAfterAuth } from '../firebase/firebaseConfig';
 import { useNavigate } from 'react-router-dom';
@@ -11,7 +11,6 @@ import { db } from '../firebase/firebaseConfig';
 const Auth = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [pseudo, setPseudo] = useState('');
   const [isLogin, setIsLogin] = useState(true);
   const [cookiesAccepted, setCookiesAccepted] = useState(Cookies.get('cookiesAccepted') === 'true');
   const [errorMessage, setErrorMessage] = useState('');
@@ -41,34 +40,37 @@ const Auth = () => {
     }
 
     try {
-      let user;
       if (isLogin) {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        user = userCredential.user;
+        const user = userCredential.user;
 
-        // Mettez à jour les cookies uniquement si nécessaire
+        if (!user.emailVerified) {
+          setErrorMessage('Veuillez vérifier votre email avant de vous connecter.');
+          return;
+        }
+
         await setUserInCookies(user);
+        navigate('/');
       } else {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        user = userCredential.user;
+        const user = userCredential.user;
 
-        const userColor = generateRandomColor();
+        // Créez un document utilisateur dans Firestore avec un pseudo par défaut et une couleur aléatoire
+        const userRef = doc(db, 'users', user.uid);
         const userData = {
-          pseudo,
-          email,
-          color: userColor,
-          role: 'user', // Rôle par défaut
+          email: user.email,
+          pseudo: 'Utilisateur',
+          color: generateRandomColor(),
+          role: 'user',
           createdAt: new Date(),
         };
+        await setDoc(userRef, userData);
 
-        await setDoc(doc(db, 'users', user.uid), userData);
+        await sendEmailVerification(user);
+        setErrorMessage('Un email de vérification a été envoyé. Veuillez vérifier votre boîte de réception.');
 
-        // Parsez immédiatement les cookies avec les données utilisateur
-        Cookies.set('user', JSON.stringify({ ...user, ...userData }), { expires: 7 });
-        console.log('Utilisateur inscrit et stocké dans les cookies :', { ...user, ...userData });
+        auth.signOut(); // Déconnecter l'utilisateur après l'envoi de l'email de vérification
       }
-
-      navigate('/');
     } catch (error) {
       if (error.code === 'auth/weak-password') {
         setErrorMessage('Le mot de passe doit contenir au moins 6 caractères.');
@@ -99,20 +101,6 @@ const Auth = () => {
         </div>
         {errorMessage && <p className="error-message">{errorMessage}</p>}
         <form onSubmit={handleSubmit} className="auth-form">
-          {!isLogin && (
-            <div className="form-group">
-              <label htmlFor="pseudo">Pseudo</label>
-              <input
-                id="pseudo"
-                type="text"
-                placeholder="Votre pseudo"
-                value={pseudo}
-                onChange={(e) => setPseudo(e.target.value)}
-                autoComplete="username"
-                required
-              />
-            </div>
-          )}
           <div className="form-group">
             <label htmlFor="email">Email <span>*</span></label>
             <input

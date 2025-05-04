@@ -20,7 +20,6 @@ export const db = getFirestore(app);
 // Fonction pour gérer les cookies utilisateur
 export const setUserCookies = (user) => {
     if (user) {
-        console.log('Stockage des données utilisateur dans les cookies :', user);
         Cookies.set('user', JSON.stringify(user), { expires: 7 });
     } else {
         Cookies.remove('user');
@@ -61,7 +60,6 @@ export const handleUserAfterAuth = async (user) => {
 
         if (userDoc.exists()) {
             const userData = userDoc.data();
-            console.log('Données utilisateur récupérées depuis Firestore :', userData);
 
             const userWithRole = {
                 email: user.email,
@@ -110,7 +108,6 @@ export const signUpWithEmailAndPseudo = async (email, password, pseudo) => {
 export const signInWithEmailAndPasswordAndFetchRole = async (email, password) => {
     try {
         const { user } = await signInWithEmailAndPassword(auth, email, password);
-        console.log('Utilisateur connecté :', user);
 
         // Gérer l'utilisateur après la connexion
         return await handleUserAfterAuth(user);
@@ -142,7 +139,6 @@ export const setUserInCookies = async (user) => {
             };
 
             Cookies.set('user', JSON.stringify(userWithRole), { expires: 7 });
-            console.log('Utilisateur stocké dans les cookies avec rôle :', userWithRole);
 
             return userWithRole;
         } else {
@@ -152,5 +148,29 @@ export const setUserInCookies = async (user) => {
     } catch (error) {
         console.error('Erreur lors de la gestion de l\'utilisateur après authentification :', error);
         return null;
+    }
+};
+
+export const isEmailVerified = (user) => {
+    return user?.emailVerified || false;
+};
+
+export const createUserInFirestore = async (user) => {
+    try {
+        const pseudo = Cookies.get('pendingPseudo') || 'Utilisateur'; // Récupérer le pseudo temporaire
+        Cookies.remove('pendingPseudo'); // Supprimer le pseudo temporaire après utilisation
+
+        const userColor = generateRandomColor();
+        const userData = {
+            pseudo,
+            email: user.email,
+            color: userColor,
+            role: 'user', // Rôle par défaut
+            createdAt: new Date(),
+        };
+
+        await setDoc(doc(db, 'users', user.uid), userData);
+    } catch (error) {
+        console.error('Erreur lors de la création de l\'utilisateur dans Firestore :', error);
     }
 };
