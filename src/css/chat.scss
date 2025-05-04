@@ -22,7 +22,57 @@
   display: inline;
 }
 
+.mention-suggestions {
+  position: absolute;
+  bottom: 100%; /* Place la liste au-dessus de l'input */
+  left: 0;
+  background: #1f1f23; /* Fond sombre pour correspondre au thème */
+  border: 1px solid #2a2a2e; /* Bordure subtile */
+  list-style: none;
+  margin: 0;
+  padding: 5px 0;
+  max-height: 150px;
+  overflow-y: auto;
+  z-index: 1000;
+  width: 100%; /* S'aligne avec l'input */
+}
 
+.mention-suggestions li {
+  padding: 8px 12px;
+  color: #fff; /* Texte blanc pour ressortir */
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.mention-suggestions li:hover {
+  background: #333333; /* Fond gris foncé au survol */
+}
+
+/* Style pour les mots mentionnés */
+.mention {
+  color: #ffd700; /* Jaune doré pour un meilleur contraste */
+  font-weight: bold;
+  background-color: rgba(0, 0, 0, 0.5); /* Fond semi-transparent pour améliorer la lisibilité */
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+
+/* Style pour les messages contenant une mention de l'utilisateur actuel */
+.highlight {
+  background-color: #333333; /* Gris foncé pour un meilleur contraste */
+  border-left: 4px solid #ffd700; /* Indicateur visuel */
+  padding-left: 8px;
+}
+
+/* Style spécial pour la mention de l'utilisateur actuel */
+.mention-current-user {
+  color: #ff6347; /* Rouge vif pour attirer l'attention */
+  font-weight: bold;
+  text-decoration: underline;
+  background-color: rgba(0, 0, 0, 0.5); /* Fond semi-transparent */
+  padding: 2px 4px;
+  border-radius: 4px;
+}
 
 .message-form {
   display: flex;

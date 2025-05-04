@@ -92,13 +92,18 @@ const Chat: React.FC = () => {
   const handleSendMessage = async (message: string) => {
     try {
       const savedUser = getUserFromCookies();
+      const mentions = message.match(/@\w+/g)?.map((mention) => mention.substring(1)) || [];
+
       await addDoc(collection(db, 'messages'), {
         text: message,
         pseudo: savedUser?.pseudo || userPseudo,
         color: savedUser?.color || '#fff',
         uid: auth.currentUser?.uid,
         timestamp: new Date(),
+        mentions,
       });
+
+      // Optionally, notify mentioned users here
     } catch (error) {
       console.error('Erreur lors de l\'envoi du message :', error);
     }
@@ -148,8 +153,13 @@ const Chat: React.FC = () => {
         }}
         isModerator={isModerator(getUserFromCookies())}
         onDeleteMessage={handleDeleteMessage}
+        currentUser={getUserFromCookies()} // Pass current user to highlight mentions
       />
-      <MessageForm onSendMessage={handleSendMessage} forbiddenWords={forbiddenWords} />
+      <MessageForm
+        onSendMessage={handleSendMessage}
+        forbiddenWords={forbiddenWords}
+        currentUserPseudo={getUserFromCookies()?.pseudo || ''} // Passe le pseudo de l'utilisateur actuel
+      />
       {isModalOpen && (
         <AdminModal
           selectedMessage={selectedMessage}
