@@ -115,15 +115,12 @@ const Chat = () => {
   const handleDeleteMessage = async (messageId) => {
     try {
       const savedUser = getUserFromCookies();
-      console.log('Utilisateur récupéré pour suppression :', savedUser);
 
       // Vérifiez si l'utilisateur est authentifié
       if (!auth.currentUser) {
         alert('Vous devez être connecté pour supprimer un message.');
         return;
       }
-
-      console.log('Suppression autorisée pour l\'utilisateur :', auth.currentUser.uid);
 
       // Utilisez deleteDoc avec une référence au document
       const messageRef = doc(db, 'messages', messageId);

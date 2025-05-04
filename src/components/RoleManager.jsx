@@ -17,13 +17,11 @@ export const assignModeratorRoleAutomatically = async (user) => {
     const userDoc = await getDoc(userRef);
 
     if (!userDoc.exists()) {
-      console.log('Utilisateur non trouvé dans Firestore, création avec rôle par défaut.');
       await updateDoc(userRef, { role: 'user' });
     }
 
     const moderatorEmails = ['admin@example.com', 'dylan.e33@hotmail.fr', 'JasonKnt94@gmail.com', 'yoyo@hotmail.fr'];
     if (moderatorEmails.includes(user.email)) {
-      console.log('Attribution automatique du rôle de modérateur pour :', user.email);
       await updateDoc(userRef, { role: 'moderator' });
     }
   } catch (error) {
