@@ -13,14 +13,24 @@ const MessageForm: React.FC<MessageFormProps> = ({ onSendMessage, forbiddenWords
   const [users, setUsers] = useState<string[]>([]);
   const [filteredUsers, setFilteredUsers] = useState<string[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [userColors, setUserColors] = useState<{ [key: string]: string }>({}); // Store user colors
   const suggestionsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
         const querySnapshot = await getDocs(collection(db, 'users'));
-        const userList = querySnapshot.docs.map((doc) => doc.data().pseudo);
-        setUsers(userList);
+        const userList = querySnapshot.docs.map((doc) => {
+          const data = doc.data();
+          return { pseudo: data.pseudo, color: data.color || '#fff' }; // Default color if not set
+        });
+        setUsers(userList.map((user) => user.pseudo));
+        setUserColors(
+          userList.reduce((acc, user) => {
+            acc[user.pseudo] = user.color;
+            return acc;
+          }, {} as { [key: string]: string })
+        );
       } catch (error) {
         console.error('Erreur lors de la récupération des utilisateurs :', error);
       }
@@ -94,7 +104,11 @@ const MessageForm: React.FC<MessageFormProps> = ({ onSendMessage, forbiddenWords
       {showSuggestions && (
         <ul className="mention-suggestions">
           {filteredUsers.map((user) => (
-            <li key={user} onClick={() => handleSelectUser(user)}>
+            <li
+              key={user}
+              onClick={() => handleSelectUser(user)}
+              style={{ color: userColors[user] || '#fff' }} // Apply user color
+            >
               {user}
             </li>
           ))}

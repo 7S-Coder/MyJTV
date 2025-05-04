@@ -84,9 +84,15 @@ const Chat: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
-    }
+    const scrollToBottom = () => {
+      if (messagesEndRef.current) {
+        setTimeout(() => {
+          messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+        }, 0); // Allow DOM updates to complete
+      }
+    };
+
+    scrollToBottom();
   }, [messages]);
 
   const handleSendMessage = async (message: string) => {
@@ -165,7 +171,7 @@ const Chat: React.FC = () => {
           onClose={handleCloseModal}
         />
       )}
-      <div ref={messagesEndRef} />
+      <div ref={messagesEndRef} /> {/* Ensure this is at the bottom of the chat */}
     </div>
   );
 };
