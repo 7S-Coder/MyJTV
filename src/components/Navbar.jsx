@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import '../css/Navbar.scss';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { fetchUserData, setUserCookies, getUserFromCookies, db } from '../firebase/firebaseConfig';
+import { auth, db } from '../utils/firebase/firebaseConfig'; // Assurez-vous que le chemin pointe vers firebaseConfig.ts
+import { onAuthStateChanged } from 'firebase/auth';
+import { fetchUserData } from '../firebase/firebaseConfig';
 import { doc, updateDoc } from 'firebase/firestore';
+import { setUserCookies, getUserFromCookies } from '../utils/cookies';
 
 const Navbar = () => {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -25,7 +27,7 @@ const Navbar = () => {
             }
         }
 
-        const unsubscribe = onAuthStateChanged(getAuth(), async (currentUser) => {
+        const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
             if (currentUser) {
                 const userData = await fetchUserData(currentUser.uid); // Fetch user data
                 const userWithColor = {
@@ -76,7 +78,7 @@ const Navbar = () => {
     }, [menuOpen]);
 
     const handleLogout = () => {
-        getAuth().signOut();
+        auth.signOut();
         setMenuOpen(false);
     };
 

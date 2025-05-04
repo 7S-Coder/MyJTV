@@ -28,5 +28,6 @@ dist-ssr
 
 /firestore.rules
 
-
 .vercel
+
+src/env.d.ts

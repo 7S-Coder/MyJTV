@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { auth } from '../firebase/firebaseConfig';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
-import Cookies from 'js-cookie';
-import { setUserCookies, setUserInCookies, handleUserAfterAuth } from '../firebase/firebaseConfig';
+import { setUserCookies } from '../utils/cookies';
+import { handleUserAfterAuth } from '../firebase/firebaseConfig';
 import { useNavigate } from 'react-router-dom';
 import '../css/Auth.scss';
 import { doc, setDoc } from 'firebase/firestore';
 import { db } from '../firebase/firebaseConfig';
+import Cookies from 'js-cookie'; // Ajout de l'importation manquante
 
 const Auth = () => {
   const [email, setEmail] = useState('');
@@ -49,7 +50,7 @@ const Auth = () => {
           return;
         }
 
-        await setUserInCookies(user);
+        await setUserCookies(user);
         navigate('/');
       } else {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
