@@ -8,6 +8,7 @@ import MessageForm from './MessageForm';
 import AdminModal from './AdminModal';
 import { Message, User } from '../../types';
 import '../../css/chat.scss';
+import { useNavigate } from 'react-router-dom';
 
 const Chat: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -15,6 +16,7 @@ const Chat: React.FC = () => {
   const [selectedMessage, setSelectedMessage] = useState<Message | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
 
   const forbiddenWords = ['hitler'];
 
@@ -42,6 +44,13 @@ const Chat: React.FC = () => {
 
     return user;
   };
+
+  useEffect(() => {
+    const savedUser = getUserFromCookies();
+    if (savedUser?.pseudo === 'Utilisateur' && auth.currentUser?.emailVerified) {
+      navigate('/update-pseudo'); // Redirige uniquement si l'email est vérifié
+    }
+  }, [navigate]);
 
   useEffect(() => {
     const q = query(collection(db, 'messages'), orderBy('timestamp', 'asc'));

@@ -13,6 +13,7 @@ import Chat from './components/chat/Chat'; // Corrigez le chemin ici
 import ForgetPassword from './pages/ForgetPassword.jsx';
 import ErrorBoundary from './components/ErrorBoundary.jsx'; // Import ErrorBoundary
 import { auth } from './utils/firebase/firebaseConfig';
+import UpdatePseudo from './components/UpdatePseudo';
 
 function App() {
     return (
@@ -43,6 +44,7 @@ function App() {
                                     </ProtectedRoute>
                                 }
                             />
+                            <Route path="/update-pseudo" element={<UpdatePseudo />} />
                             <Route path="*" element={<Error />} />
                         </Routes>
                         <Footer />

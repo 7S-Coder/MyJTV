@@ -76,6 +76,10 @@ const MessageForm: React.FC<MessageFormProps> = ({ onSendMessage, forbiddenWords
   };
 
   const handleSendMessage = () => {
+    if (currentUserPseudo === 'Utilisateur') {
+      alert('Vous devez modifier votre pseudo avant d\'envoyer des messages.');
+      return;
+    }
     if (newMessage.trim() === '') return;
 
     if (forbiddenWords.some((word) => newMessage.toLowerCase().includes(word))) {

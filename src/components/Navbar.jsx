@@ -17,12 +17,14 @@ const Navbar = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const savedUser = getUserFromCookies(); // Retrieve user from cookies
+        const savedUser = getUserFromCookies(); // Récupère l'utilisateur depuis les cookies
         if (savedUser) {
             setUser(savedUser);
-            setUserColor(savedUser.color || '#fff'); // Use color from cookies
-            if (savedUser.pseudo !== 'Utilisateur') {
-                setIsPseudoChangeDisabled(true); // Disable modification if pseudo is not "Utilisateur"
+            setUserColor(savedUser.color || '#fff'); // Utilise la couleur des cookies
+            if (savedUser.pseudo === 'Utilisateur' && auth.currentUser?.emailVerified) {
+                navigate('/update-pseudo'); // Redirige uniquement si l'email est vérifié
+            } else {
+                setIsPseudoChangeDisabled(true); // Désactive la modification si le pseudo n'est pas "Utilisateur"
             }
         }
 
@@ -48,8 +50,10 @@ const Navbar = () => {
 
                 setUser(userWithColor);
                 setUserColor(userWithColor.color);
-                if (userWithColor.pseudo !== 'Utilisateur') {
-                    setIsPseudoChangeDisabled(true); // Disable modification if pseudo is not "Utilisateur"
+                if (userWithColor.pseudo === 'Utilisateur' && currentUser.emailVerified) {
+                    navigate('/update-pseudo'); // Redirige uniquement si l'email est vérifié
+                } else {
+                    setIsPseudoChangeDisabled(true); // Désactive la modification si le pseudo n'est pas "Utilisateur"
                 }
             } else {
                 setUser(null);
