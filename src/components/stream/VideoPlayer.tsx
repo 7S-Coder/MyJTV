@@ -17,13 +17,16 @@ const VideoPlayer: React.FC = () => {
   useEffect(() => {
     const checkAndInitializePlayer = async () => {
       if (attempts >= maxAttempts) {
+        console.error('Max attempts reached. Stream not available.');
         setStreamStatus('not_available');
         return;
       }
 
       try {
+        console.log('Checking stream URL:', streamUrl);
         const response = await fetch(streamUrl, { method: 'HEAD' });
         if (response.ok) {
+          console.log('Stream is available. Initializing player...');
           setStreamStatus('ready');
 
           if (!videoRef.current || playerRef.current) return;
@@ -32,7 +35,7 @@ const VideoPlayer: React.FC = () => {
             fluid: false,
             liveui: true,
             controls: true,
-            autoplay: 'muted', // Utilisation correcte
+            autoplay: 'muted',
             preload: 'auto',
             html5: {
               vhs: {
@@ -49,11 +52,24 @@ const VideoPlayer: React.FC = () => {
 
           const player = (playerRef.current = videojs(videoRef.current, options));
 
-          player.on('loadedmetadata', () => setStreamStatus('ready'));
-          player.on('error', () => setStreamStatus('not_available'));
-          player.on('playing', () => setStreamStatus('ready'));
-          player.on('waiting', () => setStreamStatus('buffering'));
+          player.on('loadedmetadata', () => {
+            console.log('Metadata loaded. Stream is ready.');
+            setStreamStatus('ready');
+          });
+          player.on('error', (e) => {
+            console.error('Video.js error:', e);
+            setStreamStatus('not_available');
+          });
+          player.on('playing', () => {
+            console.log('Stream is playing.');
+            setStreamStatus('ready');
+          });
+          player.on('waiting', () => {
+            console.log('Stream is buffering.');
+            setStreamStatus('buffering');
+          });
         } else {
+          console.error('Stream URL is not accessible. Retrying...');
           setAttempts((prev) => prev + 1);
           setStreamStatus('not_available');
         }
@@ -68,6 +84,7 @@ const VideoPlayer: React.FC = () => {
 
     return () => {
       if (playerRef.current) {
+        console.log('Disposing player...');
         playerRef.current.dispose();
         playerRef.current = null;
       }
