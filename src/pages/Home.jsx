@@ -1,7 +1,7 @@
 // Home.js
 import React from 'react';
 import Chat from '../components/chat/Chat'; 
-import VideoPlayer from '../components/VideoPlayer.jsx';
+import VideoPlayer from '../components/stream/VideoPlayer';
 import '../css/Home.scss';
 
 const Home = () => {

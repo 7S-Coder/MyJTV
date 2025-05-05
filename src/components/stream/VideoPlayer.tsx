@@ -1,12 +1,16 @@
 import React, { useRef, useState, useEffect } from 'react';
-import videojs from 'video.js'; // Importez la bibliothèque video.js
-import 'video.js/dist/video-js.css'; // Importez les styles de video.js
+import videojs from 'video.js'; // Importation correcte
+import 'video.js/dist/video-js.css';
+import StreamMessage from './StreamMessage';
+import VideoElement from './VideoElement';
 
-const VideoPlayer = () => {
-  const videoRef = useRef(null);
-  const playerRef = useRef(null);
-  const [streamStatus, setStreamStatus] = useState('loading');
-  const streamUrl = import.meta.env.VITE_STREAM_URL; // URL du flux depuis le .env
+type StreamStatus = 'loading' | 'ready' | 'not_available' | 'buffering';
+
+const VideoPlayer: React.FC = () => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const playerRef = useRef<videojs.Player | null>(null);
+  const [streamStatus, setStreamStatus] = useState<StreamStatus>('loading');
+  const streamUrl = import.meta.env.VITE_STREAM_URL as string;
   const maxAttempts = 2;
   const [attempts, setAttempts] = useState(0);
 
@@ -18,17 +22,17 @@ const VideoPlayer = () => {
       }
 
       try {
-        const response = await fetch(streamUrl, { method: 'HEAD' }); // Vérifie si le flux est accessible
+        const response = await fetch(streamUrl, { method: 'HEAD' });
         if (response.ok) {
           setStreamStatus('ready');
 
           if (!videoRef.current || playerRef.current) return;
 
-          const options = {
+          const options: videojs.VideoJsPlayerOptions = {
             fluid: false,
             liveui: true,
             controls: true,
-            autoplay: true,
+            autoplay: 'muted', // Utilisation correcte
             preload: 'auto',
             html5: {
               vhs: {
@@ -45,26 +49,16 @@ const VideoPlayer = () => {
 
           const player = (playerRef.current = videojs(videoRef.current, options));
 
-          player.on('loadedmetadata', () => {
-            setStreamStatus('ready');
-          });
-
-          player.on('error', () => {
-            setStreamStatus('not_available');
-          });
-
-          player.on('playing', () => {
-            setStreamStatus('ready');
-          });
-
-          player.on('waiting', () => {
-            setStreamStatus('buffering');
-          });
+          player.on('loadedmetadata', () => setStreamStatus('ready'));
+          player.on('error', () => setStreamStatus('not_available'));
+          player.on('playing', () => setStreamStatus('ready'));
+          player.on('waiting', () => setStreamStatus('buffering'));
         } else {
           setAttempts((prev) => prev + 1);
           setStreamStatus('not_available');
         }
       } catch (error) {
+        console.error('Error initializing player:', error);
         setAttempts((prev) => prev + 1);
         setStreamStatus('not_available');
       }
@@ -83,21 +77,9 @@ const VideoPlayer = () => {
   return (
     <div className="video-container">
       {streamStatus === 'not_available' ? (
-        <div className="stream-message">
-          Le stream commence bientôt.
-        </div>
+        <StreamMessage />
       ) : (
-        <div data-vjs-player style={{ width: '100%', height: '100%' }}>
-          <video
-            ref={videoRef}
-            className="video-js vjs-default-skin"
-            style={{ width: '100%', height: '100%', objectFit: 'contain' }}
-            crossOrigin="anonymous"
-            playsInline
-            webkit-playsinline="true"
-            x-webkit-airplay="allow"
-          />
-        </div>
+        <VideoElement videoRef={videoRef} />
       )}
     </div>
   );
