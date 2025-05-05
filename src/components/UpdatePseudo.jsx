@@ -34,7 +34,8 @@ const UpdatePseudo = () => {
 
     return (
         <div className="update-pseudo-container">
-            <h1>Veuillez modifier votre pseudo</h1>
+            <h1>Veuillez choisir un pseudo.</h1>
+            <p>Le pseudonyme que vous choisirez apparaîtra dans le tchat et vous permettra d’échanger avec les autres utilisateurs.</p>
             <input
                 type="text"
                 placeholder="Nouveau pseudo"
