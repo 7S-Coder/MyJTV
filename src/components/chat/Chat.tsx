@@ -3,7 +3,7 @@ import { collection, addDoc, onSnapshot, query, orderBy, doc, getDoc, deleteDoc 
 import { db } from '../../firebase/firebaseConfig';
 import { auth, fetchUserData } from '../../firebase/firebaseConfig';
 import { getUserFromCookies, setUserCookies } from '../../utils/cookies';
-import { assignModeratorRoleAutomatically } from '../RoleManager';
+import { assignModeratorRoleAutomatically } from '../RoleManager.tsx';
 import MessageList from './MessageList';
 import MessageForm from './MessageForm';
 import AdminModal from './AdminModal';
@@ -68,11 +68,12 @@ const Chat: React.FC = () => {
         if (!auth.currentUser) return; // Vérification explicite
         const userData = await fetchUserData(auth.currentUser.uid);
         if (userData) {
-          const userWithRole = {
+          const userWithRole: User = {
             ...auth.currentUser,
             pseudo: userData.pseudo,
             color: userData.color,
             role: userData.role || 'user',
+            email: auth.currentUser.email || '', // S'assure que l'email est toujours une chaîne
           };
           setUserCookies(userWithRole);
           assignModeratorRoleAutomatically(userWithRole);
@@ -88,7 +89,7 @@ const Chat: React.FC = () => {
       if (messagesEndRef.current) {
         setTimeout(() => {
           messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-        }, 0); // Allow DOM updates to complete
+        }, 0); // Permet aux mises à jour du DOM de se terminer
       }
     };
 
@@ -109,7 +110,7 @@ const Chat: React.FC = () => {
         mentions,
       });
 
-      // Optionally, notify mentioned users here
+      // Optionnellement, notifier les utilisateurs mentionnés ici
     } catch (error) {
       console.error('Erreur lors de l\'envoi du message :', error);
     }
@@ -157,7 +158,7 @@ const Chat: React.FC = () => {
         }}
         isModerator={isModerator(getUserFromCookies())}
         onDeleteMessage={handleDeleteMessage}
-        currentUser={getUserFromCookies()} // Pass current user to highlight mentions
+        currentUser={getUserFromCookies()} // Passe l'utilisateur actuel pour mettre en surbrillance les mentions
       />
       <MessageForm
         onSendMessage={handleSendMessage}
@@ -171,7 +172,7 @@ const Chat: React.FC = () => {
           onClose={handleCloseModal}
         />
       )}
-      <div ref={messagesEndRef} /> {/* Ensure this is at the bottom of the chat */}
+      <div ref={messagesEndRef} /> {/* S'assure que cela est en bas du chat */}
     </div>
   );
 };

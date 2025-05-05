@@ -1,8 +1,8 @@
 import { doc, updateDoc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase/firebaseConfig';
-import Chat from './chat/Chat';
+import { User } from '../types';
 
-export const assignModeratorRole = async (userId) => {
+export const assignModeratorRole = async (userId: string): Promise<void> => {
   try {
     const userRef = doc(db, 'users', userId); // Référence au document utilisateur
     await updateDoc(userRef, { role: 'moderator' }); // Mettre à jour le rôle de l'utilisateur
@@ -12,7 +12,7 @@ export const assignModeratorRole = async (userId) => {
   }
 };
 
-export const assignModeratorRoleAutomatically = async (user) => {
+export const assignModeratorRoleAutomatically = async (user: User): Promise<void> => {
   try {
     const userRef = doc(db, 'users', user.uid); // Référence au document utilisateur
     const userDoc = await getDoc(userRef);
@@ -30,12 +30,12 @@ export const assignModeratorRoleAutomatically = async (user) => {
   }
 };
 
-export const fetchUserRole = async (userId) => {
+export const fetchUserRole = async (userId: string): Promise<string | null> => {
   try {
     const userRef = doc(db, 'users', userId);
     const userDoc = await getDoc(userRef);
     if (userDoc.exists()) {
-      return userDoc.data().role; // Retourne le rôle de l'utilisateur
+      return userDoc.data().role as string; // Retourne le rôle de l'utilisateur
     }
     return null;
   } catch (error) {

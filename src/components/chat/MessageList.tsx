@@ -16,7 +16,7 @@ const MessageList: React.FC<MessageListProps> = ({
   onDeleteMessage,
   currentUser,
 }) => {
-  const currentUserPseudo = currentUser?.pseudo || ''; // Définit une chaîne vide si pseudo est undefined
+  const currentUserPseudo = currentUser?.pseudo || ''; // Définit une chaîne vide si le pseudo est undefined
 
   return (
     <div className="messages">

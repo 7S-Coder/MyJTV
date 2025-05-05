@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../firebase/firebaseConfig';
+import { assignModeratorRoleAutomatically } from '../RoleManager';
 
 type MessageFormProps = {
   onSendMessage: (message: string) => void;
@@ -13,7 +14,7 @@ const MessageForm: React.FC<MessageFormProps> = ({ onSendMessage, forbiddenWords
   const [users, setUsers] = useState<string[]>([]);
   const [filteredUsers, setFilteredUsers] = useState<string[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
-  const [userColors, setUserColors] = useState<{ [key: string]: string }>({}); // Store user colors
+  const [userColors, setUserColors] = useState<{ [key: string]: string }>({}); // Stocke les couleurs des utilisateurs
   const suggestionsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -22,7 +23,7 @@ const MessageForm: React.FC<MessageFormProps> = ({ onSendMessage, forbiddenWords
         const querySnapshot = await getDocs(collection(db, 'users'));
         const userList = querySnapshot.docs.map((doc) => {
           const data = doc.data();
-          return { pseudo: data.pseudo, color: data.color || '#fff' }; // Default color if not set
+          return { pseudo: data.pseudo, color: data.color || '#fff' }; // Couleur par défaut si non définie
         });
         setUsers(userList.map((user) => user.pseudo));
         setUserColors(
@@ -60,7 +61,7 @@ const MessageForm: React.FC<MessageFormProps> = ({ onSendMessage, forbiddenWords
       const searchTerm = mentionMatch[1].toLowerCase();
       const matches = users
         .filter((user) => user.toLowerCase().startsWith(searchTerm))
-        .filter((user) => user !== currentUserPseudo); // Exclure le pseudo de l'utilisateur actuel
+        .filter((user) => user !== currentUserPseudo); // Exclut le pseudo de l'utilisateur actuel
       setFilteredUsers(matches);
       setShowSuggestions(matches.length > 0);
     } else {
@@ -107,7 +108,7 @@ const MessageForm: React.FC<MessageFormProps> = ({ onSendMessage, forbiddenWords
             <li
               key={user}
               onClick={() => handleSelectUser(user)}
-              style={{ color: userColors[user] || '#fff' }} // Apply user color
+              style={{ color: userColors[user] || '#fff' }} // Applique la couleur de l'utilisateur
             >
               {user}
             </li>
@@ -120,22 +121,3 @@ const MessageForm: React.FC<MessageFormProps> = ({ onSendMessage, forbiddenWords
 
 export default MessageForm;
 
-// Add CSS for the suggestions dropdown
-// .mention-suggestions {
-//   position: absolute;
-//   background: white;
-//   border: 1px solid #ccc;
-//   list-style: none;
-//   margin: 0;
-//   padding: 0;
-//   max-height: 150px;
-//   overflow-y: auto;
-//   z-index: 1000;
-// }
-// .mention-suggestions li {
-//   padding: 5px 10px;
-//   cursor: pointer;
-// }
-// .mention-suggestions li:hover {
-//   background: #f0f0f0;
-// }

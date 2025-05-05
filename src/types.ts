@@ -13,4 +13,5 @@ export interface User {
   pseudo: string;
   color: string;
   role: 'user' | 'moderator' | 'admin';
+  email: string; 
 }
