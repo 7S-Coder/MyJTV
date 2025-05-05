@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { collection, addDoc, onSnapshot, query, orderBy, doc, getDoc, deleteDoc } from 'firebase/firestore';
-import { db } from '../../firebase/firebaseConfig';
-import { auth, fetchUserData } from '../../firebase/firebaseConfig';
+import { auth, db, fetchUserData } from '../../utils/firebase/firebaseConfig';
 import { getUserFromCookies, setUserCookies } from '../../utils/cookies';
 import { assignModeratorRoleAutomatically } from '../RoleManager.tsx';
 import MessageList from './MessageList';

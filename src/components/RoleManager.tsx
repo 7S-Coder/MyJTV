@@ -1,5 +1,5 @@
 import { doc, updateDoc, getDoc } from 'firebase/firestore';
-import { db } from '../firebase/firebaseConfig';
+import { db } from '../utils/firebase/firebaseConfig';
 import { User } from '../types';
 
 export const assignModeratorRole = async (userId: string): Promise<void> => {

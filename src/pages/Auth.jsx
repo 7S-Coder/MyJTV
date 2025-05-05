@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
-import { auth } from '../firebase/firebaseConfig';
+import { auth, db, handleUserAfterAuth, generateRandomColor } from '../utils/firebase/firebaseConfig';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
 import { setUserCookies } from '../utils/cookies';
-import { handleUserAfterAuth } from '../firebase/firebaseConfig';
 import { useNavigate } from 'react-router-dom';
 import '../css/Auth.scss';
 import { doc, setDoc } from 'firebase/firestore';
-import { db } from '../firebase/firebaseConfig';
 import Cookies from 'js-cookie'; // Ajout de l'importation manquante
 
 const Auth = () => {
@@ -20,11 +18,6 @@ const Auth = () => {
   const validateEmail = (email) => {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@(gmail|hotmail|outlook)\.(fr|com)$/;
     return emailRegex.test(email);
-  };
-
-  const generateRandomColor = () => {
-    const colors = ['#FF4500', '#32CD32', '#1E90FF', '#FFD700', '#FF69B4', '#8A2BE2', '#00CED1'];
-    return colors[Math.floor(Math.random() * colors.length)];
   };
 
   const handleSubmit = async (e) => {

@@ -12,6 +12,7 @@ import ProtectedRoute from './components/ProtectedRoute.jsx';
 import Chat from './components/chat/Chat'; // Corrigez le chemin ici
 import ForgetPassword from './pages/ForgetPassword.jsx';
 import ErrorBoundary from './components/ErrorBoundary.jsx'; // Import ErrorBoundary
+import { auth } from './utils/firebase/firebaseConfig';
 
 function App() {
     return (

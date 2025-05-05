@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import '../css/Navbar.scss';
-import { auth, db } from '../utils/firebase/firebaseConfig'; // Assurez-vous que le chemin pointe vers firebaseConfig.ts
+import { auth, db, fetchUserData } from '../utils/firebase/firebaseConfig'; // Assurez-vous que le chemin pointe vers firebaseConfig.ts
 import { onAuthStateChanged } from 'firebase/auth';
-import { fetchUserData } from '../firebase/firebaseConfig';
 import { doc, updateDoc } from 'firebase/firestore';
 import { setUserCookies, getUserFromCookies } from '../utils/cookies';
 

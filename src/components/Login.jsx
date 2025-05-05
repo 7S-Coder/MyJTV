@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth, setUserInCookies } from '../firebase/firebaseConfig';
+import { auth, db, generateRandomColor, setUserInCookies } from '../utils/firebase/firebaseConfig';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
-import { db, generateRandomColor } from '../firebase/firebaseConfig';
 
 const Login = () => {
     const [email, setEmail] = useState('');
