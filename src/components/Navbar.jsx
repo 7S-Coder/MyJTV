@@ -146,12 +146,16 @@ const Navbar = () => {
                                 }}
                             />
                         ) : (
-                            <span 
-                                style={{ color: userColor, cursor: isPseudoChangeDisabled ? 'default' : 'pointer' }} 
-                                onClick={handlePseudoEdit}
-                            >
-                                {user.pseudo}
-                            </span>
+                            <p>
+                                Salut&nbsp;
+                                <span 
+                                    style={{ color: userColor, cursor: isPseudoChangeDisabled ? 'default' : 'pointer' }} 
+                                    onClick={handlePseudoEdit}
+                                >
+                                    {user.pseudo}
+                                </span>
+                                &nbsp;!
+                            </p>
                         )}
                         <div className="dropdown-menu">
                             <button onClick={handleLogout}>Déconnexion</button>
