@@ -5,7 +5,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: calc(100vh - 40px); /* Adjust for footer height */
+  min-height: calc(100vh - 100px); /* Ajuste la hauteur pour inclure un footer de 50px */
   background-color: vars.$primary--dark;
   text-align: center; /* Assure un alignement du texte */
 }
