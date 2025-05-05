@@ -27,7 +27,11 @@ nav {
         li {
         margin: 0 10px;
         font-size: 1.0.9;
-        font-weight: bold;
+
+        p {
+            margin: 0;
+            font-size: 1.0.9;
+            font-weight: bold;}
         }
 
         li:hover {
