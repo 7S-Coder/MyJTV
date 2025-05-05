@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.scss';
 import Home from './pages/Home.jsx';
-import Error from './pages/Error.jsx';
+import Error from './pages/Error.tsx';
 import Navbar from './components/Navbar.jsx';
 import Footer from './components/Footer.jsx';
 import { StreamProvider } from './context/StreamContext.jsx';

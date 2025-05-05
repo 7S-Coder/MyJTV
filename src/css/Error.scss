@@ -1,0 +1,39 @@
+@use './_variables' as vars;
+
+.centered-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 40px); /* Adjust for footer height */
+  background-color: vars.$primary--dark;
+  text-align: center; /* Assure un alignement du texte */
+}
+
+.error-title {
+  font-size: 2.5rem;
+  color: vars.$logo;
+  margin-bottom: 1rem;
+}
+
+.error-message {
+  font-size: 1.2rem;
+  color: vars.$white--smooth;
+}
+
+.error-button {
+  margin-top: 1.5rem;
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  font-family: vars.$font;
+  color: vars.$white;
+  background-color: vars.$logo;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: vars.$primary;
+  }
+}
