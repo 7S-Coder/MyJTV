@@ -11,29 +11,23 @@
 }
 
 .error-title {
-  font-size: 2.5rem;
+  font-size: 2rem; /* Réduit la taille de la police */
   color: vars.$logo;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem; /* Réduit l'espace sous le titre */
 }
 
 .error-message {
-  font-size: 1.2rem;
+  font-size: 1rem; /* Réduit la taille de la police */
   color: vars.$white--smooth;
+  margin-bottom: 0.5rem; /* Réduit l'espace sous le message */
 }
 
-.error-button {
-  margin-top: 1.5rem;
-  padding: 0.8rem 1.5rem;
-  font-size: 1rem;
-  font-family: vars.$font;
-  color: vars.$white;
-  background-color: vars.$logo;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-
+.error-link {
+  font-size: 1rem; /* Réduit la taille de la police */
+  color: vars.$logo;
+  animation: blink 1s infinite; /* Animation de clignotement */
+  margin-top: 0.5rem; /* Réduit l'espace au-dessus du lien */
   &:hover {
-    background-color: vars.$primary;
+    color: vars.$white--smooth;
   }
 }
