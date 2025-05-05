@@ -146,7 +146,6 @@ const Navbar = () => {
                                 }}
                             />
                         ) : (
-                            <p>
                                 
                                 <span 
                                 
@@ -154,11 +153,10 @@ const Navbar = () => {
                                     onClick={handlePseudoEdit}
                                 >
                                     Salut&nbsp;
-                                    {user.pseudo}
+                                <strong>{user.pseudo}</strong> 
                                 &nbsp;!
 
                                 </span>
-                            </p>
                         )}
                         <div className="dropdown-menu">
                             <button onClick={handleLogout}>Déconnexion</button>
