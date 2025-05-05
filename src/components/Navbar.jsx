@@ -147,14 +147,17 @@ const Navbar = () => {
                             />
                         ) : (
                             <p>
-                                Salut&nbsp;
+                                
                                 <span 
+                                
                                     style={{ color: userColor, cursor: isPseudoChangeDisabled ? 'default' : 'pointer' }} 
                                     onClick={handlePseudoEdit}
                                 >
+                                    Salut&nbsp;
                                     {user.pseudo}
-                                </span>
                                 &nbsp;!
+
+                                </span>
                             </p>
                         )}
                         <div className="dropdown-menu">

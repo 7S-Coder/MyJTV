@@ -22,16 +22,14 @@ nav {
     ul {
         display: flex;
         list-style-type: none;
+        margin: 0;
 
 
         li {
         margin: 0 10px;
         font-size: 1.0.9;
 
-        p {
-            margin: 0;
-            font-size: 1.0.9;
-            font-weight: bold;}
+        
         }
 
         li:hover {
