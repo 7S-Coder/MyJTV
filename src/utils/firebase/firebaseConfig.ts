@@ -84,6 +84,10 @@ export const handleUserAfterAuth = async (user: any) => {
 
 // Fonction utilitaire pour générer une couleur aléatoire
 export const generateRandomColor = () => {
-  const colors = ['#FF4500', '#32CD32', '#1E90FF', '#FFD700', '#FF69B4', '#8A2BE2', '#00CED1'];
+  const colors = [
+    '#FF4500', '#32CD32', '#1E90FF', '#FFD700', '#FF69B4', 
+    '#8A2BE2', '#00CED1', '#FF6347', '#4682B4', '#7FFF00', 
+    '#FFB6C1', '#6A5ACD'
+  ]; // Ajout de nouvelles couleurs
   return colors[Math.floor(Math.random() * colors.length)];
 };

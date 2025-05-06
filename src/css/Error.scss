@@ -1,32 +1,43 @@
 @use './_variables' as vars;
 
-.centered-container {
+.container {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  min-height: calc(100vh - 100px); /* Ajuste la hauteur pour inclure un footer de 50px */
-  background-color: vars.$primary--dark;
+  // align-items: center;
+  width: auto;
+  height: calc(90vh - 110px); 
+  // background-color: vars.$primary--dark;
   text-align: center; /* Assure un alignement du texte */
+  margin: 0 auto; /* Centre le conteneur horizontalement */
+
+  div {
+    max-width: 20vw;
+    margin: auto;
+    padding: 50px 40px; /* Ajout de padding pour le contenu */
+    padding-top: 15px;
+    border-radius: 5px;
+  }
 }
 
 .error-title {
   font-size: 2rem; /* Réduit la taille de la police */
-  color: vars.$logo;
+  color: vars.$white--smooth;
+
+  margin-top: 0.1rem;
   margin-bottom: 0.5rem; /* Réduit l'espace sous le titre */
 }
 
 .error-message {
   font-size: 1rem; /* Réduit la taille de la police */
   color: vars.$white--smooth;
-  margin-bottom: 0.5rem; /* Réduit l'espace sous le message */
+  margin-bottom: 1.5rem; /* Réduit l'espace sous le message */
 }
 
 .error-link {
   font-size: 1rem; /* Réduit la taille de la police */
   color: vars.$logo;
   animation: blink 1s infinite; /* Animation de clignotement */
-  margin-top: 0.5rem; /* Réduit l'espace au-dessus du lien */
   &:hover {
     color: vars.$white--smooth;
   }
