@@ -14,7 +14,7 @@ Footer {
     bottom: 0;  
     left: 0;
     right: 0;
-    color: vars.$white;
+    color: #6d6868;
     font-size: 0.8rem;
     height: 40px;
     padding: 10px 0;
@@ -31,6 +31,7 @@ Footer {
 
     a {
         text-decoration: underline;
+        color: #6d6868;
     }
 
     a:hover {
