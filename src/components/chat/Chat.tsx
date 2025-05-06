@@ -160,6 +160,9 @@ const Chat: React.FC = () => {
 
   return (
     <div className="chat-container">
+      <div className="chat-header">
+        <h1>Chat</h1>
+      </div>
       <div className="messages">
         <MessageList
           messages={messages}
