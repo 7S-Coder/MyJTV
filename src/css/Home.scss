@@ -41,7 +41,6 @@
         height: calc(100vh - 60px); /* Ajuste la hauteur pour ne pas dépasser la fenêtre visible */
         padding: 0; /* Ajoute un padding de 20px sur les côtés */
 
-
         .video-container {
             flex: none; /* Désactive le partage d'espace */
             width: 100%; /* Prend toute la largeur */
@@ -55,6 +54,8 @@
             width: 100%; /* Prend toute la largeur */
             height: 60%; /* Augmente la hauteur à 60% de l'écran */
             max-width: 100%; /* Enlève la limite de largeur */
+            border-left: none;
+            border-right: none;
         }
     }
 
