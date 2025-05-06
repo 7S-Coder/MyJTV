@@ -15,6 +15,7 @@ const Chat: React.FC = () => {
   const [userPseudo, setUserPseudo] = useState<string>('');
   const [selectedMessage, setSelectedMessage] = useState<Message | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [recentPseudos, setRecentPseudos] = useState<string[]>([]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
@@ -112,6 +113,12 @@ const Chat: React.FC = () => {
     scrollToBottom();
   }, [messages]);
 
+  useEffect(() => {
+    // Update the list of the last three unique pseudonyms whenever messages change
+    const uniquePseudos = [...new Set(messages.map((msg) => msg.pseudo))];
+    setRecentPseudos(uniquePseudos.slice(-3));
+  }, [messages]);
+
   const handleSendMessage = async (message: string) => {
     try {
       const savedUser = getUserFromCookies();
@@ -184,6 +191,7 @@ const Chat: React.FC = () => {
         onSendMessage={handleSendMessage}
         forbiddenWords={forbiddenWords}
         currentUserPseudo={getUserFromCookies()?.pseudo || ''}
+        recentPseudos={recentPseudos} // Pass recent pseudonyms to MessageForm
       />
       {isModalOpen && (
         <AdminModal

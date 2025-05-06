@@ -3,13 +3,14 @@ import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../utils/firebase/firebaseConfig';
 import { assignModeratorRoleAutomatically } from '../RoleManager';
 
-type MessageFormProps = {
+interface MessageFormProps {
   onSendMessage: (message: string) => void;
   forbiddenWords: string[];
-  currentUserPseudo: string; // Ajout du pseudo de l'utilisateur actuel
-};
+  currentUserPseudo: string;
+  recentPseudos: string[]; // Add recentPseudos prop
+}
 
-const MessageForm: React.FC<MessageFormProps> = ({ onSendMessage, forbiddenWords, currentUserPseudo }) => {
+const MessageForm: React.FC<MessageFormProps> = ({ onSendMessage, forbiddenWords, currentUserPseudo, recentPseudos }) => {
   const [newMessage, setNewMessage] = useState('');
   const [users, setUsers] = useState<string[]>([]);
   const [filteredUsers, setFilteredUsers] = useState<string[]>([]);
@@ -63,8 +64,11 @@ const MessageForm: React.FC<MessageFormProps> = ({ onSendMessage, forbiddenWords
       const matches = users
         .filter((user) => user.toLowerCase().startsWith(searchTerm))
         .filter((user) => user !== currentUserPseudo); // Exclut le pseudo de l'utilisateur actuel
-      setFilteredUsers(matches);
-      setShowSuggestions(matches.length > 0);
+
+      // Combine recentPseudos with matches, ensuring no duplicates
+      const combinedSuggestions = [...new Set([...recentPseudos, ...matches])];
+      setFilteredUsers(combinedSuggestions);
+      setShowSuggestions(combinedSuggestions.length > 0);
     } else {
       setShowSuggestions(false);
     }
