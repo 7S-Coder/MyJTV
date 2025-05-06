@@ -4,7 +4,7 @@ import '../css/Footer.scss';
 const Footer = () => {
   return (
     <footer>
-      <p>&copy; 2025 JeezyTv, powered by <a href="https://checkqa.fr" target="_blank" rel="noopener noreferrer">CheckQA</a></p>
+      <p>&copy; 2025 JEEZY-TV.COM, powered by <a href="https://checkqa.fr" target="_blank" rel="noopener noreferrer">CheckQA</a></p>
       {/* <div className="social-media">
         <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
           <img src="../public/instagram.png" alt="Instagram" />

@@ -13,7 +13,7 @@ body {
   flex-direction: column;
   height: 100vh; /* prendre la hauteur de la fenêtre */
   margin: 0; /* supprimer les marges par défaut */
-  background-color: vars.$primary; /* couleur de fond sombre */
+  background-color: vars.$black; /* couleur de fond sombre */
 }
 
 // Ajout de la règle globale pour la police
@@ -22,8 +22,9 @@ body {
 }
 
 main {
-  max-width: 1350px; /* largeur maximale de la fenêtre principale */
-  margin: 40px auto 0; /* centrer la fenêtre principale horizontalement */
+  // max-width: 1350px; /* largeur maximale de la fenêtre principale */
+  // margin: 40px auto 0; /* centrer la fenêtre principale horizontalement */
+  margin: 10px auto;
 }
 
 button {
