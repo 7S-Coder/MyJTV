@@ -2,11 +2,19 @@
 
 
 
+.chat-container {
+  flex-grow: 1; /* Permet au conteneur de messages de prendre tout l'espace disponible */
+  overflow-y: auto; /* Active le défilement vertical */
+  display: flex;
+  flex-direction: column;
+  max-height: 100vh; /* Limite la hauteur au viewport */
+}
+
 .messages {
-    flex: 1; /* Prend tout l'espace disponible dans .chat-container */
-    padding: 10px;
-    overflow-y: auto; /* Active le défilement vertical si nécessaire */
-    background-color: #1f1f23;
+  flex-grow: 1; /* Permet au conteneur de messages de s'étendre */
+  overflow-y: auto; /* Active le défilement vertical */
+  padding: 10px;
+  background-color: #1f1f23;
 }
 
 .message {
@@ -208,4 +216,8 @@
 
 .timestamp {
   color: #6d6868;
+}
+
+div[ref="messagesEndRef"] {
+  height: 0; /* Supprime la hauteur rouge temporaire */
 }

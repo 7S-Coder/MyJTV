@@ -95,9 +95,17 @@ const Chat: React.FC = () => {
   useEffect(() => {
     const scrollToBottom = () => {
       if (messagesEndRef.current) {
-        setTimeout(() => {
-          messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-        }, 0); // Permet aux mises à jour du DOM de se terminer
+        messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+      }
+    };
+
+    scrollToBottom();
+  }, []);
+
+  useEffect(() => {
+    const scrollToBottom = () => {
+      if (messagesEndRef.current) {
+        messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
       }
     };
 
@@ -117,8 +125,6 @@ const Chat: React.FC = () => {
         timestamp: new Date(),
         mentions,
       });
-
-      // Optionnellement, notifier les utilisateurs mentionnés ici
     } catch (error) {
       console.error('Erreur lors de l\'envoi du message :', error);
     }
@@ -153,25 +159,28 @@ const Chat: React.FC = () => {
   };
 
   return (
-    <div className="chat-container scroller">
-      <MessageList
-        messages={messages}
-        onMessageClick={async (message) => {
-          let savedUser = getUserFromCookies();
-          savedUser = await fetchUserWithRole(savedUser);
+    <div className="chat-container">
+      <div className="messages">
+        <MessageList
+          messages={messages}
+          onMessageClick={async (message) => {
+            let savedUser = getUserFromCookies();
+            savedUser = await fetchUserWithRole(savedUser);
 
-          if (isAdmin(savedUser)) {
-            handleOpenModal(message);
-          }
-        }}
-        isModerator={isModerator(getUserFromCookies())}
-        onDeleteMessage={handleDeleteMessage}
-        currentUser={getUserFromCookies()} // Passe l'utilisateur actuel pour mettre en surbrillance les mentions
-      />
+            if (isAdmin(savedUser)) {
+              handleOpenModal(message);
+            }
+          }}
+          isModerator={isModerator(getUserFromCookies())}
+          onDeleteMessage={handleDeleteMessage}
+          currentUser={getUserFromCookies()}
+        />
+        <div ref={messagesEndRef} />
+      </div>
       <MessageForm
         onSendMessage={handleSendMessage}
         forbiddenWords={forbiddenWords}
-        currentUserPseudo={getUserFromCookies()?.pseudo || ''} // Passe le pseudo de l'utilisateur actuel
+        currentUserPseudo={getUserFromCookies()?.pseudo || ''}
       />
       {isModalOpen && (
         <AdminModal
@@ -180,7 +189,6 @@ const Chat: React.FC = () => {
           onClose={handleCloseModal}
         />
       )}
-      <div ref={messagesEndRef} /> {/* S'assure que cela est en bas du chat */}
     </div>
   );
 };
