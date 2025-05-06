@@ -16,6 +16,7 @@ const MessageForm: React.FC<MessageFormProps> = ({ onSendMessage, forbiddenWords
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [userColors, setUserColors] = useState<{ [key: string]: string }>({}); // Stocke les couleurs des utilisateurs
   const suggestionsRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null); // Référence pour l'input
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -89,11 +90,13 @@ const MessageForm: React.FC<MessageFormProps> = ({ onSendMessage, forbiddenWords
 
     onSendMessage(newMessage);
     setNewMessage('');
+    inputRef.current?.blur(); // Retire le focus de l'input pour fermer le clavier sur iOS
   };
 
   return (
     <div className="message-form" style={{ position: 'relative' }} ref={suggestionsRef}>
       <input
+        ref={inputRef} // Associe la référence à l'input
         type="text"
         placeholder="Écrivez votre message..."
         enterKeyHint="send"
