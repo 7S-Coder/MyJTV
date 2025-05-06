@@ -19,6 +19,7 @@ body {
 // Ajout de la règle globale pour la police
 * {
   font-family: vars.$font;
+  box-sizing: border-box; /* inclure la bordure et le padding dans la largeur totale */
 }
 
 main {
