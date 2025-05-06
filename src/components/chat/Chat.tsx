@@ -185,7 +185,6 @@ const Chat: React.FC = () => {
           onDeleteMessage={handleDeleteMessage}
           currentUser={getUserFromCookies()}
         />
-        <div ref={messagesEndRef} />
       </div>
       <MessageForm
         onSendMessage={handleSendMessage}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Message, User } from '../../types';
 
 interface MessageListProps {
@@ -17,16 +17,25 @@ const MessageList: React.FC<MessageListProps> = ({
   currentUser,
 }) => {
   const currentUserPseudo = currentUser?.pseudo || ''; // Définit une chaîne vide si le pseudo est undefined
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // Scroll automatiquement vers le dernier message
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [messages]);
 
   return (
     <div className="messages">
-      {messages.map((message) => (
+      {messages.map((message, index) => (
         <div
           key={message.id}
           className={`message ${
             message.mentions?.includes(currentUserPseudo) ? 'highlight' : ''
           }`}
           onClick={() => onMessageClick(message)}
+          ref={index === messages.length - 1 ? messagesEndRef : null} // Associe la référence au dernier message
         >
           <span className="timestamp">
             {new Date(message.timestamp?.toDate()).toLocaleTimeString([], {
