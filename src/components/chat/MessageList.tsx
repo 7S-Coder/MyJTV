@@ -33,7 +33,7 @@ const MessageList: React.FC<MessageListProps> = ({
               hour: '2-digit',
               minute: '2-digit',
             })}
-            :
+            &nbsp;
           </span>
           <strong
             className="user-color"
@@ -41,8 +41,8 @@ const MessageList: React.FC<MessageListProps> = ({
               color: message.color || '#fff',
             }}
           >
-            {message.pseudo || 'User'}:
-          </strong>{' '}
+            {message.pseudo || 'User'}
+          </strong>:{' '}
           {message.text.split(' ').map((word, index) =>
             word.startsWith('@') ? (
               <span
