@@ -11,8 +11,8 @@
 
   .chat-header {
     padding-left: 20px;
-    // border-bottom: 1px solid #2a2a2e;
-    border-bottom: 1px solid vars.$black;
+    border-bottom: 1px solid #2a2a2e;
+    background-color: vars.$black;
     h1 {
       font-size: 1.1rem;
       color: vars.$white;
@@ -96,8 +96,7 @@
   display: flex;
   padding: 10px;
   background-color: #1f1f23;
-  // border-top: 1px solid #2a2a2e;
-  border-top: 1px solid vars.$black;
+  border-top: 1px solid #2a2a2e;
 }
 
 .message-form input {
