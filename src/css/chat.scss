@@ -9,6 +9,7 @@
   flex-direction: column;
   max-height: 100vh; /* Limite la hauteur au viewport */
   border: 1px solid vars.$grey--smooth;
+  overflow-x: hidden; /* Empêche le défilement horizontal */
 
   .chat-header {
     padding-left: 20px;

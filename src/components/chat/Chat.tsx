@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { collection, addDoc, onSnapshot, query, orderBy, doc, getDoc, deleteDoc } from 'firebase/firestore';
+import { collection, onSnapshot, query, orderBy, doc, getDoc, deleteDoc } from 'firebase/firestore';
 import { auth, db, fetchUserData } from '../../utils/firebase/firebaseConfig';
 import { getUserFromCookies, setUserCookies } from '../../utils/cookies';
 import { assignModeratorRoleAutomatically } from '../RoleManager.tsx';
@@ -19,7 +19,7 @@ const Chat: React.FC = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
-  const forbiddenWords = ['hitler'];
+  const forbiddenWords = ['hitler', '/[A-Z]{3,}/' , 'salope', 'connard', 'enculé', 'merde', 'fils de pute', 'fdp', 'merde', 'putain', 'pute', 'connasse'];
 
   const isModerator = (user: User | null) => user?.role === 'moderator';
 
@@ -119,24 +119,6 @@ const Chat: React.FC = () => {
     setRecentPseudos(uniquePseudos.slice(-3));
   }, [messages]);
 
-  const handleSendMessage = async (message: string) => {
-    try {
-      const savedUser = getUserFromCookies();
-      const mentions = message.match(/@\w+/g)?.map((mention) => mention.substring(1)) || [];
-
-      await addDoc(collection(db, 'messages'), {
-        text: message,
-        pseudo: savedUser?.pseudo || userPseudo,
-        color: savedUser?.color || '#fff',
-        uid: auth.currentUser?.uid,
-        timestamp: new Date(),
-        mentions,
-      });
-    } catch (error) {
-      console.error('Erreur lors de l\'envoi du message :', error);
-    }
-  };
-
   const handleDeleteMessage = async (messageId: string) => {
     try {
       const savedUser = getUserFromCookies();
@@ -187,10 +169,10 @@ const Chat: React.FC = () => {
         />
       </div>
       <MessageForm
-        onSendMessage={handleSendMessage}
+        onSendMessage={() => {}} // Simplified callback
         forbiddenWords={forbiddenWords}
         currentUserPseudo={getUserFromCookies()?.pseudo || ''}
-        recentPseudos={recentPseudos} // Pass recent pseudonyms to MessageForm
+        recentPseudos={recentPseudos}
       />
       {isModalOpen && (
         <AdminModal
