@@ -94,6 +94,22 @@ const VideoPlayer: React.FC = () => {
     };
   }, [streamUrl, attempts]);
 
+  useEffect(() => {
+    const handleOrientationChange = () => {
+      if (window.screen.orientation && window.screen.orientation.type.startsWith('landscape')) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        document.exitFullscreen().catch(() => {});
+      }
+    };
+
+    window.addEventListener('orientationchange', handleOrientationChange);
+
+    return () => {
+      window.removeEventListener('orientationchange', handleOrientationChange);
+    };
+  }, []);
+
   return (
     <div className="video-container">
       {streamStatus === 'not_available' ? (
