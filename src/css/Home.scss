@@ -72,8 +72,8 @@
 
 
 
-// LANDSCAPE 
-@media (orientation: landscape) {
+
+@media (max-width: 768px) and (orientation: landscape) {
     .chat-container {
       background-color: rgba(0, 0, 0, 0.5); // Rend uniquement le fond semi-transparent
       transition: background-color 0.3s ease; // Ajoute une transition pour un effet fluide
@@ -82,6 +82,4 @@
     .chat-container .message:not(:last-child) {
       display: none; // Masque tous les messages sauf le plus récent
     }
-  
-    
-  }
+}
