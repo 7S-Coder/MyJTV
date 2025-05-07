@@ -13,6 +13,7 @@ interface MessageFormProps {
 
 const MessageForm: React.FC<MessageFormProps> = ({ onSendMessage, forbiddenWords, currentUserPseudo, recentPseudos }) => {
   const [newMessage, setNewMessage] = useState('');
+  const [placeholder, setPlaceholder] = useState('Écrivez votre message...');
   const [users, setUsers] = useState<string[]>([]);
   const [filteredUsers, setFilteredUsers] = useState<string[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -92,6 +93,9 @@ const MessageForm: React.FC<MessageFormProps> = ({ onSendMessage, forbiddenWords
       uppercasePattern.test(newMessage) ||
       repeatedLettersPattern.test(newMessage)
     ) {
+      setNewMessage(''); // Clear the input field
+      setPlaceholder('Message non autorisé'); // Show error message
+      setTimeout(() => setPlaceholder('Écrivez votre message...'), 9000); // Reset placeholder after 3 seconds
       return;
     }
 
@@ -120,7 +124,7 @@ const MessageForm: React.FC<MessageFormProps> = ({ onSendMessage, forbiddenWords
       <input
         ref={inputRef}
         type="text"
-        placeholder="Écrivez votre message..."
+        placeholder={placeholder}
         enterKeyHint="send"
         value={newMessage}
         onChange={(e) => handleInputChange(e.target.value)}
