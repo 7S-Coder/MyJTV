@@ -11,6 +11,10 @@ nav {
         
     background-color: vars.$black; /* Couleur de fond sombre */
     color: vars.$white;
+
+    span:hover {
+        cursor: pointer !important;
+    }
     
 
 
