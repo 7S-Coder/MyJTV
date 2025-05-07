@@ -39,6 +39,9 @@ const VideoPlayer: React.FC = () => {
                 overrideNative: true,
               },
             },
+            userActions: {
+              seek: false, // Désactiver la recherche manuelle
+            },
             sources: [
               {
                 src: streamUrl,
@@ -48,6 +51,16 @@ const VideoPlayer: React.FC = () => {
           };
 
           const player = (playerRef.current = videojs(videoRef.current, options));
+
+          let lastTime = 0; // Stocke la position maximale atteinte
+
+          player.on('timeupdate', () => {
+            if (player.currentTime() < lastTime) {
+              player.currentTime(lastTime); // Empêche de revenir en arrière
+            } else {
+              lastTime = player.currentTime(); // Met à jour la position maximale
+            }
+          });
 
           player.on('loadedmetadata', () => {
             setStreamStatus('ready');
