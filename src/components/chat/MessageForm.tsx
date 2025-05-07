@@ -95,7 +95,7 @@ const MessageForm: React.FC<MessageFormProps> = ({ onSendMessage, forbiddenWords
     ) {
       setNewMessage(''); // Clear the input field
       setPlaceholder('Message non autorisé'); // Show error message
-      setTimeout(() => setPlaceholder('Écrivez votre message...'), 9000); // Reset placeholder after 3 seconds
+      setTimeout(() => setPlaceholder('Écrivez votre message...'), 2000); // Reset placeholder after 3 seconds
       return;
     }
 
