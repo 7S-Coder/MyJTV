@@ -13,6 +13,17 @@ const UpdatePseudo = () => {
     const handleSavePseudo = async () => {
         setErrorMessage(''); // Réinitialise le message d'erreur
 
+        const user = getUserFromCookies();
+        if (!user || !user.uid) {
+            setErrorMessage('Utilisateur introuvable.');
+            return;
+        }
+
+        if (user.pseudo !== 'Utilisateur') {
+            setErrorMessage('Vous ne pouvez pas changer de pseudo .');
+            return;
+        }
+
         if (!newPseudo.trim()) {
             setErrorMessage('Le pseudo est obligatoire.');
             return;
@@ -25,12 +36,6 @@ const UpdatePseudo = () => {
 
         if (newPseudo.length > 10) {
             setErrorMessage('Le pseudo ne doit pas dépasser 10 caractères.');
-            return;
-        }
-
-        const user = getUserFromCookies();
-        if (!user || !user.uid) {
-            setErrorMessage('Utilisateur introuvable.');
             return;
         }
 
