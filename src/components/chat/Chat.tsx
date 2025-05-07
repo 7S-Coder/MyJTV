@@ -168,12 +168,14 @@ const Chat: React.FC = () => {
           currentUser={getUserFromCookies()}
         />
       </div>
-      <MessageForm
-        onSendMessage={() => {}} // Simplified callback
-        forbiddenWords={forbiddenWords}
-        currentUserPseudo={getUserFromCookies()?.pseudo || ''}
-        recentPseudos={recentPseudos}
-      />
+      <div className="message-form">
+        <MessageForm
+          onSendMessage={() => {}} // Simplified callback
+          forbiddenWords={forbiddenWords}
+          currentUserPseudo={getUserFromCookies()?.pseudo || ''}
+          recentPseudos={recentPseudos}
+        />
+      </div>
       {isModalOpen && (
         <AdminModal
           selectedMessage={selectedMessage}
