@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth, db, generateRandomColor, setUserInCookies } from '../utils/firebase/firebaseConfig';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
+import { updatePseudo } from '../utils/updatePseudo'; // Import the function
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -18,7 +19,6 @@ const Login = () => {
             const userDoc = await getDoc(userRef);
 
             if (!userDoc.exists()) {
-                // Si l'utilisateur n'a pas encore de document dans Firestore, créez-le
                 const color = generateRandomColor();
                 await setDoc(userRef, {
                     email: user.email,
@@ -30,10 +30,11 @@ const Login = () => {
                 console.log('Document utilisateur créé avec un pseudo par défaut.');
             }
 
+            await updatePseudo(user.uid); // Call the function to update pseudo
+
             const userWithRole = await setUserInCookies(user);
             if (userWithRole) {
                 console.log('Utilisateur connecté avec rôle :', userWithRole);
-                // Redirigez ou mettez à jour l'état de l'application après la connexion
             }
         } catch (err) {
             console.error('Erreur lors de la connexion :', err);
