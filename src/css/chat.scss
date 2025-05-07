@@ -96,20 +96,27 @@
 }
 
 .message-form {
-  display: flex;
+  flex-shrink: 0; // Empêche la réduction de la taille
+  width: 100%; // Assure que l'input prend toute la largeur du parent
+  display: flex; // Active le flexbox pour les enfants
   padding: 10px;
   background-color: #1f1f23;
   border-top: 1px solid vars.$grey--smooth;
+
+  .message-form {
+    padding: 0;
+  }
 }
 
 .message-form input {
-  flex: 1;
+  flex: 1; // Permet à l'input de s'étendre pour remplir l'espace disponible
   padding: 10px;
   border: none;
   border-radius: 4px;
   background-color: vars.$grey--smooth;
   color: #fff;
   font-size: 14px;
+  width: 100%; // S'assure que l'input prend toute la largeur
 }
 
 .message-form input::placeholder {
@@ -117,7 +124,7 @@
 }
 
 .message-form button {
-  margin-left: 5px; /* Add spacing between buttons */
+  margin-left: 5px; // Ajoute un espacement entre l'input et le bouton
   padding: 10px 16px;
   border: none;
   border-radius: 4px;
