@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Cookies from 'js-cookie';
 import Login from '../components/AuthLogics/Login';
 import Register from '../components/AuthLogics/Register';
-import '../css/Auth.scss';
+import '../css/pages/Auth.scss';
 
 const Auth = () => {
     const [isLogin, setIsLogin] = useState(true);

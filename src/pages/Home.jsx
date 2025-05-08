@@ -2,7 +2,7 @@
 import React from 'react';
 import Chat from '../components/chat/Chat'; 
 import VideoPlayer from '../components/stream/VideoPlayer';
-import '../css/Home.scss';
+import '../css/pages/Home.scss';
 
 const Home = () => {
   return (
