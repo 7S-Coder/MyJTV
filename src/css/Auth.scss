@@ -1,215 +1,163 @@
 @use './_variables' as vars;
 
-
+.auth-page {
+    background-color: #000; // Fond noir
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: vars.$white;
+    font-family: vars.$font;
+}
 
 .auth-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    color: vars.$white;
-    font-family: vars.$font;
+    background-color: #111; // Fond du conteneur
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    max-width: 400px;
+    width: 100%;
+}
 
-    .auth-header {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+.auth-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 1.5rem;
 
-        h2 {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: vars.$white;
-            margin-bottom: 0.5rem; // Reduce space below the heading
-        }
-
-        p {
-            font-size: 0.875rem;
-            color: vars.$white--smooth;
-            margin-top: 0; // Remove any additional space above the paragraph
-        }
+    h2 {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: #fff;
+        margin-bottom: 0.5rem;
     }
 
-    .auth-form {
-        display: flex;
-        flex-direction: column;
-        align-items: stretch;
-        width: 100%;
-        max-width: 400px;
-        padding: 1.5rem;
-        background-color: vars.$primary--dark;
-        border-radius: 8px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 1rem;
-
-            label {
-                font-size: 0.8rem;
-                color: vars.$white--smooth;
-                margin-bottom: 0.5rem;
-            }
-
-            input {
-                width: 100%;
-                padding: 0.6rem;
-                border: 1px solid vars.$white--smooth2;
-                border-radius: 4px;
-                font-size: 0.9rem;
-                background-color: vars.$white--smooth2;
-                box-sizing: border-box; // Fix input overflow
-                transition: border-color 0.2s ease;
-
-                &:focus {
-                    border-color: vars.$logo;
-                    outline: none;
-                }
-            }
-
-            span {
-                color: #e91916; // Error color
-            }
-        }
-
-        .forgot-password {
-            display: flex;
-            margin-bottom: 1rem;
-
-            a {
-                font-size: 0.8rem;
-                color: vars.$logo;
-                text-decoration: none;
-                transition: color 0.2s ease;
-
-                &:hover {
-                    color: vars.$white--smooth;
-                }
-            }
-        }
-
-        .form-actions {
-            display: flex;
-            flex-direction: column;
-            align-items: stretch; // Ensure buttons align properly within the container
-            justify-content: center; // Center content vertically if needed
-            gap: 0.8rem;
-
-            .primary-button {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                width: 100%;
-                border: none;
-                border-radius: 4px;
-                font-size: 0.9rem;
-                font-weight: bold;
-                color: vars.$white;
-                background-color: vars.$logo;
-                transition: background-color 0.2s ease, transform 0.1s ease;
-                box-sizing: border-box; // Ensure padding and border are included in width
-                margin: 0; // Reset margin to avoid overflow;
-
-                &:hover {
-                    cursor: pointer;
-                }
-
-                &:active {
-                    transform: scale(0.98);
-                }
-            }
-
-            .secondary-button {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                padding: 0.6rem;
-                border: 1px solid vars.$logo;
-                border-radius: 4px;
-                font-size: 0.9rem;
-                font-weight: bold;
-                color: vars.$logo;
-                background-color: transparent;
-                transition: background-color 0.2s ease, color 0.2s ease;
-                box-sizing: border-box; // Ensure consistent sizing
-
-                &:hover {
-                    background-color: vars.$white--smooth;
-                    color: vars.$black;
-                    cursor: pointer;
-                }
-            }
-
-            .switch-auth-mode {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                gap: 0.5rem; // Add spacing between <p> and <a>
-
-                p, a {
-                    font-size: 0.8rem; // Ensure both have the same font size
-                    color: vars.$white--smooth; // Default color for <p>
-                }
-
-                a {
-                    color: vars.$logo; // Override color for <a>
-                    text-decoration: none;
-                    transition: color 0.2s ease;
-
-                    &:hover {
-                        color: vars.$white--smooth;
-                    }
-                }
-            }
-        }
-    }
-
-    .cookies-popup {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        position: fixed;
-        bottom: 1rem;
-        left: 50%;
-        transform: translateX(-50%);
-        background-color: vars.$white;
-        padding: 0.8rem 1.5rem;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        text-align: center;
-
-        p {
-            margin-bottom: 0.8rem;
-            font-size: 0.8rem;
-            color: #333;
-        }
-
-        button {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 0.4rem 0.8rem;
-            border: none;
-            border-radius: 5px;
-            background-color: vars.$logo;
-            color: vars.$white;
-            font-size: 0.8rem;
-            font-weight: bold;
-            transition: background-color 0.3s ease;
-
-            &:hover {
-                cursor: pointer;
-            }
-        }
-    }
-
-    .error-message {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: #e91916;
-        font-size: 0.8rem;
-        margin-bottom: 0.8rem;
+    p {
+        font-size: 0.9rem;
+        color: #aaa;
         text-align: center;
     }
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    .form-group {
+        margin-bottom: 1rem;
+
+        label {
+            font-size: 0.85rem;
+            color: #ccc;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.6rem;
+            border: 1px solid #444;
+            border-radius: 4px;
+            background-color: #222;
+            color: #fff;
+            font-size: 0.9rem;
+            box-sizing: border-box;
+
+            &:focus {
+                border-color: #e50914; // Rouge Netflix-like
+                outline: none;
+            }
+        }
+
+        span {
+            color: #e91916; // Rouge pour les erreurs
+            font-size: 0.8rem;
+        }
+    }
+
+    .primary-button {
+        background-color: #e50914; // Rouge Netflix-like
+        color: #fff;
+        font-size: 1rem;
+        font-weight: bold;
+        padding: 0.8rem;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+
+        &:hover {
+            background-color: #b00710;
+        }
+
+        &:active {
+            transform: scale(0.98);
+        }
+    }
+}
+
+.switch-auth-mode {
+    margin-top: 1rem;
+    text-align: center;
+
+    p {
+        font-size: 0.85rem;
+        color: #aaa;
+    }
+
+    a {
+        font-size: 0.85rem;
+        color: #e50914; // Rouge Netflix-like
+        text-decoration: none;
+        transition: color 0.2s ease;
+
+        &:hover {
+            color: #fff;
+        }
+    }
+}
+
+.cookies-popup {
+    position: fixed;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #222;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    text-align: center;
+
+    p {
+        font-size: 0.85rem;
+        color: #ccc;
+        margin-bottom: 0.5rem;
+    }
+
+    button {
+        background-color: #e50914;
+        color: #fff;
+        font-size: 0.85rem;
+        font-weight: bold;
+        padding: 0.5rem 1rem;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+
+        &:hover {
+            background-color: #b00710;
+        }
+    }
+}
+
+.error-message {
+    color: #e91916;
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+    text-align: center;
 }

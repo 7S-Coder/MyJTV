@@ -1,168 +1,70 @@
 import React, { useState } from 'react';
-import { auth, db, handleUserAfterAuth, generateRandomColor } from '../utils/firebase/firebaseConfig';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
-import { setUserCookies } from '../utils/cookies';
-import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
+import Login from '../components/AuthLogics/Login';
+import Register from '../components/AuthLogics/Register';
 import '../css/Auth.scss';
-import { doc, setDoc } from 'firebase/firestore';
-import Cookies from 'js-cookie'; // Ajout de l'importation manquante
 
 const Auth = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [isLogin, setIsLogin] = useState(true);
-  const [cookiesAccepted, setCookiesAccepted] = useState(Cookies.get('cookiesAccepted') === 'true');
-  const [errorMessage, setErrorMessage] = useState('');
-  const navigate = useNavigate();
+    const [isLogin, setIsLogin] = useState(true);
+    const [cookiesAccepted, setCookiesAccepted] = useState(Cookies.get('cookiesAccepted') === 'true');
+    const [errorMessage, setErrorMessage] = useState('');
 
-  const validateEmail = (email) => {
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@(gmail|hotmail|outlook)\.(fr|com)$/;
-    return emailRegex.test(email);
-  };
+    const handleAcceptCookies = () => {
+        Cookies.set('cookiesAccepted', 'true', { expires: 365 });
+        setCookiesAccepted(true);
+    };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setErrorMessage('');
-    if (!cookiesAccepted) {
-      alert('Vous devez accepter les cookies pour continuer.');
-      return;
-    }
-
-    if (!validateEmail(email)) {
-      setErrorMessage("Veuillez entrer un email valide.");
-      return;
-    }
-
-    try {
-      if (isLogin) {
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        const user = userCredential.user;
-
-        if (!user.emailVerified) {
-          setErrorMessage('Veuillez vérifier votre email avant de vous connecter.');
-          return;
-        }
-
-        await setUserCookies(user);
-        navigate('/');
-      } else {
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        const user = userCredential.user;
-
-        // Créez un document utilisateur dans Firestore avec un pseudo par défaut et une couleur aléatoire
-        const userRef = doc(db, 'users', user.uid);
-        const userData = {
-          email: user.email,
-          pseudo: 'Utilisateur',
-          color: generateRandomColor(),
-          role: 'user',
-          createdAt: new Date(),
-        };
-        await setDoc(userRef, userData);
-
-        await sendEmailVerification(user);
-        setErrorMessage('Un email de vérification a été envoyé. Veuillez vérifier votre boîte de réception.');
-
-        auth.signOut(); // Déconnecter l'utilisateur après l'envoi de l'email de vérification
-      }
-    } catch (error) {
-      if (error.code === 'auth/weak-password') {
-        setErrorMessage('Le mot de passe doit contenir au moins 6 caractères.');
-      } else if (error.code === 'auth/email-already-in-use') {
-        setErrorMessage('Cet email est déjà utilisé.');
-      } else if (error.code === 'auth/user-not-found') {
-        setErrorMessage('Utilisateur non trouvé.');
-      } else if (error.code === 'auth/wrong-password') {
-        setErrorMessage('Mot de passe incorrect.');
-      } else {
-        setErrorMessage('Une erreur est survenue. Veuillez réessayer.');
-      }
-      console.error('Authentication error:', error);
-    }
-  };
-
-  const handleAcceptCookies = () => {
-    Cookies.set('cookiesAccepted', 'true', { expires: 365 });
-    setCookiesAccepted(true);
-  };
-
-  return (
-    <main className="auth-page">
-      <div className="auth-container">
-        <div className="auth-header">
-          <h2>{isLogin ? "T'es là ?" : 'Créer un compte'}</h2>
-          <p>{isLogin ? 'Quel plaisir de te revoir. Ne rate pas le RDV !' : 'Rejoignez-nous dès maintenant.'}</p>
-        </div>
-        {errorMessage && <p className="error-message">{errorMessage}</p>}
-        <form onSubmit={handleSubmit} className="auth-form">
-          <div className="form-group">
-            <label htmlFor="email">Email <span>*</span></label>
-            <input
-              id="email"
-              type="email"
-              placeholder="Votre email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              autoComplete="email"
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="password">Mot de passe <span>*</span></label>
-            <input
-              id="password"
-              type="password"
-              placeholder="Votre mot de passe"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              autoComplete="current-password"
-              required
-            />
-          </div>
-          <div className="form-actions">
-            <button type="submit" className="primary-button">
-              {isLogin ? 'Se connecter' : "S'inscrire"}
-            </button>
-            <div className="switch-auth-mode">
-              {isLogin ? (
-                <>
-                  <p>Pas encore de compte ?</p>
-                  <a
-                    href="#"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setIsLogin(false);
-                    }}
-                  >
-                    Créer un compte
-                  </a>
-                </>
-              ) : (
-                <>
-                  <p>Déjà un compte ?</p>
-                  <a
-                    href="#"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setIsLogin(true);
-                    }}
-                  >
-                    Se connecter
-                  </a>
-                </>
-              )}
+    return (
+        <main className="auth-page">
+            <div className="auth-container">
+                <div className="auth-header">
+                    <h2>{isLogin ? "T'es là ?" : 'Créer un compte'}</h2>
+                    <p>{isLogin ? 'Quel plaisir de te revoir. Ne rate pas le RDV !' : 'Rejoignez-nous dès maintenant.'}</p>
+                </div>
+                {errorMessage && <p className="error-message">{errorMessage}</p>}
+                {isLogin ? (
+                    <Login setErrorMessage={setErrorMessage} />
+                ) : (
+                    <Register setErrorMessage={setErrorMessage} />
+                )}
+                <div className="switch-auth-mode">
+                    {isLogin ? (
+                        <>
+                            <p>Pas encore de compte ?</p>
+                            <a
+                                href="#"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    setIsLogin(false);
+                                }}
+                            >
+                                Créer un compte
+                            </a>
+                        </>
+                    ) : (
+                        <>
+                            <p>Déjà un compte ?</p>
+                            <a
+                                href="#"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    setIsLogin(true);
+                                }}
+                            >
+                                Se connecter
+                            </a>
+                        </>
+                    )}
+                </div>
+                {!cookiesAccepted && (
+                    <div className="cookies-popup">
+                        <p>Nous utilisons des cookies pour améliorer votre expérience. Acceptez-vous les cookies ?</p>
+                        <button onClick={handleAcceptCookies}>Accepter</button>
+                    </div>
+                )}
             </div>
-          </div>
-        </form>
-        {!cookiesAccepted && (
-          <div className="cookies-popup">
-            <p>Nous utilisons des cookies pour améliorer votre expérience. Acceptez-vous les cookies ?</p>
-            <button onClick={handleAcceptCookies}>Accepter</button>
-          </div>
-        )}
-      </div>
-    </main>
-  );
+        </main>
+    );
 };
 
 export default Auth;

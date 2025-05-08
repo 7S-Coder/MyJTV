@@ -91,3 +91,13 @@ export const generateRandomColor = () => {
   ]; // Ajout de nouvelles couleurs
   return colors[Math.floor(Math.random() * colors.length)];
 };
+
+// Fonction pour définir les cookies utilisateur
+export const setUserInCookies = async (user) => {
+  const userData = {
+    uid: user.uid,
+    email: user.email,
+    // Ajoutez d'autres propriétés nécessaires
+  };
+  document.cookie = `user=${JSON.stringify(userData)}; path=/;`;
+};
