@@ -38,8 +38,8 @@
     }
     .box {
         flex-direction: column; /* Place les enfants en colonne */
-        height: calc(100vh - 60px); /* Ajuste la hauteur pour ne pas dépasser la fenêtre visible */
-        padding: 0; /* Ajoute un padding de 20px sur les côtés */
+        height: calc(100vh - 60px); /* Soustrait la hauteur de la navbar (60px) */
+        padding: 0; /* Supprime le padding pour éviter tout dépassement */
 
         .video-container {
             flex: none; /* Désactive le partage d'espace */
@@ -69,28 +69,3 @@
 }
 
 
-
-// @media (max-width: 768px) and (orientation: landscape) {
-//     .chat-container {
-//         background-color: rgba(0, 0, 0, 0.5); // Rend uniquement le fond semi-transparent
-//         transition: background-color 0.3s ease; // Ajoute une transition pour un effet fluide
-//         display: flex;
-//         flex-direction: column; // Empile les éléments verticalement
-//     }
-
-//     .chat-container .messages {
-//         flex: 1; // Permet à la liste des messages de prendre l'espace disponible
-//         display: flex;
-//         flex-direction: column;
-//         justify-content: flex-end; // Aligne le dernier message en bas
-//     }
-
-//     .chat-container .messages .message:not(:last-child) {
-//         display: none; // Masque tous les messages sauf le dernier
-//     }
-
-//     .chat-container .message-form {
-//         flex: none; // Désactive le partage d'espace
-//         display: block; // Affiche l'input pour écrire un message
-//     }
-// }
