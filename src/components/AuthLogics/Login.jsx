@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth, setUserInCookies } from '../../utils/firebase/firebaseConfig';
 import { useNavigate } from 'react-router-dom';
+import ForgetPassword from '../../pages/ForgetPassword';
 
 const Login = ({ setErrorMessage }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [showForgetPasswordModal, setShowForgetPasswordModal] = useState(false);
     const navigate = useNavigate();
 
     const handleLogin = async (e) => {
@@ -33,33 +35,56 @@ const Login = ({ setErrorMessage }) => {
     };
 
     return (
-        <form onSubmit={handleLogin} className="auth-form">
-            <div className="form-group">
-                <label htmlFor="email">Email <span>*</span></label>
-                <input
-                    id="email"
-                    type="email"
-                    placeholder="Votre email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    autoComplete="email"
-                    required
-                />
-            </div>
-            <div className="form-group">
-                <label htmlFor="password">Mot de passe <span>*</span></label>
-                <input
-                    id="password"
-                    type="password"
-                    placeholder="Votre mot de passe"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    autoComplete="current-password"
-                    required
-                />
-            </div>
-            <button type="submit" className="primary-button">Se connecter</button>
-        </form>
+        <>
+            <form onSubmit={handleLogin} className="auth-form">
+                <div className="form-group">
+                    <label htmlFor="email">Email <span>*</span></label>
+                    <input
+                        id="email"
+                        type="email"
+                        placeholder="Votre email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        autoComplete="email"
+                        required
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="password">Mot de passe <span>*</span></label>
+                    <input
+                        id="password"
+                        type="password"
+                        placeholder="Votre mot de passe"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        autoComplete="current-password"
+                        required
+                    />
+                </div>
+                <p className="switch-auth-mode">
+                    <a href="#" onClick={(e) => { e.preventDefault(); setShowForgetPasswordModal(true); }}>
+                        Mot de passe oublié ?
+                    </a>
+                </p>
+                <button type="submit" className="primary-button">Se connecter</button>
+            </form>
+            {showForgetPasswordModal && (
+                <>
+                    <div className="modal-backdrop-forget" onClick={() => setShowForgetPasswordModal(false)}></div>
+                    <div className="modal-forget">
+                        <div className="modal-content-forget">
+                            <button
+                                onClick={() => setShowForgetPasswordModal(false)}
+                                className="close-button-forget"
+                            >
+                                &times;
+                            </button>
+                            <ForgetPassword />
+                        </div>
+                    </div>
+                </>
+            )}
+        </>
     );
 };
 

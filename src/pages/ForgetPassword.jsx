@@ -29,15 +29,18 @@ const ForgetPassword = () => {
       {message && <p className="success-message">{message}</p>}
       {error && <p className="error-message">{error}</p>}
       <form onSubmit={handleReset} className="auth-form">
-        <label>Email</label>
-        <input
-          type="email"
-          placeholder="Votre email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <button type="submit" className="primary-button">Envoyer</button>
+        <div className="form-group">
+          <label htmlFor="email">Email</label>
+          <input
+            id="email"
+            type="email"
+            placeholder="Votre email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </div>
+        <button type="submit" className="primary-button btn-forget">Envoyer</button>
       </form>
     </div>
   );
