@@ -28,7 +28,7 @@
   flex-grow: 1; /* Permet au conteneur de messages de s'étendre */
   overflow-y: auto; /* Active le défilement vertical */
   padding-left: 5px;
-  background-color: #1f1f23;
+  background-color: vars.$black; /* Fond sombre pour correspondre au thème */
 }
 
 .message {
@@ -102,7 +102,7 @@
   width: 100%; // Assure que l'input prend toute la largeur du parent
   display: flex; // Active le flexbox pour les enfants
   padding: 10px;
-  background-color: #1f1f23;
+  background-color: vars.$black; /* Fond sombre pour correspondre au thème */
   border-top: 1px solid vars.$grey--smooth;
 
   .message-form {
@@ -115,7 +115,7 @@
   padding: 10px;
   border: none;
   border-radius: 4px;
-  background-color: vars.$grey--smooth;
+  background-color: #1f1f23; /* Fond sombre pour correspondre au thème */
   color: #fff;
   font-size: 14px;
   width: 100%; // S'assure que l'input prend toute la largeur
