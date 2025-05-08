@@ -29,7 +29,7 @@ const VideoPlayer: React.FC = () => {
           if (!videoRef.current || playerRef.current) return;
 
           const options: videojs.VideoJsPlayerOptions = {
-            fluid: true,
+            fluid: false,
             liveui: true,
             controls: true,
             autoplay: 'muted',

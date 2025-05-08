@@ -38,7 +38,7 @@
     }
     .box {
         flex-direction: column; /* Place les enfants en colonne */
-        height: calc(100dvh - 60px); /* Soustrait la hauteur de la navbar (60px) */
+        height: calc(100dvh - 56px); /* Soustrait la hauteur de la navbar (60px) */
         padding: 0; /* Supprime le padding pour éviter tout dépassement */
 
         .video-container {
