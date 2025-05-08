@@ -1,7 +1,11 @@
+@use './_variables' as vars;
+
+
 .update-pseudo-container {
     max-width: 400px;
     margin: 0 auto;
     padding: 0 20px;
+    background-color: vars.$black;
 
     input, button {
         width: 200px;
