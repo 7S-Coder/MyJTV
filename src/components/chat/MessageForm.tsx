@@ -208,7 +208,7 @@ const MessageForm: React.FC<MessageFormProps> = ({
         style={{ flex: 1 }} // Permet à l'input de prendre tout l'espace disponible
       />
       <div className="emoji">
-        <button
+        <button className='emoji-btn'
           onClick={() => setShowEmojiPicker((prev) => !prev)} // Affiche ou masque la boîte emoji
           style={{
             width: '50px',

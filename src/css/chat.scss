@@ -37,12 +37,70 @@ html, body {
   }
 
   .message-form {
-    flex-shrink: 0; /* Empêche la réduction de la taille */
-    width: 100%; /* Assure que le formulaire prend toute la largeur */
+    display: flex; // Aligne les enfants horizontalement
+    align-items: center; // Centre verticalement les éléments
+    position: relative; // Nécessaire pour positionner la boîte emoji
+    flex-shrink: 0; // Empêche la réduction de la taille
+    width: 100%; // Assure que l'input prend toute la largeur du parent
     background-color: vars.$black; /* Fond sombre pour correspondre au thème */
     border-top: 1px solid vars.$grey--smooth;
     padding: 5px; /* Ajoute un léger padding pour éviter que le contenu touche les bords */
     box-sizing: border-box;
+
+    input {
+      flex: 1; // Permet à l'input de prendre tout l'espace disponible
+      padding: 10px;
+      border: none; // Supprime la bordure droite pour fusionner avec le bouton
+      border-radius: 4px 0 0 4px; // Arrondit uniquement les coins gauche
+      color: #fff;
+      font-size: 14px;
+      height: 37px; // Définit une hauteur fixe de 37px
+      background-color: vars.$black;
+      box-sizing: border-box; // Assure que les paddings/bordures sont inclus dans la hauteur
+    }
+
+    input::placeholder {
+      color: #a3a3a3;
+    }
+
+    .emoji {
+      .emoji-btn {
+        width: 50px;
+        height: 37px;
+        background-color: transparent !important; // Force le fond transparent
+        color: #fff !important; // Force la couleur blanche
+        cursor: pointer;
+        border-left: none !important; // Supprime la bordure gauche
+        border-radius: 0 4px 4px 0 !important; // Arrondit uniquement les coins droit
+        box-sizing: border-box;
+        font-size: 1.5em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+        padding: 0;
+        padding-bottom: 5px;
+      }
+
+      button:hover {
+        background-color: rgba(255, 255, 255, 0.1); // Ajoute un léger fond au survol
+      }
+
+      button:active {
+        background-color: rgba(255, 255, 255, 0.2); // Ajoute un fond plus visible au clic
+      }
+    }
+
+    .emoji-picker-container {
+      position: absolute;
+      bottom: 100%; // Positionne la boîte emoji au-dessus de l'input
+      left: 0;
+      background-color: #1f1f23;
+      border: 1px solid vars.$grey--smooth;
+      border-radius: 4px;
+      padding: 10px;
+      z-index: 1000;
+    }
   }
 }
 
@@ -120,74 +178,6 @@ html, body {
   background-color: rgba(0, 0, 0, 0.5); /* Fond semi-transparent */
   padding: 2px 4px;
   border-radius: 4px;
-}
-
-.message-form {
-  display: flex; // Aligne les enfants horizontalement
-  align-items: center; // Centre verticalement les éléments
-  position: relative; // Nécessaire pour positionner la boîte emoji
-  flex-shrink: 0; // Empêche la réduction de la taille
-  width: 100%; // Assure que l'input prend toute la largeur du parent
-  background-color: vars.$black; /* Fond sombre pour correspondre au thème */
-  border-top: 1px solid vars.$grey--smooth;
-  padding: 5px; /* Ajoute un léger padding pour éviter que le contenu touche les bords */
-  box-sizing: border-box;
-
-  .message-form {
-    border-top: none;
-  }
-
-  input {
-    flex: 1; // Permet à l'input de prendre tout l'espace disponible
-    padding: 10px;
-    border: none;
-    border-radius: 4px 0 0 4px; // Arrondit les coins gauche
-    color: #fff;
-    font-size: 14px;
-    height: 37px; // Définit une hauteur fixe de 37px
-    background-color: vars.$black;
-    box-sizing: border-box; // Assure que les paddings/bordures sont inclus dans la hauteur
-  }
-
-  input::placeholder {
-    color: #a3a3a3;
-  }
-
-  .emoji {
-    button {
-      width: 50px;
-      height: 37px; // Définit une hauteur fixe de 37px
-      background-color: vars.$black !important; // Assure que le fond est noir
-      color: #fff; // Assure que le texte reste blanc
-      cursor: pointer;
-      margin: 0;
-      border-radius: 0 4px 4px 0 ; // Arrondit les coins droit
-      box-sizing: border-box;
-      font-size: 1.5em;
-      display: flex;
-      align-items: center;
-      padding-bottom: 15px; // Ajuste le padding pour centrer l'emoji
-    }
-
-    button:hover {
-      background-color: vars.$grey--smooth; // Change la couleur de fond au survol
-    }
-
-    button:active {
-      background-color: vars.$grey--smooth; // Garde la même couleur au clic
-    }
-  }
-
-  .emoji-picker-container {
-    position: absolute;
-    bottom: 100%; // Positionne la boîte emoji au-dessus de l'input
-    left: 0;
-    background-color: #1f1f23;
-    border: 1px solid vars.$grey--smooth;
-    border-radius: 4px;
-    padding: 10px;
-    z-index: 1000;
-  }
 }
 
 .message-form button {
