@@ -98,13 +98,35 @@
   flex-shrink: 0; // Empêche la réduction de la taille
   width: 100%; // Assure que l'input prend toute la largeur du parent
   display: flex; // Active le flexbox pour les enfants
-  padding: 10px;
+  flex-direction: column;
   background-color: vars.$black; /* Fond sombre pour correspondre au thème */
   border-top: 1px solid vars.$grey--smooth;
 
-  .message-form {
-    padding: 0;
+  .emoji {
+    button {
+      width: 50px;
+      background-color: vars.$black;
+      border: 1px solid vars.$grey--smooth;
+      border-radius: 4px;
+      color: #fff; // Assure que le texte reste blanc
+    }
+
+    button:hover {
+      background-color: vars.$grey--smooth; // Change la couleur de fond au survol
+      color: #fff; // Assure que le texte reste blanc
+    }
+
+    button:active {
+      background-color: vars.$grey--smooth; // Garde la même couleur au clic
+      color: #fff; // Assure que le texte reste blanc
+    }
   }
+
+  .emoji-picker-containe {
+    display: flex;
+    flex-direction: row;
+  }
+  
 }
 
 .message-form input {
