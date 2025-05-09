@@ -95,53 +95,65 @@
 }
 
 .message-form {
+  display: flex; // Aligne les enfants horizontalement
+  align-items: center; // Centre verticalement les éléments
+  position: relative; // Nécessaire pour positionner la boîte emoji
   flex-shrink: 0; // Empêche la réduction de la taille
   width: 100%; // Assure que l'input prend toute la largeur du parent
-  display: flex; // Active le flexbox pour les enfants
-  flex-direction: column;
   background-color: vars.$black; /* Fond sombre pour correspondre au thème */
   border-top: 1px solid vars.$grey--smooth;
+  padding-top: 5px;
+
+  .message-form {
+    border-top: none;
+  }
+
+  input {
+    flex: 1; // Permet à l'input de prendre tout l'espace disponible
+    padding: 10px;
+    border: none;
+    border-radius: 4px 0 0 4px; // Arrondit les coins gauche
+    color: #fff;
+    font-size: 14px;
+    height: 37px; // Définit une hauteur fixe de 37px
+    border: 1xp solid vars.$grey--smooth; /* Fond sombre pour correspondre au thème */
+    background-color: vars.$black;
+  }
+
+  input::placeholder {
+    color: #a3a3a3;
+  }
 
   .emoji {
     button {
       width: 50px;
-      background-color: vars.$black;
-      border: 1px solid vars.$grey--smooth;
-      border-radius: 4px;
+      height: 37px; // Définit une hauteur fixe de 37px
+      background-color: vars.$black !important; // Assure que le fond est noir
       color: #fff; // Assure que le texte reste blanc
+      cursor: pointer;
+      margin: 0;
+      border-radius: 0 4px 4px 0 ; // Arrondit les coins droit
     }
 
     button:hover {
       background-color: vars.$grey--smooth; // Change la couleur de fond au survol
-      color: #fff; // Assure que le texte reste blanc
     }
 
     button:active {
       background-color: vars.$grey--smooth; // Garde la même couleur au clic
-      color: #fff; // Assure que le texte reste blanc
     }
   }
 
-  .emoji-picker-containe {
-    display: flex;
-    flex-direction: row;
+  .emoji-picker-container {
+    position: absolute;
+    bottom: 100%; // Positionne la boîte emoji au-dessus de l'input
+    left: 0;
+    background-color: #1f1f23;
+    border: 1px solid vars.$grey--smooth;
+    border-radius: 4px;
+    padding: 10px;
+    z-index: 1000;
   }
-  
-}
-
-.message-form input {
-  flex: 1; // Permet à l'input de s'étendre pour remplir l'espace disponible
-  padding: 10px;
-  border: none;
-  border-radius: 4px;
-  background-color: #1f1f23; /* Fond sombre pour correspondre au thème */
-  color: #fff;
-  font-size: 14px;
-  width: 100%; // S'assure que l'input prend toute la largeur
-}
-
-.message-form input::placeholder {
-  color: #a3a3a3;
 }
 
 .message-form button {

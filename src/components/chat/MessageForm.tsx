@@ -178,11 +178,20 @@ const MessageForm: React.FC<MessageFormProps> = ({
 
   return (
     <div className="message-form" style={{ position: 'relative' }} ref={suggestionsRef}>
-      {showEmojiPicker && (
+      {enableEmojiPicker && showEmojiPicker && (
         <div
           className="emoji-picker-container"
-          ref={emojiPickerRef} // Associe la référence à la boîte emoji
-          style={{ display: 'flex', justifyContent: 'space-between' }}
+          ref={emojiPickerRef}
+          style={{
+            position: 'absolute',
+            bottom: '100%', // Positionne la boîte emoji au-dessus de l'input
+            left: 0,
+            backgroundColor: '#1f1f23',
+            border: '1px solid #333',
+            borderRadius: '4px',
+            padding: '10px',
+            zIndex: 1000,
+          }}
         >
           <Wallet onEmojiSelect={handleEmojiSelect} />
         </div>
@@ -193,10 +202,26 @@ const MessageForm: React.FC<MessageFormProps> = ({
         placeholder={placeholder}
         enterKeyHint="send"
         value={newMessage}
-        onFocus={() => setShowEmojiPicker(true)} // Affiche la boîte emoji au focus
+        onFocus={() => setShowEmojiPicker(false)} // Désactive la boîte emoji au focus
         onChange={(e) => handleInputChange(e.target.value)}
         onKeyDown={handleKeyDown} // Utilise la nouvelle fonction handleKeyDown
+        style={{ flex: 1 }} // Permet à l'input de prendre tout l'espace disponible
       />
+      <div className="emoji">
+        <button
+          onClick={() => setShowEmojiPicker((prev) => !prev)} // Affiche ou masque la boîte emoji
+          style={{
+            width: '50px',
+            height: '100%',
+            backgroundColor: '#1f1f23',
+            border: 'none',
+            color: '#fff',
+            cursor: 'pointer',
+          }}
+        >
+          😄
+        </button>
+      </div>
       {showSuggestions && (
         <ul className="mention-suggestions">
           {filteredUsers.map((user) => (
