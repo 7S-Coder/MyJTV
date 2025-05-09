@@ -1,19 +1,8 @@
 @use '../_variables' as *; // Importe toutes les variables pour les rendre accessibles
 
-body, html {
-    overflow: hidden; /* Empêche le défilement indésirable */
-}
-
-nav {
-    position: fixed; /* Fixe la navbar en haut de l'écran */
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000; /* Assure que la navbar est au-dessus des autres éléments */
-}
 
 main {
-    margin-top: 60px; /* Ajoute un espace sous la navbar pour éviter qu'elle ne chevauche le contenu */
+    margin: 0; /* Supprime la marge sans casser la disposition */
 }
 
 .box {
@@ -47,135 +36,47 @@ main {
 }
 
 @media (max-width: 768px) {
-    // main {
-    //     margin: 0; /* Remove margin for smaller screens */
-    // }
+    body {
+        display: flex; /* Active le flexbox pour le wireframe mobile */
+        flex-direction: column; /* Empile les enfants verticalement */
+        height: 100dvh; /* Assure que la fenêtre prend toute la hauteur de l'écran */
+        margin: 0; /* Supprime les marges */
+        overflow: hidden; /* Empêche tout débordement */
+    }
+
+    main {
+        flex: 1; /* Permet à main de prendre l'espace restant */
+        display: flex;
+        flex-direction: column; /* Empile les enfants verticalement */
+        height: 100%; /* Prend toute la hauteur */
+        overflow: hidden; /* Empêche tout débordement */
+    }
+
     .box {
-        flex-direction: column; /* Place les enfants en colonne */
-        height: calc(100dvh - 56px); /* Soustrait la hauteur de la navbar (60px) */
-        padding: 0; /* Supprime le padding pour éviter tout dépassement */
+        display: flex;
+        flex-direction: column; /* Empile les enfants verticalement */
+        height: 100%; /* Prend toute la hauteur */
+        max-width: 100%; /* S'adapte à la largeur de l'écran */
+        margin: 0; /* Supprime les marges */
+        padding: 0; /* Supprime le padding */
+        overflow: hidden; /* Empêche tout débordement */
 
         .video-container {
-            flex: none; /* Désactive le partage d'espace */
+            flex: 0 0 40%; /* Hauteur fixe de 40% */
             width: 100%; /* Prend toute la largeur */
-            height: 40%; /* Réduit la hauteur à 40% de l'écran */
         }
 
         .chat-container {
-            flex: none; /* Désactive le partage d'espace */
-            display: flex; /* Active le flexbox */
-            flex-direction: column; /* Empile les enfants verticalement */
-            flex-grow: 1; /* Permet au chat de prendre l'espace restant */
-            width: 100%; /* Prend toute la largeur */
-            height: 60%; /* Augmente la hauteur à 60% de l'écran */
-            max-width: 100%; /* Enlève la limite de largeur */
-            background-color: #1e1e1e; /* Ajoute un fond pour le chat */
-            overflow: hidden; /* Empêche tout débordement */
-
-            .chat-header {
-                padding-left: 20px;
-                border-bottom: 1px solid $grey--smooth;
-                background-color: $black;
-                h1 {
-                    font-size: 1.1rem;
-                    color: $white;
-                }
-            }
-
-            .messages {
-                flex-grow: 1; /* Permet au conteneur de messages de s'étendre */
-                overflow-y: auto; /* Active uniquement le défilement vertical */
-                overflow-x: hidden; /* Désactive le défilement horizontal */
-                padding: 5px; /* Ajoute un léger padding pour éviter que le contenu touche les bords */
-                background-color: $black; /* Fond sombre pour correspondre au thème */
-                box-sizing: border-box;
-            }
-
-            .message-form {
-                display: flex; // Aligne les enfants horizontalement
-                align-items: center; // Centre verticalement les éléments
-                position: relative; // Nécessaire pour positionner la boîte emoji
-                flex-shrink: 0; // Empêche la réduction de la taille
-                width: 100%; // Assure que l'input prend toute la largeur du parent
-                background-color: $black; /* Fond sombre pour correspondre au thème */
-                border-top: 1px solid $grey--smooth;
-                padding: 5px; /* Ajoute un léger padding pour éviter que le contenu touche les bords */
-                box-sizing: border-box;
-
-                input {
-                    flex: 1; // Permet à l'input de prendre tout l'espace disponible
-                    padding: 10px;
-                    border: none; // Supprime la bordure droite pour fusionner avec le bouton
-                    border-radius: 4px 0 0 4px; // Arrondit uniquement les coins gauche
-                    color: #fff;
-                    font-size: 14px;
-                    height: 37px; // Définit une hauteur fixe de 37px
-                    background-color: $black;
-                    box-sizing: border-box; // Assure que les paddings/bordures sont inclus dans la hauteur
-                }
-
-                input::placeholder {
-                    color: #a3a3a3;
-                }
-
-                .emoji {
-                    .emoji-btn {
-                        width: 50px;
-                        height: 37px;
-                        background-color: transparent !important; // Force le fond transparent
-                        color: #fff !important; // Force la couleur blanche
-                        cursor: pointer;
-                        border-left: none !important; // Supprime la bordure gauche
-                        border-radius: 0 4px 4px 0 !important; // Arrondit uniquement les coins droit
-                        box-sizing: border-box;
-                        font-size: 1.5em;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        margin: 0;
-                        padding: 0;
-                        padding-bottom: 5px;
-                    }
-
-                    button:hover {
-                        background-color: rgba(255, 255, 255, 0.1); // Ajoute un léger fond au survol
-                    }
-
-                    button:active {
-                        background-color: rgba(255, 255, 255, 0.2); // Ajoute un fond plus visible au clic
-                    }
-                }
-
-                .emoji-picker-container {
-                    position: absolute;
-                    bottom: 100%; // Positionne la boîte emoji au-dessus de l'input
-                    left: 0;
-                    background-color: #1f1f23;
-                    border: 1px solid $grey--smooth;
-                    border-radius: 4px;
-                    padding: 10px;
-                    z-index: 1000;
-                }
-            }
+            flex: 1 1 auto; /* Prend tout l'espace restant */
+            min-height: 0; /* Empêche les débordements */
+            height: 70vh; /* Laisse Flexbox gérer la hauteur */
+            width: 100%; /* Ajuste la largeur */
+            max-width:100%;
+            overflow-y: auto; /* Ajoute un défilement vertical si nécessaire */
+            margin: 0; /* Supprime les marges */
+            padding: 0; /* Supprime le padding */
         }
     }
-
-    .auth-form {
-        padding: 0 10px; /* Réduit le padding pour les petits écrans */
-        box-sizing: border-box; /* Inclut le padding dans la largeur/hauteur totale */
-    }
-
-    Footer {
-        display: none !important; /* Cache le footer */
-    }
 }
 
-@media (orientation: landscape) {
-    Footer {
-        display: none !important; /* Cache le footer en mode paysage */
-    }
-}
-
-
-
-
+    
