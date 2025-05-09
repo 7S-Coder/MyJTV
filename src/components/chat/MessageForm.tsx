@@ -88,7 +88,27 @@ const MessageForm: React.FC<MessageFormProps> = ({
       const combinedSuggestions = [...new Set([...recentPseudos, ...matches])];
       setFilteredUsers(combinedSuggestions);
       setShowSuggestions(combinedSuggestions.length > 0);
+
+      // Auto-complète si une seule suggestion correspond
+      if (combinedSuggestions.length === 1) {
+        const updatedMessage = value.replace(/@\w*$/, `@${combinedSuggestions[0]} `);
+        setNewMessage(updatedMessage);
+        setShowSuggestions(false);
+      }
     } else {
+      setShowSuggestions(false);
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleSendMessage();
+      e.preventDefault();
+    } else if (e.key === 'Tab' && showSuggestions && filteredUsers.length > 0) {
+      e.preventDefault();
+      // Complète avec la première suggestion
+      const updatedMessage = newMessage.replace(/@\w*$/, `@${filteredUsers[0]} `);
+      setNewMessage(updatedMessage);
       setShowSuggestions(false);
     }
   };
@@ -115,11 +135,14 @@ const MessageForm: React.FC<MessageFormProps> = ({
       return;
     }
 
+    // Exclure les mentions combinées avec des emojis de la validation
+    const sanitizedMessage = newMessage.replace(/@\w+/g, '').trim();
+
     // Vérifie si le message contient des mots interdits, plus de trois majuscules consécutives ou des lettres répétées
     if (
-      forbiddenWords.some((word) => newMessage.toLowerCase().includes(word)) ||
-      uppercasePattern.test(newMessage) ||
-      repeatedLettersPattern.test(newMessage)
+      forbiddenWords.some((word) => sanitizedMessage.toLowerCase().includes(word)) ||
+      uppercasePattern.test(sanitizedMessage) ||
+      repeatedLettersPattern.test(sanitizedMessage)
     ) {
       setNewMessage('');
       setPlaceholder('Message non autorisé');
@@ -141,6 +164,7 @@ const MessageForm: React.FC<MessageFormProps> = ({
       });
 
       setNewMessage('');
+      setShowEmojiPicker(false); // Cache la barre des emojis
       inputRef.current?.blur();
     } catch (error) {
       console.error('Erreur lors de l\'envoi du message :', error);
@@ -171,12 +195,7 @@ const MessageForm: React.FC<MessageFormProps> = ({
         value={newMessage}
         onFocus={() => setShowEmojiPicker(true)} // Affiche la boîte emoji au focus
         onChange={(e) => handleInputChange(e.target.value)}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter') {
-            handleSendMessage();
-            e.preventDefault();
-          }
-        }}
+        onKeyDown={handleKeyDown} // Utilise la nouvelle fonction handleKeyDown
       />
       {showSuggestions && (
         <ul className="mention-suggestions">
