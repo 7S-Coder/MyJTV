@@ -177,7 +177,7 @@ const MessageForm: React.FC<MessageFormProps> = ({
   };
 
   return (
-    <div className="message-form" style={{ position: 'relative' }} ref={suggestionsRef}>
+    <>
       {enableEmojiPicker && showEmojiPicker && (
         <div
           className="emoji-picker-container"
@@ -235,7 +235,7 @@ const MessageForm: React.FC<MessageFormProps> = ({
           ))}
         </ul>
       )}
-    </div>
+    </>
   );
 };
 

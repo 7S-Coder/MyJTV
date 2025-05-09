@@ -297,18 +297,3 @@ html, body {
 .timestamp {
   color: vars.$grey;
 }
-
-@media (max-width: 768px) {
-  .chat-container {
-    height: 100dvh; // Assure que le chat occupe toute la hauteur de l'écran sur mobile
-  }
-
-  .messages {
-    max-height: calc(100dvh - 50px); // Ajuste la hauteur pour tenir compte de la barre de saisie
-  }
-
-  .message-form {
-    height: 50px; // Fixe la hauteur de la barre de saisie
-  }
-}
-
