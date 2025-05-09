@@ -1,6 +1,20 @@
 @use '../_variables' as *; // Importe toutes les variables pour les rendre accessibles
 
+body, html {
+    overflow: hidden; /* Empêche le défilement indésirable */
+}
 
+nav {
+    position: fixed; /* Fixe la navbar en haut de l'écran */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000; /* Assure que la navbar est au-dessus des autres éléments */
+}
+
+main {
+    margin-top: 60px; /* Ajoute un espace sous la navbar pour éviter qu'elle ne chevauche le contenu */
+}
 
 .box {
     display: flex;
@@ -33,9 +47,9 @@
 }
 
 @media (max-width: 768px) {
-    main {
-        margin: 0; /* Remove margin for smaller screens */
-    }
+    // main {
+    //     margin: 0; /* Remove margin for smaller screens */
+    // }
     .box {
         flex-direction: column; /* Place les enfants en colonne */
         height: calc(100dvh - 56px); /* Soustrait la hauteur de la navbar (60px) */
@@ -153,6 +167,12 @@
 
     Footer {
         display: none !important; /* Cache le footer */
+    }
+}
+
+@media (orientation: landscape) {
+    Footer {
+        display: none !important; /* Cache le footer en mode paysage */
     }
 }
 
