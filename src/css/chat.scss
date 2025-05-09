@@ -12,8 +12,7 @@ html, body {
   flex-grow: 1; /* Permet au conteneur de messages de prendre tout l'espace disponible */
   display: flex;
   flex-direction: column;
-  max-height: 100vh; /* Limite la hauteur au viewport */
-  height: 100%; /* Assure que le conteneur occupe toute la hauteur */
+  height: 100dvh; // Utilise la hauteur dynamique pour couvrir tout l'écran
   width: 100%; /* Assure que le conteneur ne dépasse pas la largeur de l'écran */
   box-sizing: border-box; /* Inclut les bordures et paddings dans la largeur/hauteur */
   overflow: hidden; /* Empêche tout débordement */
@@ -213,7 +212,6 @@ html, body {
   cursor: not-allowed;
 }
 
-
 .modal { 
   background-color: #1f1f23; /* Match primary site background */
   border: 1px solid vars.$grey--smooth; /* Subtle border for contrast */
@@ -304,5 +302,19 @@ html, body {
 
 .timestamp {
   color: vars.$grey;
+}
+
+@media (max-width: 768px) {
+  .chat-container {
+    height: 100dvh; // Assure que le chat occupe toute la hauteur de l'écran sur mobile
+  }
+
+  .messages {
+    max-height: calc(100dvh - 50px); // Ajuste la hauteur pour tenir compte de la barre de saisie
+  }
+
+  .message-form {
+    height: 50px; // Fixe la hauteur de la barre de saisie
+  }
 }
 
