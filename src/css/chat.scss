@@ -1,14 +1,22 @@
 @use './_variables' as vars;
 
-
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden; // Empêche tout défilement non désiré
+}
 
 .chat-container {
   flex-grow: 1; /* Permet au conteneur de messages de prendre tout l'espace disponible */
-  overflow-y: auto; /* Active le défilement vertical */
+  overflow-y: auto; /* Active uniquement le défilement vertical */
+  overflow-x: hidden; /* Désactive le défilement horizontal */
   display: flex;
   flex-direction: column;
   max-height: 100vh; /* Limite la hauteur au viewport */
-  overflow-x: hidden; /* Empêche le défilement horizontal */
+  width: 100%; /* Assure que le conteneur ne dépasse pas la largeur de l'écran */
+  box-sizing: border-box; /* Inclut les bordures et paddings dans la largeur/hauteur */
 
   .chat-header {
     padding-left: 20px;
@@ -23,9 +31,12 @@
 
 .messages {
   flex-grow: 1; /* Permet au conteneur de messages de s'étendre */
-  overflow-y: auto; /* Active le défilement vertical */
-  padding-left: 5px;
+  overflow-y: auto; /* Active uniquement le défilement vertical */
+  overflow-x: hidden; /* Désactive le défilement horizontal */
+  padding: 5px; /* Ajoute un léger padding pour éviter que le contenu touche les bords */
   background-color: vars.$black; /* Fond sombre pour correspondre au thème */
+  max-height: calc(100vh - 100px); /* Ajuste la hauteur en fonction des autres éléments (comme l'en-tête et le formulaire) */
+  box-sizing: border-box;
 }
 
 .message {
@@ -102,7 +113,8 @@
   width: 100%; // Assure que l'input prend toute la largeur du parent
   background-color: vars.$black; /* Fond sombre pour correspondre au thème */
   border-top: 1px solid vars.$grey--smooth;
-  padding-top: 5px;
+  padding: 5px; /* Ajoute un léger padding pour éviter que le contenu touche les bords */
+  box-sizing: border-box;
 
   .message-form {
     border-top: none;
@@ -116,8 +128,8 @@
     color: #fff;
     font-size: 14px;
     height: 37px; // Définit une hauteur fixe de 37px
-    border: 1xp solid vars.$grey--smooth; /* Fond sombre pour correspondre au thème */
     background-color: vars.$black;
+    box-sizing: border-box; // Assure que les paddings/bordures sont inclus dans la hauteur
   }
 
   input::placeholder {
@@ -133,6 +145,11 @@
       cursor: pointer;
       margin: 0;
       border-radius: 0 4px 4px 0 ; // Arrondit les coins droit
+      box-sizing: border-box;
+      font-size: 1.5em;
+      display: flex;
+      align-items: center;
+      padding-bottom: 15px; // Ajuste le padding pour centrer l'emoji
     }
 
     button:hover {

@@ -219,7 +219,7 @@ const MessageForm: React.FC<MessageFormProps> = ({
             cursor: 'pointer',
           }}
         >
-          😄
+          ☺︎
         </button>
       </div>
       {showSuggestions && (
