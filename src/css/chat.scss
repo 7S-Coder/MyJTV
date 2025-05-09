@@ -10,13 +10,13 @@ html, body {
 
 .chat-container {
   flex-grow: 1; /* Permet au conteneur de messages de prendre tout l'espace disponible */
-  overflow-y: auto; /* Active uniquement le défilement vertical */
-  overflow-x: hidden; /* Désactive le défilement horizontal */
   display: flex;
   flex-direction: column;
   max-height: 100vh; /* Limite la hauteur au viewport */
+  height: 100%; /* Assure que le conteneur occupe toute la hauteur */
   width: 100%; /* Assure que le conteneur ne dépasse pas la largeur de l'écran */
   box-sizing: border-box; /* Inclut les bordures et paddings dans la largeur/hauteur */
+  overflow: hidden; /* Empêche tout débordement */
 
   .chat-header {
     padding-left: 20px;
@@ -26,6 +26,24 @@ html, body {
       font-size: 1.1rem;
       color: vars.$white;
     }
+  }
+
+  .messages {
+    flex-grow: 1; /* Permet au conteneur de messages de s'étendre */
+    overflow-y: auto; /* Active uniquement le défilement vertical */
+    overflow-x: hidden; /* Désactive le défilement horizontal */
+    padding: 5px; /* Ajoute un léger padding pour éviter que le contenu touche les bords */
+    background-color: vars.$black; /* Fond sombre pour correspondre au thème */
+    box-sizing: border-box;
+  }
+
+  .message-form {
+    flex-shrink: 0; /* Empêche la réduction de la taille */
+    width: 100%; /* Assure que le formulaire prend toute la largeur */
+    background-color: vars.$black; /* Fond sombre pour correspondre au thème */
+    border-top: 1px solid vars.$grey--smooth;
+    padding: 5px; /* Ajoute un léger padding pour éviter que le contenu touche les bords */
+    box-sizing: border-box;
   }
 }
 
