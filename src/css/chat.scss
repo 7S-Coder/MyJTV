@@ -47,6 +47,10 @@ html, body {
     padding: 5px; /* Ajoute un léger padding pour éviter que le contenu touche les bords */
     box-sizing: border-box;
 
+    .message-form {
+      border: none; // Supprime la bordure par défaut
+    }
+
     input {
       flex: 1; // Permet à l'input de prendre tout l'espace disponible
       padding: 10px;
