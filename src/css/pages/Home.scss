@@ -69,7 +69,7 @@ main {
         .chat-container {
             flex: 1 1 auto; /* Prend tout l'espace restant */
             min-height: 0; /* Empêche les débordements */
-            height: 70vh; /* Laisse Flexbox gérer la hauteur */
+            height: 70dvh; /* Laisse Flexbox gérer la hauteur */
             width: 100%; /* Ajuste la largeur */
             max-width:100%;
             overflow-y: auto; /* Ajoute un défilement vertical si nécessaire */
