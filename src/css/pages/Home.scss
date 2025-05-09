@@ -10,6 +10,7 @@ main {
     flex-direction: row; /* Arrange les enfants côte à côte */
     align-items: stretch; /* Étire les enfants pour qu'ils aient la même hauteur */
     // max-width: 1200px; /* Limite la largeur maximale de la box */
+    // height: calc( 100vh - 40px - 90px); /* Ajuste la hauteur pour ne pas dépasser la fenêtre visible */
     height: calc( 100vh - 40px - 90px); /* Ajuste la hauteur pour ne pas dépasser la fenêtre visible */
     margin: 0 auto; /* Centre la box horizontalement */
     padding: 0 20px; /* Ajoute un padding de 20px sur les côtés */
@@ -30,53 +31,44 @@ main {
         flex: 1; /* Prend 1 part de l'espace disponible */
         flex-direction: column; /* Empile les enfants verticalement */
         height: 100%; /* Prend toute la hauteur de la box */
-        max-width: 400px; /* Limite la largeur à 400px */
+        max-width: 100%; /* Limite la largeur à 400px */
         background-color: #1e1e1e; /* Ajoute un fond pour le chat */
     }
 }
 
-@media (max-width: 768px) {
-    body {
-        display: flex; /* Active le flexbox pour le wireframe mobile */
-        flex-direction: column; /* Empile les enfants verticalement */
-        height: 100dvh; /* Assure que la fenêtre prend toute la hauteur de l'écran */
-        margin: 0; /* Supprime les marges */
-        overflow: hidden; /* Empêche tout débordement */
-    }
 
-    main {
-        flex: 1; /* Permet à main de prendre l'espace restant */
-        display: flex;
-        flex-direction: column; /* Empile les enfants verticalement */
-        height: 100%; /* Prend toute la hauteur */
-        overflow: hidden; /* Empêche tout débordement */
-    }
-
+    @media (max-width: 768px) {
+        nav {
+            position: fixed; /* Fixe la barre de navigation en haut */
+            width: 100%;
+        }
     .box {
         display: flex;
         flex-direction: column; /* Empile les enfants verticalement */
-        height: 100%; /* Prend toute la hauteur */
-        max-width: 100%; /* S'adapte à la largeur de l'écran */
-        margin: 0; /* Supprime les marges */
-        padding: 0; /* Supprime le padding */
-        overflow: hidden; /* Empêche tout débordement */
+        flex: 1; /* Permet à .box de prendre tout l'espace restant */
+        height: 100vh; /* Prend toute la hauteur */
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        padding-top: 60px;
 
         .video-container {
             flex: 0 0 40%; /* Hauteur fixe de 40% */
-            width: 100%; /* Prend toute la largeur */
+            width: 100%;
         }
 
         .chat-container {
-            flex: 1 1 auto; /* Prend tout l'espace restant */
+            flex: 1; /* Prend tout l'espace restant */
             min-height: 0; /* Empêche les débordements */
-            height: 70dvh; /* Laisse Flexbox gérer la hauteur */
-            width: 100%; /* Ajuste la largeur */
-            max-width:100%;
+            height: auto; /* Laisse Flexbox gérer la hauteur */
+            width: 100%;
             overflow-y: auto; /* Ajoute un défilement vertical si nécessaire */
-            margin: 0; /* Supprime les marges */
-            padding: 0; /* Supprime le padding */
+            margin: 0;
+            padding: 0;
         }
     }
-}
 
-    
+    footer {
+        display: none !important;
+    }
+}

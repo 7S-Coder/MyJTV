@@ -27,14 +27,16 @@ html, body {
     }
   }
 
-  .messages {
+.messages {
     flex-grow: 1; /* Permet au conteneur de messages de s'étendre */
     overflow-y: auto; /* Active uniquement le défilement vertical */
     overflow-x: hidden; /* Désactive le défilement horizontal */
     padding: 5px; /* Ajoute un léger padding pour éviter que le contenu touche les bords */
     background-color: vars.$black; /* Fond sombre pour correspondre au thème */
     box-sizing: border-box;
-  }
+    /* Supprimez cette ligne */
+    /* max-height: calc(100vh - 100px); */
+}
 
   .message-form {
     display: flex; // Aligne les enfants horizontalement
