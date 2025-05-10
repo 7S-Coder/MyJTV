@@ -52,7 +52,8 @@ main {
         overflow: hidden;
         padding-top: 60px;
 
-        @supports (-webkit-appearance: none) {
+
+        @supports (-webkit-touch-callout: none) {
             padding-bottom: 50px; /* Ajoute un padding-bottom spécifique à Chrome */
         }
 
