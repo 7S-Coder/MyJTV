@@ -46,7 +46,7 @@ main {
         display: flex;
         flex-direction: column; /* Empile les enfants verticalement */
         flex: 1; /* Permet à .box de prendre tout l'espace restant */
-        height: 100vh; /* Prend toute la hauteur */
+        height: calc(var(--vh, 1vh) * 100); /* Utilise la constante CSS pour iOS */
         margin: 0;
         padding: 0;
         overflow: hidden;
