@@ -299,3 +299,15 @@ html, body {
 .timestamp {
   color: vars.$grey;
 }
+
+.send-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 5px;
+  padding: 0;
+
+  img {
+    width: 20px;
+  }
+}

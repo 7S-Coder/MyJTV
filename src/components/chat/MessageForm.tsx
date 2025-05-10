@@ -222,6 +222,22 @@ const MessageForm: React.FC<MessageFormProps> = ({
           ☺︎
         </button>
       </div>
+      <div className="send-button">
+        <button
+          className='send-btn'
+          onClick={handleSendMessage} // Appelle la fonction handleSendMessage au clic
+          style={{
+            width: '50px',
+            height: '100%',
+            backgroundColor: '#1f1f23',
+            border: 'none',
+            color: '#fff',
+            cursor: 'pointer',
+          }}
+        >
+          <img src="../../send.png" alt="Envoyer" />
+        </button>
+      </div>
       {showSuggestions && (
         <ul className="mention-suggestions">
           {filteredUsers.map((user) => (
