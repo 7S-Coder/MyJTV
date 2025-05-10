@@ -222,7 +222,7 @@ const MessageForm: React.FC<MessageFormProps> = ({
           ☺︎
         </button>
       </div>
-      {/* <div className="send-button">
+      <div className="send-button">
         <button
           className='send-btn'
           onClick={handleSendMessage} // Appelle la fonction handleSendMessage au clic
@@ -237,7 +237,7 @@ const MessageForm: React.FC<MessageFormProps> = ({
         >
           <img src="../../send.png" alt="Envoyer" />
         </button>
-      </div> */}
+      </div>
       {showSuggestions && (
         <ul className="mention-suggestions">
           {filteredUsers.map((user) => (
