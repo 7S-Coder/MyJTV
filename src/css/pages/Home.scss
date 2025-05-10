@@ -52,6 +52,10 @@ main {
         overflow: hidden;
         padding-top: 60px;
 
+        @supports (-webkit-appearance: none) {
+            padding-bottom: 50px; /* Ajoute un padding-bottom spécifique à Chrome */
+        }
+
         .video-container {
             flex: 0 0 40%; /* Hauteur fixe de 40% */
             width: 100%;
