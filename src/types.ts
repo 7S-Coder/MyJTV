@@ -14,4 +14,5 @@ export interface User {
   color: string;
   role: 'user' | 'moderator' | 'admin';
   email: string; 
+  badges: string[]; // Liste des badges de l'utilisateur, y compris badgeAdmin
 }

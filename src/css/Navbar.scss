@@ -45,14 +45,12 @@ nav {
         background: vars.$primary--dark;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         border-radius: 4px;
-        z-index: 9999;
         display: none; /* Masquer par défaut */
         box-sizing: border-box; /* Inclure padding dans la largeur */
     }
 
     .user-menu {
         position: relative; /* Nécessaire pour que .dropdown-menu utilise right: 0 */
-        z-index: 9999;
     }
 
     .user-menu.open .dropdown-menu {
