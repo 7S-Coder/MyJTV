@@ -72,7 +72,7 @@ html, body {
     .emoji {
       .emoji-btn {
         width: 50px;
-        height: 37px;
+        height: 50px !important;
         background-color: transparent !important; // Force le fond transparent
         color: #fff !important; // Force la couleur blanche
         cursor: pointer;
@@ -300,14 +300,21 @@ html, body {
   color: vars.$grey;
 }
 
-.send-btn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0 5px;
-  padding: 0;
+.send-button {
+  width: 50px;
+  height: 50px;
+  .send-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 5px;
+    padding: 0;
+    padding-bottom: 2px;
+    height: 100%;
 
-  img {
-    width: 20px;
-  }
+    img {
+      width: 20px;
+    }
 }
+}
+
