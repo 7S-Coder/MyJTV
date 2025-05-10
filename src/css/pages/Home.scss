@@ -24,6 +24,7 @@ main {
         height: 100%; /* Prend toute la hauteur de la box */
         background-color: $black;
         color: $white; /* Change la couleur du texte à blanc */
+        z-index: 1;
     }
 
     .chat-container {
@@ -46,7 +47,8 @@ main {
         display: flex;
         flex-direction: column; /* Empile les enfants verticalement */
         flex: 1; /* Permet à .box de prendre tout l'espace restant */
-        height: calc(var(--vh, 1vh) * 100); /* Utilise la constante CSS pour iOS */
+        height: 100vh; /* Prend toute la hauteur */
+        // height: 100%;
         margin: 0;
         padding: 0;
         overflow: hidden;
