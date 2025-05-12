@@ -5,7 +5,7 @@ import { auth } from '../../utils/firebase/firebaseConfig';
 import { getUserFromCookies } from '../../utils/cookies';
 import Wallet from './Emotes/Wallet';
 import emojiRegex from 'emoji-regex'; // Importez la bibliothèque emoji-regex
-import { SendHorizontal } from 'lucide-react';
+import { SendHorizontal, Smile } from 'lucide-react';
 
 interface MessageFormProps {
   onSendMessage: (message: string) => void;
@@ -220,7 +220,7 @@ const MessageForm: React.FC<MessageFormProps> = ({
             cursor: 'pointer',
           }}
         >
-          ☺︎
+          <Smile  size={16}/>
         </button>
       </div>
       <div className="send-button">

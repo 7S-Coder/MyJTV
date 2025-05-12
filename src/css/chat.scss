@@ -72,19 +72,11 @@ html, body {
       .emoji-btn {
         width: 50px;
         height: 50px !important;
-        background-color: transparent !important; // Force le fond transparent
-        color: #fff !important; // Force la couleur blanche
+        background-color: vars.$black !important; // Force le fond transparent
         cursor: pointer;
         border-left: none !important; // Supprime la bordure gauche
-        border-radius: 0 4px 4px 0 !important; // Arrondit uniquement les coins droit
-        box-sizing: border-box;
-        font-size: 1.5em;
-        display: flex;
-        align-items: center;
-        justify-content: center;
         margin: 0;
         padding: 0;
-        padding-bottom: 5px;
       }
 
       button:hover {
@@ -292,16 +284,17 @@ html, body {
 .send-button {
   width: 50px;
   height: 50px;
-    padding-right: 2px;
+    
 
   .send-btn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 5px;
+    // display: flex;
+    // justify-content: center;
+    // align-items: center;
+    
     padding: 0;
-    padding-bottom: 3px;
+    margin: 0;
     background-color: vars.$black !important;
+    height: 100%;
 
     img {
       width: 24px;
