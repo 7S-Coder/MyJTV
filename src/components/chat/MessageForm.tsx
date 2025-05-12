@@ -220,7 +220,8 @@ const MessageForm: React.FC<MessageFormProps> = ({
             cursor: 'pointer',
           }}
         >
-          <Smile  size={16}/>
+      
+          <Smile  size={16} color="#f7f7f8"/>
         </button>
       </div>
       <div className="send-button">
@@ -236,7 +237,7 @@ const MessageForm: React.FC<MessageFormProps> = ({
             cursor: 'pointer',
           }}
         >
-          <SendHorizontal size={16} />
+          <SendHorizontal size={16} color="#f7f7f8" />
         </button>
       </div>
       {showSuggestions && (
