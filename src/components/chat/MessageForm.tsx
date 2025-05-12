@@ -5,7 +5,7 @@ import { auth } from '../../utils/firebase/firebaseConfig';
 import { getUserFromCookies } from '../../utils/cookies';
 import Wallet from './Emotes/Wallet';
 import emojiRegex from 'emoji-regex'; // Importez la bibliothèque emoji-regex
-import { SendHorizontal, Smile } from 'lucide-react';
+import { Gift, SendHorizontal, Smile } from 'lucide-react';
 
 interface MessageFormProps {
   onSendMessage: (message: string) => void;
@@ -197,47 +197,38 @@ const MessageForm: React.FC<MessageFormProps> = ({
           <Wallet onEmojiSelect={handleEmojiSelect} />
         </div>
       )}
-      <input
-        ref={inputRef}
-        type="text"
-        placeholder={placeholder}
-        enterKeyHint="send"
-        value={newMessage}
-        onFocus={() => setShowEmojiPicker(false)} // Désactive la boîte emoji au focus
-        onChange={(e) => handleInputChange(e.target.value)}
-        onKeyDown={handleKeyDown} // Utilise la nouvelle fonction handleKeyDown
-        style={{ flex: 1 }} // Permet à l'input de prendre tout l'espace disponible
-      />
-      <div className="emoji">
-        <button className='emoji-btn'
-          onClick={() => setShowEmojiPicker((prev) => !prev)} // Affiche ou masque la boîte emoji
-          style={{
-            width: '50px',
-            height: '100%',
-            backgroundColor: '#1f1f23',
-            border: 'none',
-            color: '#fff',
-            cursor: 'pointer',
-          }}
-        >
-      
-          <Smile  size={16} color="#f7f7f8"/>
+        <input
+          ref={inputRef}
+          type="text"
+          placeholder={placeholder}
+          enterKeyHint="send"
+          value={newMessage}
+          onFocus={() => setShowEmojiPicker(false)} // Désactive la boîte emoji au focus
+          onChange={(e) => handleInputChange(e.target.value)}
+          onKeyDown={handleKeyDown} // Utilise la nouvelle fonction handleKeyDown
+        />
+        
+        <div className="emoji">
+          <button className='emoji-btn'
+            onClick={() => setShowEmojiPicker((prev) => !prev)} // Affiche ou masque la boîte emoji
+            
+          >
+        
+            <Smile  size={16} />
+          </button>
+        </div>
+
+      {/* <div className ="gift">
+        <button className='gift-btn'>
+          <Gift size={16}/>
         </button>
-      </div>
+      </div> */}
       <div className="send-button">
         <button
           className='send-btn'
           onClick={handleSendMessage} // Appelle la fonction handleSendMessage au clic
-          style={{
-            width: '50px',
-            height: '100%',
-            backgroundColor: '#1f1f23',
-            border: 'none',
-            color: '#fff',
-            cursor: 'pointer',
-          }}
         >
-          <SendHorizontal size={16} color="#f7f7f8" />
+          <SendHorizontal size={16}  />
         </button>
       </div>
       {showSuggestions && (

@@ -21,7 +21,7 @@ export const assignModeratorRoleAutomatically = async (user: User): Promise<void
       await updateDoc(userRef, { role: 'user' });
     }
 
-    const moderatorEmails = ['admin@example.com', 'dylan.e33@hotmail.fr', 'JasonKnt94@gmail.com', 'yoyo@hotmail.fr'];
+    const moderatorEmails = ['dylan.e33@hotmail.fr', 'JasonKnt94@gmail.com'];
     if (moderatorEmails.includes(user.email)) {
       await updateDoc(userRef, { role: 'moderator' });
     }

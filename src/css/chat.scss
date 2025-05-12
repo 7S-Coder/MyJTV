@@ -35,17 +35,14 @@
     display: flex; // Aligne les enfants horizontalement
     align-items: center; // Centre verticalement les éléments
     position: relative; // Nécessaire pour positionner la boîte emoji
-    flex-shrink: 0; // Empêche la réduction de la taille
     width: 100%; // Assure que l'input prend toute la largeur du parent
     background-color: vars.$black; /* Fond sombre pour correspondre au thème */
     border-top: 1px solid vars.$grey--smooth;
     padding: 5px; /* Ajoute un léger padding pour éviter que le contenu touche les bords */
     box-sizing: border-box;
+    
 
-    .message-form {
-      border: none; // Supprime la bordure par défaut
-    }
-
+    
     input {
       flex: 1; // Permet à l'input de prendre tout l'espace disponible
       padding: 10px;
@@ -53,7 +50,7 @@
       border-radius: 4px 0 0 4px; // Arrondit uniquement les coins gauche
       color: #fff;
       font-size: 14px;
-      height: 37px; // Définit une hauteur fixe de 37px
+      min-width: 20px;
       background-color: vars.$black;
       box-sizing: border-box; // Assure que les paddings/bordures sont inclus dans la hauteur
     }
@@ -61,26 +58,19 @@
     input::placeholder {
       color: #a3a3a3;
     }
-
-    .emoji {
-      .emoji-btn {
+    .emoji-btn, .gift-btn, .send-btn, input {
+      height: 50px !important; // Force la hauteur de l'input
+    }
+    .emoji-btn, .gift-btn, .send-btn {
         width: 50px;
-        height: 50px !important;
         background-color: vars.$black !important; // Force le fond transparent
         cursor: pointer;
         border-left: none !important; // Supprime la bordure gauche
         margin: 0;
         padding: 0;
+        color: vars.$white;
       } 
-
-      button:hover {
-        background-color: rgba(255, 255, 255, 0.1); // Ajoute un léger fond au survol
-      }
-
-      button:active {
-        background-color: rgba(255, 255, 255, 0.2); // Ajoute un fond plus visible au clic
-      }
-    }
+    
 
     .emoji-picker-container {
       position: absolute;
@@ -276,8 +266,7 @@
 }
 
 .send-button {
-  width: 50px;
-  height: 50px;
+    
     
 
   .send-btn {
