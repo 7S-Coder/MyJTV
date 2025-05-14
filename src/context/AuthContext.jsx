@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { auth } from '../utils/firebase/firebaseConfig';
 import { onAuthStateChanged, signOut, signInWithEmailAndPassword } from 'firebase/auth';
+import { assignRole as assignUserRole } from '../functions/user/updateUser';
 
 const AuthContext = createContext();
 
@@ -36,11 +37,27 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const assignRole = async (userId, role) => {
+    try {
+      // Appeler la fonction assignRole pour mettre à jour le rôle en base de données
+      await assignUserRole(userId, role);
+
+      // Récupérer les nouvelles données utilisateur depuis Firebase
+      const updatedUser = auth.currentUser;
+      if (updatedUser) {
+        setUser({ ...updatedUser, role }); // Mettre à jour le contexte avec le nouveau rôle
+      }
+    } catch (error) {
+      console.error('Erreur lors de l\'assignation du rôle :', error);
+      throw error; // Relancer l'erreur pour une gestion en amont
+    }
+  };
+
   // Vérifiez si la route actuelle est publique
   const isPublicRoute = publicRoutes.includes(window.location.pathname);
 
   return (
-    <AuthContext.Provider value={{ user, loading, logout, login }}>
+    <AuthContext.Provider value={{ user, loading, logout, login, assignRole }}>
       {/* Affiche les enfants immédiatement pour les routes publiques */}
       {isPublicRoute ? children : !loading && children}
     </AuthContext.Provider>
