@@ -10,7 +10,7 @@ import '../../css/chat.scss';
 import { useNavigate } from 'react-router-dom';
 import { assignRole,  } from '../../functions/user/updateUser';
 import { fetchUserWithRole, isAdmin, isModerator } from '../../functions/user/getUser';
-import { useConfirmationMessage } from '../../contexts/ConfirmationMessageContext';
+import { useConfirmationMessage } from '../../context/ConfirmationMessageContext';
 
 const Chat: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);

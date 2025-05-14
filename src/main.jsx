@@ -2,7 +2,7 @@ import { StrictMode, useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.scss';
 import App from './App.jsx';
-import ConfirmationMessageContext from './contexts/ConfirmationMessageContext'; // Import the context
+import ConfirmationMessageContext from './context/ConfirmationMessageContext'; // Import the context
 
 const Root = () => {
   const [confirmationMessage, setConfirmationMessage] = useState(null);

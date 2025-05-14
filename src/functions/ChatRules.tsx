@@ -5,6 +5,7 @@ export const validateMessage = (message: string, forbiddenWords: string[]) => {
   const repeatedLettersPattern = /(.)\1{3,}/;
   const regex = emojiRegex();
 
+  
   // Check for excessive emojis
   const emojiMatches = message.match(regex);
   if (emojiMatches && emojiMatches.length > 6) {
