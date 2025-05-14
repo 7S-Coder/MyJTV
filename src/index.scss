@@ -1,12 +1,12 @@
-@use './css/_variables';
+@use './css/_variables' as vars;
 
 .confirmation-message {
   position: fixed;
   top: 20px;
   left: 50%; // Center horizontally
   transform: translateX(-50%); // Adjust for the element's width
-  background-color: #4caf50; // Couleur verte pour indiquer le succès
-  color: white;
+  background-color: vars.$grey--smooth; 
+  color: vars.$white;
   padding: 10px 20px;
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
