@@ -1,7 +1,5 @@
 @use './_variables' as vars;
 
-
-
 .chat-container {
   flex-grow: 1; /* Permet au conteneur de messages de prendre tout l'espace disponible */
   display: flex;
@@ -36,19 +34,17 @@
     align-items: center; // Centre verticalement les éléments
     position: relative; // Nécessaire pour positionner la boîte emoji
     width: 100%; // Assure que l'input prend toute la largeur du parent
+    margin-right: 5px;
     background-color: vars.$black; /* Fond sombre pour correspondre au thème */
     border-top: 1px solid vars.$grey--smooth;
     padding: 5px; /* Ajoute un léger padding pour éviter que le contenu touche les bords */
     box-sizing: border-box;
-    
-
     
     input {
       flex: 1; // Permet à l'input de prendre tout l'espace disponible
       padding: 10px;
       border: none; // Supprime la bordure droite pour fusionner avec le bouton
       border-radius: 4px 0 0 4px; // Arrondit uniquement les coins gauche
-      color: #fff;
       font-size: 14px;
       min-width: 20px;
       background-color: vars.$black;
@@ -58,7 +54,7 @@
     input::placeholder {
       color: #a3a3a3;
     }
-    .emoji-btn, .gift-btn, .send-btn, input {
+    .emoji-btn, .gift-btn, .send-btn{
       height: 50px !important; // Force la hauteur de l'input
     }
     .emoji-btn, .gift-btn, .send-btn {
@@ -71,7 +67,6 @@
         color: vars.$white;
       } 
     
-
     .emoji-picker-container {
       position: absolute;
       bottom: 100%; // Positionne la boîte emoji au-dessus de l'input
@@ -284,7 +279,9 @@
       height: 24px;
 
     }
+  }
 }
-}
+
+
 
 

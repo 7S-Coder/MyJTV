@@ -13,6 +13,17 @@ export const getUserFromCookies = () => {
     return userCookie ? JSON.parse(userCookie) : null;
 };
 
+export const getUserCookies = (userId) => {
+    const cookies = document.cookie.split('; ').reduce((acc, cookie) => {
+        const [key, value] = cookie.split('=');
+        acc[key] = decodeURIComponent(value);
+        return acc;
+    }, {});
+
+    // Assuming user cookies are stored in a specific format
+    return cookies[`user_${userId}`] ? JSON.parse(cookies[`user_${userId}`]) : null;
+};
+
 // Ajout de la fonction setUserInCookies
 export const setUserInCookies = async (user) => {
     try {

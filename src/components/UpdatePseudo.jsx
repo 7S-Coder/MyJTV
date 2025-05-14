@@ -5,6 +5,7 @@ import { getUserFromCookies, setUserCookies } from '../utils/cookies';
 import { useNavigate } from 'react-router-dom';
 import '../css/UpdatePseudo.scss'; // Import your CSS file for styling
 
+// A mettre dans UpdateUser
 const UpdatePseudo = () => {
     const [newPseudo, setNewPseudo] = useState('');
     const [errorMessage, setErrorMessage] = useState(''); // État pour le message d'erreur

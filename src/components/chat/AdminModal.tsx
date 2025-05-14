@@ -5,9 +5,10 @@ interface AdminModalProps {
   selectedMessage: Message | null;
   onDeleteMessage: (messageId: string) => void;
   onClose: () => void;
+  assignAdminRole: (userId: string) => void;
 }
 
-const AdminModal: React.FC<AdminModalProps> = ({ selectedMessage, onDeleteMessage, onClose }) => {
+const AdminModal: React.FC<AdminModalProps> = ({ selectedMessage, onDeleteMessage, onClose, assignAdminRole }) => {
   if (!selectedMessage) return null;
 
   return (
@@ -17,6 +18,7 @@ const AdminModal: React.FC<AdminModalProps> = ({ selectedMessage, onDeleteMessag
         <p>Message : {selectedMessage.text}</p>
         <p>Utilisateur : {selectedMessage.pseudo}</p>
         <button onClick={() => onDeleteMessage(selectedMessage.id)}>Supprimer le message</button>
+        <button onClick={() => assignAdminRole(selectedMessage.id)}>Attribuer le rôle d'administrateur</button>
         <button onClick={onClose}>Fermer</button>
       </div>
     </div>

@@ -68,17 +68,6 @@ const MessageList: React.FC<MessageListProps> = ({
               <span key={index}>{word} </span>
             )
           )}
-          {isModerator && (
-            <button
-              className="delete-button"
-              onClick={(e) => {
-                e.stopPropagation(); // Empêche le clic de se propager
-                onDeleteMessage(message.id);
-              }}
-            >
-              Supprimer
-            </button>
-          )}
         </div>
       ))}
     </div>

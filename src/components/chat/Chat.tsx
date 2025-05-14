@@ -1,14 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { collection, onSnapshot, query, orderBy, doc, getDoc, deleteDoc } from 'firebase/firestore';
+import { collection, onSnapshot, query, orderBy, doc, getDoc, deleteDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { auth, db, fetchUserData } from '../../utils/firebase/firebaseConfig';
 import { getUserFromCookies, setUserCookies } from '../../utils/cookies';
-import { assignModeratorRoleAutomatically } from '../RoleManager.tsx';
 import MessageList from './MessageList';
 import MessageForm from './MessageForm';
 import AdminModal from './AdminModal';
 import { Message, User } from '../../types';
 import '../../css/chat.scss';
 import { useNavigate } from 'react-router-dom';
+import { assignAdminRole } from '../../functions/user/updateUser';
+import { useConfirmationMessage } from '../../contexts/ConfirmationMessageContext';
 
 const Chat: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -18,6 +19,7 @@ const Chat: React.FC = () => {
   const [recentPseudos, setRecentPseudos] = useState<string[]>([]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
+  const { setMessage: setConfirmationMessage } = useConfirmationMessage();
 
   const forbiddenWords = ['hitler', '/[A-Z]{3,}/' , 'salope', 'connard', 'enculé', 'merde', 'fils de pute', 'fdp', 'merde', 'putain', 'pute', 'connasse'];
 
@@ -70,7 +72,6 @@ const Chat: React.FC = () => {
     const savedUser = getUserFromCookies();
     if (savedUser) {
       setUserCookies(savedUser);
-      assignModeratorRoleAutomatically(savedUser);
       setUserPseudo(savedUser.pseudo);
     } else if (auth.currentUser) {
       const fetchPseudo = async () => {
@@ -82,10 +83,10 @@ const Chat: React.FC = () => {
             pseudo: userData.pseudo,
             color: userData.color,
             role: userData.role || 'user',
-            email: auth.currentUser.email || '', // S'assure que l'email est toujours une chaîne
+            email: auth.currentUser.email || '',
+            badges: []
           };
           setUserCookies(userWithRole);
-          assignModeratorRoleAutomatically(userWithRole);
           setUserPseudo(userData.pseudo);
         }
       };
@@ -149,8 +150,6 @@ const Chat: React.FC = () => {
 
   return (
     <div className="chat-container">
-
-
       <div className="chat-header">
         <h1>Chat</h1>
       </div>
@@ -183,6 +182,18 @@ const Chat: React.FC = () => {
           selectedMessage={selectedMessage}
           onDeleteMessage={handleDeleteMessage}
           onClose={handleCloseModal}
+          assignAdminRole={async () => {
+            if (selectedMessage?.uid) {
+              try {
+                const message = await assignAdminRole(selectedMessage.uid, 'admin'); // Récupère le message
+                setConfirmationMessage(message); // Passe le message à setConfirmationMessage
+              } catch (error) {
+                console.error('Erreur lors de l’attribution du rôle admin :', error);
+              }
+            } else {
+              console.error('UID de l’utilisateur du message est introuvable.');
+            }
+          }}
         />
       )}
     </div>
