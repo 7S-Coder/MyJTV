@@ -114,7 +114,6 @@ const Chat: React.FC = () => {
       setIsModalOpen(true);
     } else {
       console.error("Vous n'avez pas les permissions nécessaires pour ouvrir cette modale.");
-      setConfirmationMessage("Vous n'avez pas les permissions nécessaires pour effectuer cette action.");
     }
   };
 
