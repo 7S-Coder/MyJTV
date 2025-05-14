@@ -49,6 +49,7 @@
       min-width: 20px;
       background-color: vars.$black;
       box-sizing: border-box; // Assure que les paddings/bordures sont inclus dans la hauteur
+      color: vars.$white; // Couleur du texte
     }
 
     input::placeholder {
