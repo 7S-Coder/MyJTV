@@ -80,6 +80,25 @@
   }
 }
 
+.role-selection {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 300px;
+
+  select {
+    margin-right: 10px;
+    margin-left: 10px;
+    padding: 10px;
+    border-radius: 4px;
+    background-color: vars.$black;
+    color: #fff;
+    height: 40px;
+    font-size: 14px;
+    border: 1px solid vars.$grey--smooth;
+  }
+}
+
 .message {
   margin-bottom: 8px;
   padding: 0 10px 0 0 ;

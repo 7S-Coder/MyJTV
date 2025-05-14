@@ -41,8 +41,8 @@ const updateUserCookies = (userId: string, updatedUserData: Partial<User>): void
   setUserCookies({ ...updatedUserData, uid: userId });
 };
 
-// Assigne admin à un utilisateur 
-export const assignAdminRole = async (userId: string, role: string): Promise<string> => {
+// Assigne un rôle à un utilisateur (admin, moderator, user)
+export const assignRole = async (userId: string, role: string): Promise<string> => {
   let message = "";
   try {
     // Vérifie si l'utilisateur actuel est un administrateur
@@ -69,14 +69,6 @@ export const assignAdminRole = async (userId: string, role: string): Promise<str
       await setDoc(userRef, { role });
       setUserCookies({ uid: userId, role }); // Met à jour les cookies
       message = `Rôle ${role} attribué avec succès à l'utilisateur ${userId}`;
-      return message; // Retourne le message
-    }
-
-    // Vérifie si l'utilisateur cible est déjà admin
-    const userData = userDoc.data();
-    if (userData?.role === 'admin') {
-      console.error("Cet utilisateur est déjà admin."); // Log message
-      message = "Cet utilisateur est déjà admin."; // Message d'erreur
       return message; // Retourne le message
     }
 

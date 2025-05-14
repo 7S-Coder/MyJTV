@@ -8,7 +8,7 @@ import AdminModal from './AdminModal';
 import { Message, User } from '../../types';
 import '../../css/chat.scss';
 import { useNavigate } from 'react-router-dom';
-import { assignAdminRole } from '../../functions/user/UpdateUser';
+import { assignRole } from '../../functions/user/UpdateUser';
 import { useConfirmationMessage } from '../../contexts/ConfirmationMessageContext';
 
 const Chat: React.FC = () => {
@@ -17,6 +17,7 @@ const Chat: React.FC = () => {
   const [selectedMessage, setSelectedMessage] = useState<Message | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [recentPseudos, setRecentPseudos] = useState<string[]>([]);
+  const [selectedRole, setSelectedRole] = useState<string>('user'); // State for selected role
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const { setMessage: setConfirmationMessage } = useConfirmationMessage();
@@ -177,16 +178,20 @@ const Chat: React.FC = () => {
           assignAdminRole={async () => {
             if (selectedMessage?.uid) {
               try {
-                const message = await assignAdminRole(selectedMessage.uid, 'admin'); // Récupère le message
-                setConfirmationMessage(message); // Passe le message à setConfirmationMessage
+                const message = await assignRole(selectedMessage.uid, selectedRole); // Pass selected role
+                setConfirmationMessage(message); // Set confirmation message
               } catch (error) {
-                console.error('Erreur lors de l’attribution du rôle admin :', error);
+                console.error('Erreur lors de l’attribution du rôle :', error);
               }
             } else {
               console.error('UID de l’utilisateur du message est introuvable.');
             }
           }}
-        />
+          selectedRole={selectedRole} // Pass selectedRole state
+          setSelectedRole={setSelectedRole} // Pass setSelectedRole function
+        >
+          
+        </AdminModal>
       )}
     </div>
   );
