@@ -4,8 +4,9 @@ import { db } from '../../utils/firebase/firebaseConfig';
 import { auth } from '../../utils/firebase/firebaseConfig';
 import { getUserFromCookies } from '../../utils/cookies';
 import Wallet from './Emotes/Wallet';
-import emojiRegex from 'emoji-regex'; // Importez la bibliothèque emoji-regex
+import emojiRegex from 'emoji-regex';
 import { Gift, SendHorizontal, Smile } from 'lucide-react';
+import { validateMessage } from '../../functions/ChatRules'; // Import moderation rules
 
 interface MessageFormProps {
   onSendMessage: (message: string) => void;
@@ -123,30 +124,10 @@ const MessageForm: React.FC<MessageFormProps> = ({
   const handleSendMessage = async () => {
     if (newMessage.trim() === '') return;
 
-    const uppercasePattern = /[A-Z]{3,}/;
-    const repeatedLettersPattern = /(.)\1{3,}/;
-    const regex = emojiRegex(); // Utilisez emoji-regex pour détecter les emojis
-
-    // Vérifie si le message contient plus de 6 émotes consécutives
-    const emojiMatches = newMessage.match(regex);
-    if (emojiMatches && emojiMatches.length > 6) {
+    const validationResult = validateMessage(newMessage, forbiddenWords);
+    if (!validationResult.isValid) {
       setNewMessage('');
-      setPlaceholder('Doucement sur les émojis)');
-      setTimeout(() => setPlaceholder('Écrivez votre message...'), 2000);
-      return;
-    }
-
-    // Exclure les mentions combinées avec des emojis de la validation
-    const sanitizedMessage = newMessage.replace(/@\w+/g, '').trim();
-
-    // Vérifie si le message contient des mots interdits, plus de trois majuscules consécutives ou des lettres répétées
-    if (
-      forbiddenWords.some((word) => sanitizedMessage.toLowerCase().includes(word)) ||
-      uppercasePattern.test(sanitizedMessage) ||
-      repeatedLettersPattern.test(sanitizedMessage)
-    ) {
-      setNewMessage('');
-      setPlaceholder('Message non autorisé');
+      setPlaceholder(validationResult.placeholder);
       setTimeout(() => setPlaceholder('Écrivez votre message...'), 2000);
       return;
     }
@@ -165,7 +146,7 @@ const MessageForm: React.FC<MessageFormProps> = ({
       });
 
       setNewMessage('');
-      setShowEmojiPicker(false); // Cache la barre des emojis
+      setShowEmojiPicker(false);
       inputRef.current?.blur();
     } catch (error) {
       console.error('Erreur lors de l\'envoi du message :', error);

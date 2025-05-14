@@ -24,6 +24,7 @@ export const AuthProvider = ({ children }) => {
     await signOut(auth);
   };
 
+  // Fonction de connexion
   const login = async (email, password) => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
@@ -37,6 +38,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // Fonction pour assigner un rôle à un utilisateur
   const assignRole = async (userId, role) => {
     try {
       // Appeler la fonction assignRole pour mettre à jour le rôle en base de données
