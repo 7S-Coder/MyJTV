@@ -8,7 +8,7 @@ import AdminModal from './AdminModal';
 import { Message, User } from '../../types';
 import '../../css/chat.scss';
 import { useNavigate } from 'react-router-dom';
-import { assignAdminRole } from '../../functions/user/updateUser';
+import { assignAdminRole } from '../../functions/user/UpdateUser';
 import { useConfirmationMessage } from '../../contexts/ConfirmationMessageContext';
 
 const Chat: React.FC = () => {
