@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { collection, onSnapshot, query, orderBy, doc, getDoc, deleteDoc, setDoc, updateDoc } from 'firebase/firestore';
+import { collection, onSnapshot, query, orderBy, doc, getDoc, deleteDoc } from 'firebase/firestore'; // Removed unused imports
 import { auth, db, fetchUserData } from '../../utils/firebase/firebaseConfig';
 import { getUserFromCookies, setUserCookies } from '../../utils/cookies';
 import MessageList from './MessageList';
@@ -102,16 +102,6 @@ const Chat: React.FC = () => {
     };
 
     scrollToBottom();
-  }, []);
-
-  useEffect(() => {
-    const scrollToBottom = () => {
-      if (messagesEndRef.current) {
-        messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
-      }
-    };
-
-    scrollToBottom();
   }, [messages]);
 
   useEffect(() => {
@@ -171,7 +161,9 @@ const Chat: React.FC = () => {
       </div>
       <div className="message-form">
         <MessageForm
-          onSendMessage={() => {}} // Simplified callback
+          onSendMessage={(message) => {
+            console.log('Message sent:', message); // Added a basic implementation for onSendMessage
+          }}
           forbiddenWords={forbiddenWords}
           currentUserPseudo={getUserFromCookies()?.pseudo || ''}
           recentPseudos={recentPseudos}
