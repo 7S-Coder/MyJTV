@@ -7,6 +7,8 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { doc, updateDoc } from 'firebase/firestore';
 import { setUserCookies, getUserFromCookies } from '../utils/cookies';
 
+import logo from '../assets/jeezy.jpg'; // Correctly import the logo image
+
 const Navbar = () => {
     const [menuOpen, setMenuOpen] = useState(false);
     const [user, setUser] = useState(null);
@@ -117,7 +119,7 @@ const Navbar = () => {
 
     return (
         <nav>
-            <Link to="/"><img src="/jeezy.jpg" alt="Logo" /></Link>
+            <Link to="/"><img src={logo} alt="Logo" /></Link>
             <ul>
                 {user ? (
                     <li 
