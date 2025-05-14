@@ -9,7 +9,7 @@ import { Message, User } from '../../types';
 import '../../css/chat.scss';
 import { useNavigate } from 'react-router-dom';
 import { assignRole,  } from '../../functions/user/updateUser';
-import { fetchUserWithRole, isAdmin, isModerator } from '../../functions/user/GetUser';
+import { fetchUserWithRole, isAdmin, isModerator } from '../../functions/user/getUser';
 import { useConfirmationMessage } from '../../contexts/ConfirmationMessageContext';
 
 const Chat: React.FC = () => {
