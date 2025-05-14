@@ -13,6 +13,7 @@ export const isAdmin = (user: User | null): boolean => {
   return user?.role === 'admin' || user?.role === 'moderator';
 };
 
+// Fonction pour récupérer les données utilisateur avec le rôle
 export const fetchUserWithRole = async (user: User | null): Promise<User | null> => {
   if (!user) return null; // Retourne null si l'utilisateur est invalide.
 
@@ -36,11 +37,6 @@ export const fetchUserWithRole = async (user: User | null): Promise<User | null>
   return { ...user, role: 'user' }; // Retourne un rôle par défaut si aucune donnée n'est trouvée.
 };
 
-// Fonction utilitaire pour mettre à jour les cookies utilisateur
-const updateUserCookies = (userId: string, updatedUserData: Partial<User>): void => {
-  setUserCookies({ ...updatedUserData, uid: userId });
-};
-
 // Assigne un rôle à un utilisateur (admin, moderator, user)
 export const assignRole = async (userId: string, role: string): Promise<string> => {
   let message = "";
@@ -58,28 +54,24 @@ export const assignRole = async (userId: string, role: string): Promise<string> 
       throw new Error("Seuls les administrateurs peuvent modifier le rôle d'un utilisateur.");
     }
 
-    console.log(`Tentative d'attribution du rôle ${role} à l'utilisateur avec l'ID : ${userId}`);
-
     const userRef = doc(db, 'users', userId);
 
     // Vérifie si le document existe
     const userDoc = await getDoc(userRef);
     if (!userDoc.exists()) {
-      console.error(`Le document utilisateur avec l'ID ${userId} n'existe pas. Création du document.`);
       await setDoc(userRef, { role });
-      setUserCookies({ uid: userId, role }); // Met à jour les cookies
-      message = `Rôle ${role} attribué avec succès à l'utilisateur ${userId}`;
-      return message; // Retourne le message
+    } else {
+      // Met à jour le rôle de l'utilisateur
+      await updateDoc(userRef, { role });
     }
-
-    // Met à jour le rôle de l'utilisateur
-    await updateDoc(userRef, { role });
 
     // Récupérer les données utilisateur mises à jour
     const updatedUserDoc = await getDoc(userRef);
     if (updatedUserDoc.exists()) {
       const updatedUserData = updatedUserDoc.data();
-      setUserCookies({ ...updatedUserData, uid: userId }); // Met à jour les cookies
+      setUserCookies({ ...updatedUserData, uid: userId }); // Met à jour les cookies avec les données les plus récentes
+    } else {
+      console.error("Impossible de récupérer les données utilisateur mises à jour.");
     }
 
     message = `Rôle ${role} attribué avec succès à l'utilisateur ${userId}`; // Message de confirmation

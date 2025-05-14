@@ -8,7 +8,7 @@ import AdminModal from './AdminModal';
 import { Message, User } from '../../types';
 import '../../css/chat.scss';
 import { useNavigate } from 'react-router-dom';
-import { assignRole } from '../../functions/user/UpdateUser';
+import { assignRole, fetchUserWithRole, isAdmin, isModerator } from '../../functions/user/UpdateUser';
 import { useConfirmationMessage } from '../../contexts/ConfirmationMessageContext';
 
 const Chat: React.FC = () => {
@@ -24,30 +24,7 @@ const Chat: React.FC = () => {
 
   const forbiddenWords = ['hitler', '/[A-Z]{3,}/' , 'salope', 'connard', 'enculé', 'merde', 'fils de pute', 'fdp', 'merde', 'putain', 'pute', 'connasse'];
 
-  const isModerator = (user: User | null) => user?.role === 'moderator';
-
-  const isAdmin = (user: User | null) => user?.role === 'admin' || user?.role === 'moderator';
-
-  const fetchUserWithRole = async (user: User | null): Promise<User | null> => {
-    if (!user) return null;
-
-    if (user.role) {
-      return user;
-    }
-
-    try {
-      const userRef = doc(db, 'users', user.uid);
-      const userDoc = await getDoc(userRef);
-      if (userDoc.exists()) {
-        const userData = userDoc.data();
-        return { ...user, role: userData.role };
-      }
-    } catch (error) {
-      console.error('Erreur lors de la récupération du rôle utilisateur :', error);
-    }
-
-    return user;
-  };
+  
 
   useEffect(() => {
     const savedUser = getUserFromCookies();
@@ -129,9 +106,16 @@ const Chat: React.FC = () => {
     }
   };
 
-  const handleOpenModal = (message: Message) => {
-    setSelectedMessage(message);
-    setIsModalOpen(true);
+  const handleOpenModal = async (message: Message) => {
+    const savedUser = await fetchUserWithRole(getUserFromCookies());
+
+    if (isAdmin(savedUser)) {
+      setSelectedMessage(message);
+      setIsModalOpen(true);
+    } else {
+      console.error("Vous n'avez pas les permissions nécessaires pour ouvrir cette modale.");
+      setConfirmationMessage("Vous n'avez pas les permissions nécessaires pour effectuer cette action.");
+    }
   };
 
   const handleCloseModal = () => {
@@ -148,12 +132,7 @@ const Chat: React.FC = () => {
         <MessageList
           messages={messages}
           onMessageClick={async (message) => {
-            let savedUser = getUserFromCookies();
-            savedUser = await fetchUserWithRole(savedUser);
-
-            if (isAdmin(savedUser)) {
-              handleOpenModal(message);
-            }
+            await handleOpenModal(message);
           }}
           isModerator={isModerator(getUserFromCookies())}
           onDeleteMessage={handleDeleteMessage}
@@ -163,7 +142,6 @@ const Chat: React.FC = () => {
       <div className="message-form">
         <MessageForm
           onSendMessage={(message) => {
-            console.log('Message sent:', message); // Added a basic implementation for onSendMessage
           }}
           forbiddenWords={forbiddenWords}
           currentUserPseudo={getUserFromCookies()?.pseudo || ''}
