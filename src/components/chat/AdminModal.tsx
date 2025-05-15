@@ -29,11 +29,13 @@ const AdminModal: React.FC<AdminModalProps> = ({
         <h3>Actions Admin</h3>
         <div className='message-details'>
           <button onClick={() => togglePinnedStatus(selectedMessage.id, !selectedMessage.isPinned)}>
-            <Pin size={16} color='#fff'  />
+            <Pin  color="#ffffff" />
           </button>
           <div>
             <p>
               Message : {selectedMessage.text} <br />
+            </p>
+            <p>
               Utilisateur : {selectedMessage.pseudo}
             </p>
           </div>
