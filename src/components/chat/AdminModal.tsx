@@ -1,5 +1,8 @@
 import React from 'react';
 import { Message } from '../../types';
+import { Pin } from 'lucide-react';
+import { togglePinnedStatus } from '../../functions/database/saveUpdates';
+import "../../css/AdminModal.scss"; // Assurez-vous que le chemin est correct
 
 interface AdminModalProps {
   selectedMessage: Message | null;
@@ -24,8 +27,18 @@ const AdminModal: React.FC<AdminModalProps> = ({
     <div className="modal">
       <div className="modal-content">
         <h3>Actions Admin</h3>
-        <p>Message : {selectedMessage.text}</p>
-        <p>Utilisateur : {selectedMessage.pseudo}</p>
+        <div className='message-details'>
+          <button onClick={() => togglePinnedStatus(selectedMessage.id, !selectedMessage.isPinned)}>
+            <Pin size={16} color='#fff'  />
+          </button>
+          <div>
+            <p>
+              Message : {selectedMessage.text} <br />
+              Utilisateur : {selectedMessage.pseudo}
+            </p>
+          </div>
+        </div>
+        
         <button onClick={() => onDeleteMessage(selectedMessage.id)}>Supprimer le message</button>
         <div className="role-selection">
           <h4>Attribuer un rôle</h4>

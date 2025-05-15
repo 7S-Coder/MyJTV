@@ -1,0 +1,17 @@
+@use './_variables' as vars;
+
+.pinned-message {
+
+    background-color: vars.$black;
+    color: vars.$white;
+    border-top: 1px solid #dee2e6;
+    padding: 10px;
+    z-index: 1000;
+
+    p:nth-child(2) {
+        font-style: italic;
+        color: vars.$grey;
+        font-size: 0.8em;
+        text-align: right;
+    }
+}

@@ -5,10 +5,12 @@ import { getUserFromCookies, setUserCookies } from '../../utils/cookies';
 import MessageList from './MessageList';
 import MessageForm from './MessageForm';
 import AdminModal from './AdminModal';
+import PinnedMessage from './PinnedMessage';
 import { Message, User } from '../../types';
 import '../../css/chat.scss';
 import { useNavigate } from 'react-router-dom';
-import { assignRole,  } from '../../functions/user/updateUser';
+import { assignRole,} from '../../functions/user/updateUser';
+import { togglePinnedStatus ,} from '../../functions/database/saveUpdates';
 import { fetchUserWithRole, isAdmin, isModerator } from '../../functions/user/getUser';
 import { useConfirmationMessage } from '../../context/ConfirmationMessageContext';
 
@@ -19,13 +21,12 @@ const Chat: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [recentPseudos, setRecentPseudos] = useState<string[]>([]);
   const [selectedRole, setSelectedRole] = useState<string>('user'); // State for selected role
+  const [pinnedMessage, setPinnedMessage] = useState<Message | null>(null); // Message épinglé
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const { setMessage: setConfirmationMessage } = useConfirmationMessage();
 
   const forbiddenWords = ['hitler', '/[A-Z]{3,}/' , 'salope', 'connard', 'enculé', 'merde', 'fils de pute', 'fdp', 'merde', 'putain', 'pute', 'connasse'];
-
-  
 
   useEffect(() => {
     const savedUser = getUserFromCookies();
@@ -42,6 +43,9 @@ const Chat: React.FC = () => {
         ...doc.data(),
       })) as Message[];
       setMessages(fetchedMessages);
+
+      const pinned = fetchedMessages.find((msg) => msg.isPinned);
+      setPinnedMessage(pinned || null);
     });
 
     return () => unsubscribe();
@@ -123,11 +127,20 @@ const Chat: React.FC = () => {
     setIsModalOpen(false);
   };
 
+  const handleTogglePinnedStatus = async (messageId: string) => {
+    const messageToPin = messages.find((msg) => msg.id === messageId);
+    if (messageToPin) {
+      await togglePinnedStatus(messageId, !messageToPin.isPinned);
+      setPinnedMessage(!messageToPin.isPinned ? messageToPin : null);
+    }
+  };
+
   return (
     <div className="chat-container">
       <div className="chat-header">
         <h1>Chat</h1>
       </div>
+      <PinnedMessage pinnedMessage={pinnedMessage} />
       <div className="messages">
         <MessageList
           messages={messages}
@@ -137,6 +150,7 @@ const Chat: React.FC = () => {
           isModerator={isModerator(getUserFromCookies())}
           onDeleteMessage={handleDeleteMessage}
           currentUser={getUserFromCookies()}
+          onTogglePinnedStatus={handleTogglePinnedStatus} // Utilise la fonction locale correctement
         />
       </div>
       <div className="message-form">

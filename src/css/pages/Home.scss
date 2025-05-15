@@ -37,8 +37,8 @@ main {
 }
 
 
-    @media (max-width: 768px) {
-        nav {
+@media (max-width: 768px) {
+    nav {
             position: fixed; /* Fixe la barre de navigation en haut */
             width: 100%;
         }
@@ -52,6 +52,10 @@ main {
         padding: 0;
         overflow: hidden;
         padding-top: 60px;
+
+        .chat-header {
+            display: none; /* Cache l'en-tête du chat */
+        }
 
 
         .video-container {
