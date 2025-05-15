@@ -1,6 +1,7 @@
 import React from 'react';
 import { Message } from '../../types';
 import "../../css/PinnedMessage.scss"; // Assurez-vous que le fichier CSS existe
+import { Pin } from 'lucide-react';
 
 interface PinnedMessageProps {
   pinnedMessage: Message | null;
@@ -12,11 +13,12 @@ const PinnedMessage: React.FC<PinnedMessageProps> = ({ pinnedMessage }) => {
   return (
     <div className="pinned-message">
       <p>
-        {pinnedMessage.text}
+        <Pin  size={16} color="#ffffff" /> &nbsp; <em>Épinglé par </em> &nbsp; {pinnedMessage.pseudo}
       </p>
       <p>
-        <em>Par :</em> {pinnedMessage.pseudo}
+        {pinnedMessage.text}
       </p>
+      
     </div>
   );
 };
