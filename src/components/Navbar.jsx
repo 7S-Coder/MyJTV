@@ -173,9 +173,9 @@ const Navbar = () => {
                             <li>
                                 <Link to="/" onClick={() => setMenuOpen(false)} className="dropdown-link"><TvMinimalPlay size={16} />Live</Link>
                             </li>
-                            <li>
+                            {/* <li>
                                 <Link to="/profil" onClick={() => setMenuOpen(false)} className="dropdown-link"><User size={16} />Profil</Link>
-                            </li>
+                            </li> */}
                             <li>
                                 <Link to="/football" onClick={() => setMenuOpen(false)} className="dropdown-link"><Volleyball size={16} />Résultats Foot</Link>
                             </li>
