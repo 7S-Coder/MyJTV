@@ -24,12 +24,17 @@
 
   }
 
+  .message-box{
+    display: flex; /* Aligne les enfants horizontalement */
+    flex-grow: 1;
+  }
+  
+
   .message-form {
     display: flex; // Aligne les enfants horizontalement
     align-items: center; // Centre verticalement les éléments
     position: relative; // Nécessaire pour positionner la boîte emoji
     width: 100%; // Assure que l'input prend toute la largeur du parent
-    margin-right: 5px;
     background-color: vars.$black; /* Fond sombre pour correspondre au thème */
     border-top: 1px solid vars.$grey--smooth;
     padding: 5px; /* Ajoute un léger padding pour éviter que le contenu touche les bords */

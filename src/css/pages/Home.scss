@@ -30,7 +30,7 @@ main {
         display: flex; /* Active le flexbox pour ses enfants */
         flex: 1; /* Prend 1 part de l'espace disponible */
         flex-direction: column; /* Empile les enfants verticalement */
-        height: 100%; /* Prend toute la hauteur de la box */
+        height: calc(90vh - 60px); /* Prend toute la hauteur de la box */
         max-width: 100%; /* Limite la largeur à 400px */
         background-color: #1e1e1e; /* Ajoute un fond pour le chat */
         position: relative
@@ -46,9 +46,8 @@ main {
     .box {
         display: flex;
         flex-direction: column; /* Empile les enfants verticalement */
-        flex: 1; /* Permet à .box de prendre tout l'espace restant */
+        flex: 1 1 auto; /* Permet à .box de grandir/rétrécir correctement */
         height: 100vh; /* Prend toute la hauteur */
-        // height: 100%;
         margin: 0;
         padding: 0;
         overflow: hidden;
@@ -66,8 +65,8 @@ main {
         }
 
         .chat-container {
-            flex: 1; /* Prend tout l'espace restant */
-            min-height: 0; /* Empêche les débordements */
+            flex: 1 1 0; /* Prend tout l'espace restant */
+            min-height: 0; /* Nécessaire pour que le flex fonctionne correctement */
             height: auto; /* Laisse Flexbox gérer la hauteur */
             width: 100%;
             overflow-y: auto; /* Ajoute un défilement vertical si nécessaire */
