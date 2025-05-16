@@ -170,7 +170,7 @@ const Navbar = () => {
                             <Link to="/football" onClick={() => setMenuOpen(false)} className="dropdown-link"><Volleyball size={16} />Résultats Foot</Link>
                                 </li>
                             </ul>
-                            <button className='logout' onClick={handleLogout}><LogOut  size={16} />Déconnexion</button>
+                            <button type="button" className='logout' onClick={handleLogout}><LogOut  size={16} />Déconnexion</button>
                             
                         </div>
                     </li>

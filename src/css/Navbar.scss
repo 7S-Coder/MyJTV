@@ -47,6 +47,10 @@ nav {
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         display: none; /* Masquer par défaut */
         box-sizing: border-box; /* Inclure padding dans la largeur */
+        border: 1px solid vars.$grey--smooth;
+        border-top: none;
+        border-top: right;
+        border-radius: 5px;
         z-index: 9999;
     }
 
@@ -62,13 +66,14 @@ nav {
             li {
                 margin: 0.4em 0;
             }
+            
         }
+        
 
         .logout {
         margin: 0.4em 0;
         padding: 0;
         color: red;
-
     }
 
     
@@ -104,6 +109,7 @@ nav {
         padding: 8px 12px; /* Add padding for better click area */
         text-align: left; /* Align text to the left */
         width: 100%; /* Full width for buttons */
+        
     }
 
     .dropdown-menu li, .dropdown-menu button:hover {
