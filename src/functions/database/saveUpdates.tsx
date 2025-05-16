@@ -17,7 +17,6 @@ export const togglePinnedStatus = async (messageId: string, p0: boolean) => {
       const newIsPinned = !currentIsPinned;
 
       await updateDoc(messageRef, { isPinned: newIsPinned });
-      console.log(`Le statut isPinned du message ${messageId} a été mis à jour à :`, newIsPinned);
     } else {
       console.error('Message introuvable dans la base de données.');
     }

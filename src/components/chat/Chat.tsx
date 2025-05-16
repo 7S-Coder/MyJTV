@@ -135,6 +135,13 @@ const Chat: React.FC = () => {
     }
   };
 
+  const handleUnpinMessage = async () => {
+    if (pinnedMessage) {
+      await togglePinnedStatus(pinnedMessage.id, false);
+      setPinnedMessage(null);
+    }
+  };
+
   return (
     <div className="chat-container">
       <div className="chat-header">
@@ -181,6 +188,7 @@ const Chat: React.FC = () => {
           }}
           selectedRole={selectedRole} // Pass selectedRole state
           setSelectedRole={setSelectedRole} // Pass setSelectedRole function
+          onUnpinMessage={handleUnpinMessage} // Ajoute la prop ici
         >
           
         </AdminModal>

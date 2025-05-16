@@ -48,3 +48,32 @@
     
     }
 }
+
+.pin-btn {
+  background-color: transparent !important;
+  border: none;
+  border-radius: 4px;
+  padding: 6px;
+  cursor: pointer;
+  color: #fff !important;
+}
+
+.pin-btn.pinned {
+  background-color: vars.$white !important;
+  color: #000 !important;
+}
+
+.pin-btn svg {
+  color: inherit !important;
+  stroke: currentColor !important;
+}
+
+.pin-btn.pinned svg {
+  color: #000 !important;
+  stroke: #000 !important;
+}
+
+.unpinMessage {
+    width: 50px;
+    
+}
