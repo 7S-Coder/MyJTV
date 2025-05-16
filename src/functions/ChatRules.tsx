@@ -5,17 +5,21 @@ export const validateMessage = (message: string, forbiddenWords: string[]) => {
   const repeatedLettersPattern = /(.)\1{3,}/;
   const regex = emojiRegex();
 
-  
-  // Check for excessive emojis
+  // Vérifie la longueur maximale du message
+  if (message.length > 50) {
+    return { isValid: false, placeholder: 'Pas de pavés stp' };
+  }
+
+  // Vérifie la présence excessive d'émojis
   const emojiMatches = message.match(regex);
   if (emojiMatches && emojiMatches.length > 6) {
     return { isValid: false, placeholder: 'Doucement sur les émojis)' };
   }
 
-  // Sanitize message by removing mentions
+  // Nettoie le message en supprimant les mentions
   const sanitizedMessage = message.replace(/@\w+/g, '').trim();
 
-  // Check for forbidden words, excessive uppercase, or repeated letters
+  // Vérifie la présence de mots interdits, de majuscules excessives ou de lettres répétées
   if (
     forbiddenWords.some((word) => sanitizedMessage.toLowerCase().includes(word)) ||
     uppercasePattern.test(sanitizedMessage) ||

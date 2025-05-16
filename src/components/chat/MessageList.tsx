@@ -1,13 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { Message, User } from '../../types';
-
-interface MessageListProps {
-  messages: Message[];
-  onMessageClick: (message: Message) => void;
-  isModerator: boolean;
-  onDeleteMessage: (messageId: string) => void;
-  currentUser: User | null;
-}
+import { Message, User, MessageListProps } from '../../types';
 
 const MessageList: React.FC<MessageListProps> = ({
   messages,
@@ -15,6 +7,7 @@ const MessageList: React.FC<MessageListProps> = ({
   isModerator,
   onDeleteMessage,
   currentUser,
+  onTogglePinnedStatus,
 }) => {
   const currentUserPseudo = currentUser?.pseudo || ''; // Définit une chaîne vide si le pseudo est undefined
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -34,7 +27,7 @@ const MessageList: React.FC<MessageListProps> = ({
           className={`message ${
             message.mentions?.includes(currentUserPseudo) ? 'highlight' : ''
           }`}
-          onClick={() => onMessageClick(message)}
+          onClick={() => onMessageClick && onMessageClick(message)}
           ref={index === messages.length - 1 ? messagesEndRef : null} // Associe la référence au dernier message
         >
           <span className="timestamp">
@@ -67,6 +60,11 @@ const MessageList: React.FC<MessageListProps> = ({
             ) : (
               <span key={index}>{word} </span>
             )
+          )}
+          {isModerator && onTogglePinnedStatus && (
+            <button onClick={() => onTogglePinnedStatus(message.id)}>
+              {message.isPinned ? 'Désépingler' : 'Épingler'}
+            </button>
           )}
         </div>
       ))}

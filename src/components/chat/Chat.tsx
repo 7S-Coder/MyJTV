@@ -141,7 +141,7 @@ const Chat: React.FC = () => {
         <h1>Chat</h1>
       </div>
       <PinnedMessage pinnedMessage={pinnedMessage} />
-      <div className="messages">
+      <div className="message-box">
         <MessageList
           messages={messages}
           onMessageClick={async (message) => {

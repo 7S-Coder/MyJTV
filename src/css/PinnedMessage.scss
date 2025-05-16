@@ -27,3 +27,9 @@
     max-height: 40px;
     overflow: hidden;}
 }
+
+@media (max-width: 768px) {
+    .pinned-message {
+        margin-top: 15px;
+    }
+}

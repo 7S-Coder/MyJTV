@@ -54,6 +54,12 @@ main {
         overflow: hidden;
         padding-top: 60px;
 
+        
+
+        .chat-header {
+            display: none !important;
+        }
+
         .video-container {
             flex: 0 0 40%; /* Hauteur fixe de 40% */
             width: 100%;
