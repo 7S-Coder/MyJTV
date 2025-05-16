@@ -39,18 +39,50 @@ nav {
     .dropdown-menu {
         position: absolute;
         top: 100%; /* Positionner sous le parent */
-        right: calc(-2vw); /* Compense le padding de nav */
+        // right: calc(-2vw); /* Compense le padding de nav */
+        right: calc(-3vw); /* Compense le padding de nav */
         margin: 0; /* Supprimer les marges */
         padding: 10px;
-        background: vars.$primary--dark;
+        background: vars.$black;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         display: none; /* Masquer par défaut */
         box-sizing: border-box; /* Inclure padding dans la largeur */
         z-index: 9999;
     }
 
+    
     .user-menu {
         position: relative; /* Nécessaire pour que .dropdown-menu utilise right: 0 */
+
+        ul {
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+            padding-right: 10px;
+            li {
+                margin: 0.4em 0;
+            }
+        }
+
+        .logout {
+        margin: 0.4em 0;
+        padding: 0;
+        color: red;
+
+    }
+
+    
+
+    }
+
+    .logout, .user-menu ul li {
+        font-size: 0.9rem;
+        text-align: left;
+        height: 20px;
+    }
+
+    svg {
+        margin-right: 5px;
     }
 
     .user-menu.open .dropdown-menu {
@@ -78,6 +110,8 @@ nav {
         color: vars.$logo;
         cursor: pointer;
     }
+
+    
 
     
 }

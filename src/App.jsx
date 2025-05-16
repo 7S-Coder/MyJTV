@@ -14,6 +14,8 @@ import ForgetPassword from './pages/ForgetPassword.jsx';
 import ErrorBoundary from './components/ErrorBoundary.jsx'; // Import ErrorBoundary
 import { auth } from './utils/firebase/firebaseConfig';
 import UpdatePseudo from './components/UpdatePseudo';
+import Profile from './pages/Profile.jsx';
+import FootballStats from './pages/FootballStats.jsx';
 
 function App() {
     return (
@@ -45,6 +47,8 @@ function App() {
                                 }
                             />
                             <Route path="/update-pseudo" element={<UpdatePseudo />} />
+                            <Route path="/profil" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+                            <Route path="/football" element={<FootballStats />} />
                             <Route path="*" element={<Error />} />
                         </Routes>
                         <Footer />

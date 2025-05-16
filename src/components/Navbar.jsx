@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { User, Volleyball, LogOut } from 'lucide-react';
 import Cookies from 'js-cookie';
 import '../css/Navbar.scss';
 import { auth, db, fetchUserData } from '../utils/firebase/firebaseConfig'; // Assurez-vous que le chemin pointe vers firebaseConfig.ts
@@ -161,7 +162,16 @@ const Navbar = () => {
                                 </span>
                         )}
                         <div className="dropdown-menu">
-                            <button onClick={handleLogout}>Déconnexion</button>
+                            <ul>
+                                <li>
+                            <Link to="/profil" onClick={() => setMenuOpen(false)} className="dropdown-link"><User size={16} />Profil</Link>
+                                </li>
+                                <li>
+                            <Link to="/football" onClick={() => setMenuOpen(false)} className="dropdown-link"><Volleyball size={16} />Résultats Foot</Link>
+                                </li>
+                            </ul>
+                            <button className='logout' onClick={handleLogout}><LogOut  size={16} />Déconnexion</button>
+                            
                         </div>
                     </li>
                 ) : (
