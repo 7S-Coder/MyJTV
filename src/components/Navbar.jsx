@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { User, Volleyball, LogOut } from 'lucide-react';
+import { TvMinimalPlay, User, Volleyball, LogOut } from 'lucide-react';
 import Cookies from 'js-cookie';
 import '../css/Navbar.scss';
 import { auth, db, fetchUserData } from '../utils/firebase/firebaseConfig'; // Assurez-vous que le chemin pointe vers firebaseConfig.ts
@@ -9,6 +9,7 @@ import { doc, updateDoc } from 'firebase/firestore';
 import { setUserCookies, getUserFromCookies } from '../utils/cookies';
 
 import logo from '../assets/jeezy.jpg'; // Correctly import the logo image
+import DropdownPortal from './DropdownPortal';
 
 const Navbar = () => {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -119,66 +120,71 @@ const Navbar = () => {
     };
 
     return (
-        <nav>
-            <Link to="/"><img src={logo} alt="Logo" /></Link>
-            <ul>
-                {user ? (
-                    <li 
-                        className={`user-menu ${menuOpen ? 'open' : ''}`} 
-                        onClick={() => setMenuOpen(!menuOpen)}
-                    >
-                        {isEditingPseudo ? (
-                            <input
-                                type="text"
-                                value={newPseudo}
-                                onChange={(e) => setNewPseudo(e.target.value)}
-                                onBlur={handlePseudoSave} // Save pseudo on blur
-                                onKeyDown={(e) => {
-                                    if (e.key === 'Enter') handlePseudoSave(); // Save pseudo on Enter
-                                }}
-                                autoFocus
-                                style={{
-                                    color: userColor,
-                                    backgroundColor: 'transparent',
-                                    border: 'none',
-                                    borderBottom: '1px solid #fff',
-                                    outline: 'none',
-                                    fontSize: 'inherit',
-                                    fontFamily: 'inherit',
-                                    width: '100px',
-                                }}
-                            />
-                        ) : (
-                                
+        <>
+            <nav>
+                <Link to="/"><img src={logo} alt="Logo" /></Link>
+                <ul>
+                    {user ? (
+                        <li 
+                            className={`user-menu ${menuOpen ? 'open' : ''}`} 
+                            onClick={() => setMenuOpen(!menuOpen)}
+                        >
+                            {isEditingPseudo ? (
+                                <input
+                                    type="text"
+                                    value={newPseudo}
+                                    onChange={(e) => setNewPseudo(e.target.value)}
+                                    onBlur={handlePseudoSave} // Save pseudo on blur
+                                    onKeyDown={(e) => {
+                                        if (e.key === 'Enter') handlePseudoSave(); // Save pseudo on Enter
+                                    }}
+                                    autoFocus
+                                    style={{
+                                        color: userColor,
+                                        backgroundColor: 'transparent',
+                                        border: 'none',
+                                        borderBottom: '1px solid #fff',
+                                        outline: 'none',
+                                        fontSize: 'inherit',
+                                        fontFamily: 'inherit',
+                                        width: '100px',
+                                    }}
+                                />
+                            ) : (
                                 <span 
-                                
                                     style={{ color: userColor, cursor: isPseudoChangeDisabled ? 'default' : 'pointer' }} 
                                     onClick={handlePseudoEdit}
                                 >
                                     Salut&nbsp;
-                                <strong>{user.pseudo}</strong> 
-                                &nbsp;!
-
+                                    <strong>{user.pseudo}</strong> 
+                                    &nbsp;!
                                 </span>
-                        )}
-                        <div className="dropdown-menu">
-                            <ul>
-                                <li>
-                            <Link to="/profil" onClick={() => setMenuOpen(false)} className="dropdown-link"><User size={16} />Profil</Link>
-                                </li>
-                                <li>
-                            <Link to="/football" onClick={() => setMenuOpen(false)} className="dropdown-link"><Volleyball size={16} />Résultats Foot</Link>
-                                </li>
-                            </ul>
-                            <button type="button" className='logout' onClick={handleLogout}><LogOut  size={16} />Déconnexion</button>
-                            
-                        </div>
-                    </li>
-                ) : (
-                    <li><Link to="/login">Connexion</Link></li>
-                )}
-            </ul>
-        </nav>
+                            )}
+                        </li>
+                    ) : (
+                        <li><Link to="/login">Connexion</Link></li>
+                    )}
+                </ul>
+            </nav>
+            {user && menuOpen && (
+                <DropdownPortal>
+                    <div className="dropdown-menu">
+                        <ul>
+                            <li>
+                                <Link to="/" onClick={() => setMenuOpen(false)} className="dropdown-link"><TvMinimalPlay size={16} />Live</Link>
+                            </li>
+                            <li>
+                                <Link to="/profil" onClick={() => setMenuOpen(false)} className="dropdown-link"><User size={16} />Profil</Link>
+                            </li>
+                            <li>
+                                <Link to="/football" onClick={() => setMenuOpen(false)} className="dropdown-link"><Volleyball size={16} />Résultats Foot</Link>
+                            </li>
+                        </ul>
+                        <button type="button" className='logout' onClick={handleLogout}><LogOut  size={16} />Déconnexion</button>
+                    </div>
+                </DropdownPortal>
+            )}
+        </>
     );
 };
 

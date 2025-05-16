@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import '../css/pages/FootballStats.scss'; // Assurez-vous que le chemin est correct
+import '../css/pages/FootballStats.scss';
 
-const API_URL = 'https://api-football-v1.p.rapidapi.com/v3/'; // Remplacez par l'API de votre choix
-const API_KEY = 'VOTRE_CLE_API'; // Remplacez par votre clé API
+const API_URL = 'hhttps://free-api-live-football-data.p.rapidapi.com/football-get-match-score?eventid=4621624';
+const API_KEY = '0f5076d593msh0a9f0a41a9a8a5ep1ebcf2jsn652272b502bb';
+const API_HOST = 'free-api-live-football-data.p.rapidapi.com';
 
 const FootballStats = () => {
   const [results, setResults] = useState([]);
@@ -10,16 +11,18 @@ const FootballStats = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Exemple: récupération des matchs de la journée
-    fetch(`${API_URL}fixtures?live=all`, {
+    fetch(API_URL, {
       headers: {
         'x-rapidapi-key': API_KEY,
-        'x-rapidapi-host': 'api-football-v1.p.rapidapi.com',
+        'x-rapidapi-host': API_HOST,
       },
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) throw new Error('Erreur API: ' + res.status);
+        return res.json();
+      })
       .then((data) => {
-        setResults(data.response || []);
+        setResults(data.data || []);
         setLoading(false);
       })
       .catch((err) => {
@@ -34,10 +37,10 @@ const FootballStats = () => {
       {loading && <p>Chargement...</p>}
       {error && <p>Erreur: {error}</p>}
       <ul>
-        {results.map((match, idx) => (
+        {results.map((player, idx) => (
           <li key={idx}>
-            {/* Affichez ici les infos du match selon la structure de l'API */}
-            {JSON.stringify(match)}
+            <strong>{player.player_name}</strong> - {player.team_name} <br />
+            Nationalité: {player.nationality} | Âge: {player.age}
           </li>
         ))}
       </ul>

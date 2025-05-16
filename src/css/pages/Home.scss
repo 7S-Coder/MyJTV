@@ -24,6 +24,7 @@ main {
         height: 100%; /* Prend toute la hauteur de la box */
         background-color: $black;
         color: $white; /* Change la couleur du texte à blanc */
+        z-index: 0;
     }
 
     .chat-container {

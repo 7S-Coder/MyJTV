@@ -15,8 +15,6 @@ nav {
     span:hover {
         cursor: pointer !important;
     }
-    
-
 
     img {
         width: 40px;
@@ -28,107 +26,76 @@ nav {
         list-style-type: none;
         margin: 0;
 
-
         li {
-        margin: 0 10px;
-        font-size: 1.0.9;
+            margin: 0 10px;
+            font-size: 1.0.9;
         }
-
     }
+}
 
-    .dropdown-menu {
-        position: absolute;
-        top: 100%; /* Positionner sous le parent */
-        // right: calc(-2vw); /* Compense le padding de nav */
-        right: calc(-3vw); /* Compense le padding de nav */
-        margin: 0; /* Supprimer les marges */
-        padding: 10px;
-        background: vars.$black;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        display: none; /* Masquer par défaut */
-        box-sizing: border-box; /* Inclure padding dans la largeur */
-        border: 1px solid vars.$grey--smooth;
-        border-top: none;
-        border-top: right;
-        border-radius: 5px;
-        z-index: 9999;
-    }
+// Style global pour le dropdown-menu rendu via portail
+.dropdown-menu {
+    position: fixed;
+    top: 60px; /* Ajuste selon la hauteur de ta navbar */
+    right: 2vw; /* Ajuste selon ton layout */
+    margin: 0;
+    padding: 10px;
+    background: vars.$black;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: block;
+    box-sizing: border-box;
+    border: 1px solid vars.$grey--smooth;
+    border-top: none;
+    border-radius: 5px;
+    z-index: 9999;
+    min-width: 180px;
+}
 
-    
-    .user-menu {
-        position: relative; /* Nécessaire pour que .dropdown-menu utilise right: 0 */
+.dropdown-menu ul {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    margin: 0;
+}
 
-        ul {
-            display: flex;
-            flex-direction: column;
-            padding: 0;
-            padding-right: 10px;
-            li {
-                margin: 0.4em 0;
-            }
-            
-        }
-        
+.dropdown-menu li {
+    margin: 0.4em 0;
+    font-size: 0.9rem;
+    text-align: left;
+    height: 20px;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    border-radius: 4px;
+}
 
-        .logout {
-        margin: 0.4em 0;
-        padding: 0;
-        color: red;
-    }
+.dropdown-menu button {
+    background-color: inherit;
+    color: vars.$white;
+    border: none;
+    margin: 0;
+    border-radius: 0;
+    padding: 8px 12px;
+    text-align: left;
+    width: 100%;
+}
 
-    
+.dropdown-menu li, .dropdown-menu button:hover {
+    color: vars.$logo;
+    cursor: pointer;
+}
 
-    }
+.dropdown-menu li:hover, .dropdown-menu button.logout:hover {
+    background: rgba(255,255,255,0.08);
+    color: vars.$logo;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+    cursor: pointer;
+}
 
-    .logout, .user-menu ul li {
-        font-size: 0.9rem;
-        text-align: left;
-        height: 20px;
-    }
+.dropdown-menu button.logout {
+    color: red;
+    margin: 0.4em 0;
+    padding: 0;
+}
 
-    svg {
-        margin-right: 5px;
-    }
-
-    .user-menu.open .dropdown-menu {
-        display: block; /* Afficher le menu déroulant */
-    }
-
-    li:hover .dropdown-menu {
-        display: none; /* Remove hover behavior */
-    }
-
-    
-
-    .dropdown-menu button {
-        background-color: inherit;
-        color: vars.$white;
-        border: none;
-        margin: 0;
-        border-radius: 0;
-        padding: 8px 12px; /* Add padding for better click area */
-        text-align: left; /* Align text to the left */
-        width: 100%; /* Full width for buttons */
-        
-    }
-
-    .dropdown-menu li, .dropdown-menu button:hover {
-        color: vars.$logo;
-        cursor: pointer;
-    }
-
-    .dropdown-menu li, .dropdown-menu button.logout {
-        transition: background 0.2s, color 0.2s, box-shadow 0.2s;
-        border-radius: 4px;
-    }
-    .dropdown-menu li:hover, .dropdown-menu button.logout:hover {
-        background: rgba(255,255,255,0.08);
-        color: vars.$logo;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.10);
-        cursor: pointer;
-    }
-
-    
-
-    
+svg {
+    margin-right: 10px;
 }
