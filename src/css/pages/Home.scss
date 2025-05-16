@@ -30,7 +30,7 @@ main {
         display: flex; /* Active le flexbox pour ses enfants */
         flex: 1; /* Prend 1 part de l'espace disponible */
         flex-direction: column; /* Empile les enfants verticalement */
-        height: calc(90vh - 60px); /* Prend toute la hauteur de la box */
+        height: calc( 100vh - 30px - 60px); 
         max-width: 100%; /* Limite la largeur à 400px */
         background-color: #1e1e1e; /* Ajoute un fond pour le chat */
         position: relative
