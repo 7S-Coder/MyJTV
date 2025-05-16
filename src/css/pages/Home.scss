@@ -33,6 +33,7 @@ main {
         height: 100%; /* Prend toute la hauteur de la box */
         max-width: 100%; /* Limite la largeur à 400px */
         background-color: #1e1e1e; /* Ajoute un fond pour le chat */
+        position: relative
     }
 }
 
@@ -52,11 +53,6 @@ main {
         padding: 0;
         overflow: hidden;
         padding-top: 60px;
-
-        .chat-header {
-            display: none; /* Cache l'en-tête du chat */
-        }
-
 
         .video-container {
             flex: 0 0 40%; /* Hauteur fixe de 40% */

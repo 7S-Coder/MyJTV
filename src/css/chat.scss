@@ -1,13 +1,6 @@
 @use './_variables' as vars;
 
 .chat-container {
-  flex-grow: 1; /* Permet au conteneur de messages de prendre tout l'espace disponible */
-  display: flex;
-  flex-direction: column;
-  height: 100vh; /* Assure que le conteneur couvre toute la hauteur de l'écran */
-  width: 100%; /* Assure que le conteneur ne dépasse pas la largeur de l'écran */
-  box-sizing: border-box; /* Inclut les bordures et paddings dans la largeur/hauteur */
-  overflow: hidden; /* Empêche tout débordement */
 
   .chat-header {
     padding-left: 20px;
@@ -283,13 +276,8 @@
 }
 
 .send-button {
-    
-    
-
   .send-btn {
-    // display: flex;
-    // justify-content: center;
-    // align-items: center;
+    
     
     padding: 0;
     margin: 0;

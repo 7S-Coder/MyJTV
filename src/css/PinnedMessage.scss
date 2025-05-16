@@ -1,16 +1,20 @@
 @use './_variables' as vars;
 
 .pinned-message {
-
     background-color: vars.$grey--smooth;
     color: vars.$white;
-    border-top: 1px solid #dee2e6;
-    padding: 10px;
+    border-top: 2px solid #5c5c5c;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    padding: 14px 16px 10px 16px;
+    margin-top: 60px;
     font-weight: bold;
-    z-index: 1000;
+    width: 90%;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
     
-    
-
     p:nth-child(1) {
         display: flex;
         align-items: center;
@@ -18,4 +22,8 @@
         font-size: 0.8em;
         text-align: right;
     }
+
+    p:nth-child(2) {
+    max-height: 40px;
+    overflow: hidden;}
 }
