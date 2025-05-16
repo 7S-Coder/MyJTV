@@ -6,7 +6,7 @@ export const validateMessage = (message: string, forbiddenWords: string[]) => {
   const regex = emojiRegex();
 
   // Vérifie la longueur maximale du message
-  if (message.length > 50) {
+  if (message.length > 150) {
     return { isValid: false, placeholder: 'Pas de pavés stp' };
   }
 
