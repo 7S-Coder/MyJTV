@@ -117,6 +117,17 @@ nav {
         cursor: pointer;
     }
 
+    .dropdown-menu li, .dropdown-menu button.logout {
+        transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+        border-radius: 4px;
+    }
+    .dropdown-menu li:hover, .dropdown-menu button.logout:hover {
+        background: rgba(255,255,255,0.08);
+        color: vars.$logo;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+        cursor: pointer;
+    }
+
     
 
     
