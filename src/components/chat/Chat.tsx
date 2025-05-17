@@ -43,13 +43,12 @@ const Chat: React.FC = () => {
           const messageData = messageDoc.data();
           const userRef = doc(db, 'users', messageData.uid);
           const userDoc = await getDoc(userRef);
-          console.log('User data for message:', userDoc.data());
           const userBadges = userDoc.exists() && userDoc.data() ? userDoc.data().badges || [] : [];
 
           return {
             id: messageDoc.id,
             ...messageData,
-            badges: userBadges,
+            badges: userBadges, // Ajoute les badges au message
           };
         })
       ) as Message[];

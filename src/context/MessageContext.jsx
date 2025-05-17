@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { collection, onSnapshot, addDoc, deleteDoc, doc } from 'firebase/firestore';
+import { collection, onSnapshot, addDoc, deleteDoc, doc, getDoc } from 'firebase/firestore';
 import { db } from '../utils/firebase/firebaseConfig';
 
 // Création du contexte pour les messages
@@ -11,11 +11,21 @@ export const MessageProvider = ({ children }) => {
   useEffect(() => {
     // Écoute des messages en temps réel depuis Firestore
     const q = collection(db, 'messages');
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-      const fetchedMessages = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
+    const unsubscribe = onSnapshot(q, async (snapshot) => {
+      const fetchedMessages = await Promise.all(
+        snapshot.docs.map(async (doc) => {
+          const messageData = doc.data();
+          const userRef = doc(db, 'users', messageData.uid);
+          const userDoc = await getDoc(userRef);
+          const userBadges = userDoc.exists() && userDoc.data() ? userDoc.data().badges || [] : [];
+
+          return {
+            id: doc.id,
+            ...messageData,
+            badges: userBadges, // Ajoute les badges au message
+          };
+        })
+      );
       setMessages(fetchedMessages);
     });
 
