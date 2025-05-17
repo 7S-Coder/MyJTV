@@ -33,6 +33,11 @@ export const assignRole = async (userId: string, role: string): Promise<string> 
       await updateDoc(userRef, { role });
     }
 
+    // Ajoute le badge certifié si le rôle est admin
+    if (role === 'admin') {
+      await addAdminBadge(userId);
+    }
+
     // Récupérer les données utilisateur mises à jour
     const updatedUserDoc = await getDoc(userRef);
     if (updatedUserDoc.exists()) {
@@ -49,3 +54,30 @@ export const assignRole = async (userId: string, role: string): Promise<string> 
     throw error; // Relance l'erreur pour permettre une gestion en amont
   }
 };
+
+//Ajoute automatique le badge certifié aux administrateurs
+export const addAdminBadge = async (userId: string): Promise<void> => {
+  try {
+    const userRef = doc(db, 'users', userId);
+    const userDoc = await getDoc(userRef);
+
+    if (userDoc.exists()) {
+      const userData = userDoc.data() as User;
+      const badges: string[] = userData.badges || []; // Récupère les badges existants ou initialise un tableau vide
+
+      // Vérifie si le badge "certified" est déjà présent
+      const certifiedBadge = '/src/assets/badges/certif.png'; // Correction du chemin pour le badge certifié
+      console.log('Chemin du badge certifié utilisé:', certifiedBadge);
+      if (!badges.includes(certifiedBadge)) {
+        console.log('Badges avant mise à jour:', badges);
+        badges.push(certifiedBadge); // Ajoute le chemin de l'image du badge "certified"
+        await updateDoc(userRef, { badges });
+        console.log('Mise à jour des badges pour l’utilisateur:', userId);
+      }
+    } else {
+      console.error("L'utilisateur n'existe pas.");
+    }
+  } catch (error) {
+    console.error("Erreur lors de l'ajout du badge administrateur :", error);
+  }
+}

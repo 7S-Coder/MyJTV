@@ -7,15 +7,7 @@ export interface Message {
   timestamp: any; // Vous pouvez remplacer `any` par un type plus précis si nécessaire
   mentions?: string[]; // Ajout de la propriété mentions (liste des pseudos mentionnés)
   isPinned?: boolean; // Ajout de la propriété isPinned pour indiquer si le message est épinglé
-}
-
-export interface User {
-  uid: string;
-  pseudo: string;
-  color: string;
-  role: 'user' | 'moderator' | 'admin';
-  email: string; 
-  badges: string[]; // Liste des badges de l'utilisateur, y compris badgeAdmin
+  badges?: string[]; // Ajout de la propriété badges pour les badges utilisateur
 }
 
 export interface MessageListProps {
@@ -25,4 +17,13 @@ export interface MessageListProps {
   onTogglePinnedStatus?: (messageId: string) => void; // Added onTogglePinnedStatus
   isModerator?: boolean;
   currentUser?: User;
+}
+
+export interface User {
+  uid: string;
+  pseudo: string;
+  color: string;
+  role: 'user' | 'moderator' | 'admin';
+  email: string; 
+  badges: string[]; // Liste des badges de l'utilisateur, y compris badgeAdmin
 }

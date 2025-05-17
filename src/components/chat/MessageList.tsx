@@ -20,6 +20,10 @@ const MessageList: React.FC<MessageListProps> = ({
     }
   }, [messages]);
 
+  useEffect(() => {
+    console.log('Messages:', messages);
+  }, [messages]);
+
   return (
     <div className="messages">
       {messages.map((message, index) => (
@@ -44,6 +48,13 @@ const MessageList: React.FC<MessageListProps> = ({
               color: message.color || '#fff',
             }}
           >
+            {message.badges?.includes('/src/assets/badges/certif.png') && (
+              <img
+                src="/src/assets/badges/certif.png"
+                alt="Certifié"
+                style={{ width: '12px', marginRight: '4px' }}
+              />
+            )}
             {message.pseudo || 'User'}
           </strong>:{' '}
           {message.text.split(' ').map((word, index) =>

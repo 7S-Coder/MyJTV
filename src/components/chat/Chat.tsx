@@ -37,11 +37,22 @@ const Chat: React.FC = () => {
 
   useEffect(() => {
     const q = query(collection(db, 'messages'), orderBy('timestamp', 'asc'));
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-      const fetchedMessages = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      })) as Message[];
+    const unsubscribe = onSnapshot(q, async (snapshot) => {
+      const fetchedMessages = await Promise.all(
+        snapshot.docs.map(async (messageDoc) => {
+          const messageData = messageDoc.data();
+          const userRef = doc(db, 'users', messageData.uid);
+          const userDoc = await getDoc(userRef);
+          console.log('User data for message:', userDoc.data());
+          const userBadges = userDoc.exists() && userDoc.data() ? userDoc.data().badges || [] : [];
+
+          return {
+            id: messageDoc.id,
+            ...messageData,
+            badges: userBadges,
+          };
+        })
+      ) as Message[];
       setMessages(fetchedMessages);
 
       const pinned = fetchedMessages.find((msg) => msg.isPinned);
@@ -67,7 +78,7 @@ const Chat: React.FC = () => {
             color: userData.color,
             role: userData.role || 'user',
             email: auth.currentUser.email || '',
-            badges: []
+            badges: userData.badges || [], // Récupère les badges existants ou initialise un tableau vide
           };
           setUserCookies(userWithRole);
           setUserPseudo(userData.pseudo);
