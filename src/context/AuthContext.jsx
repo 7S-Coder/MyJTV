@@ -2,6 +2,8 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { auth } from '../utils/firebase/firebaseConfig';
 import { onAuthStateChanged, signOut, signInWithEmailAndPassword } from 'firebase/auth';
 import { assignRole as assignUserRole } from '../functions/user/updateUser';
+import { getDoc, doc } from 'firebase/firestore';
+import { db } from '../utils/firebase/firebaseConfig';
 
 const AuthContext = createContext();
 
@@ -13,8 +15,17 @@ export const AuthProvider = ({ children }) => {
   const publicRoutes = ['/forgot-password', '/login'];
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      if (currentUser) {
+        // Récupérer les badges de l'utilisateur depuis la base de données
+        const userDoc = await getDoc(doc(db, 'users', currentUser.uid));
+        const userData = userDoc.exists() ? userDoc.data() : {};
+        const badges = userData.badges || []; // Récupère les badges ou initialise un tableau vide
+
+        setUser({ ...currentUser, badges }); // Ajoute les badges au contexte
+      } else {
+        setUser(null);
+      }
       setLoading(false);
     });
     return unsubscribe;

@@ -1,7 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { Message, User, MessageListProps } from '../../types';
 import { Pencil } from 'lucide-react';
-
 const MessageList: React.FC<MessageListProps> = ({
   messages,
   onMessageClick,
@@ -21,7 +20,6 @@ const MessageList: React.FC<MessageListProps> = ({
   }, [messages]);
 
   useEffect(() => {
-    console.log('Messages:', messages);
   }, [messages]);
 
   return (
@@ -74,12 +72,6 @@ const MessageList: React.FC<MessageListProps> = ({
             )
           )}
           {/* Bouton Pencil à la fin du message */}
-          
-          {isModerator && onTogglePinnedStatus && (
-            <button onClick={() => onTogglePinnedStatus(message.id)}>
-              {message.isPinned ? 'Désépingler' : 'Épingler'}
-            </button>
-          )}
         </div>
       ))}
     </div>

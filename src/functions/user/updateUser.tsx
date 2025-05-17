@@ -27,10 +27,21 @@ export const assignRole = async (userId: string, role: string): Promise<string> 
     // Vérifie si le document existe
     const userDoc = await getDoc(userRef);
     if (!userDoc.exists()) {
-      await setDoc(userRef, { role });
+      await setDoc(userRef, { role }, { merge: true }); // Utilise merge pour éviter d'écraser les champs existants
     } else {
       // Met à jour le rôle de l'utilisateur
       await updateDoc(userRef, { role });
+
+      // Supprime le badge admin si le rôle n'est plus admin
+      if (role !== 'admin') {
+        const userData = userDoc.data() as User;
+        const badges = userData.badges || [];
+        const adminBadge = '/src/assets/badges/certif.png';
+        if (badges.includes(adminBadge)) {
+          const updatedBadges = badges.filter((badge) => badge !== adminBadge);
+          await updateDoc(userRef, { badges: updatedBadges });
+        }
+      }
     }
 
     // Ajoute le badge certifié si le rôle est admin
@@ -42,6 +53,7 @@ export const assignRole = async (userId: string, role: string): Promise<string> 
     const updatedUserDoc = await getDoc(userRef);
     if (updatedUserDoc.exists()) {
       const updatedUserData = updatedUserDoc.data();
+      console.log("Données utilisateur mises à jour :", updatedUserData); // Log des données mises à jour
       setUserCookies({ ...updatedUserData, uid: userId }); // Met à jour les cookies avec les données les plus récentes
     } else {
       console.error("Impossible de récupérer les données utilisateur mises à jour.");
@@ -66,7 +78,7 @@ export const addAdminBadge = async (userId: string): Promise<void> => {
       const badges: string[] = userData.badges || []; // Récupère les badges existants ou initialise un tableau vide
 
       // Vérifie si le badge "certified" est déjà présent
-      const certifiedBadge = '/src/assets/badges/certif.svg'; // Correction du chemin pour le badge certifié
+      const certifiedBadge = '/src/assets/badges/certif.png'; // Revert to PNG path
       if (!badges.includes(certifiedBadge)) {
         badges.push(certifiedBadge); // Ajoute le chemin de l'image du badge "certified"
         await updateDoc(userRef, { badges });
