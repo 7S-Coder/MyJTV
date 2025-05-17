@@ -5,15 +5,20 @@ main {
     margin: 0; /* Supprime la marge sans casser la disposition */
 }
 
+.box, .messages-box {
+    height: calc( 100vh - 40px - 60px); /* Ajuste la hauteur pour ne pas dépasser la fenêtre visible */
+
+}
 .box {
     display: flex;
     flex-direction: row; /* Arrange les enfants côte à côte */
     align-items: stretch; /* Étire les enfants pour qu'ils aient la même hauteur */
     // max-width: 1200px; /* Limite la largeur maximale de la box */
     // height: calc( 100vh - 40px - 90px); /* Ajuste la hauteur pour ne pas dépasser la fenêtre visible */
-    height: calc( 100vh - 40px - 60px); /* Ajuste la hauteur pour ne pas dépasser la fenêtre visible */
     margin: 0 auto; /* Centre la box horizontalement */
     padding: 0 20px; /* Ajoute un padding de 20px sur les côtés */
+
+    
 
     .video-container {
         flex: 2; /* Prend 2 parts de l'espace disponible */
@@ -31,13 +36,27 @@ main {
         display: flex; /* Active le flexbox pour ses enfants */
         flex: 1; /* Prend 1 part de l'espace disponible */
         flex-direction: column; /* Empile les enfants verticalement */
-        height: calc( 100vh - 30px - 60px); 
+        height: calc( 100vh - 40px - 60px); /* Ajuste la hauteur pour ne pas dépasser la fenêtre visible */
         max-width: 100%; /* Limite la largeur à 400px */
         background-color: #1e1e1e; /* Ajoute un fond pour le chat */
         position: relative
     }
 }
 
+.message-box {
+    display: flex; /* Active Flexbox */
+    flex-direction: column; /* Empile les enfants verticalement */
+    flex: 1; /* Permet à .message-box de prendre tout l'espace disponible */
+    height: 100%; /* Prend toute la hauteur disponible */
+    overflow: hidden; /* Empêche le dépassement du contenu */
+}
+
+.messages {
+    flex: 1; /* Permet à .messages de prendre tout l'espace restant */
+    overflow-y: auto; /* Ajoute un défilement vertical si nécessaire */
+    height: calc( 100vh - 40px - 140px); /* Ajuste la hauteur pour ne pas dépasser la fenêtre visible */
+    max-height: 100%; /* Limite la hauteur au conteneur parent */
+}
 
 @media (max-width: 768px) {
     nav {
@@ -54,6 +73,11 @@ main {
         overflow: hidden;
         padding-top: 60px;
 
+        .messages {
+            height: calc(100vh - 40px - 60px - 40%); /* Ajuste la hauteur en soustrayant la hauteur du lecteur vidéo (40%) */
+            max-height: 100%; /* Limite la hauteur au conteneur parent */
+            overflow-y: auto; /* Ajoute un défilement vertical si le contenu dépasse */
+        }
         
 
         .chat-header {
@@ -75,9 +99,18 @@ main {
             padding: 0;
         }
 
-        .messages {
-            border-top: 1px solid $grey--smooth;
+        .message-box {
+            display: flex; /* Active Flexbox */
+            flex-direction: column; /* Empile les enfants verticalement */
+            flex: 1; /* Permet à .message-box de prendre tout l'espace disponible */
+            height: 100%; /* Prend toute la hauteur disponible */
+            overflow: hidden; /* Empêche le dépassement du contenu */
+        }
 
+        .messages {
+            flex: 1; /* Permet à .messages de prendre tout l'espace restant */
+            overflow-y: auto; /* Ajoute un défilement vertical si nécessaire */
+            border-top: 1px solid $grey--smooth;
         }
     }
 
