@@ -1,7 +1,7 @@
 import emojiRegex from 'emoji-regex';
 
 export const validateMessage = (message: string, forbiddenWords: string[]) => {
-  const uppercasePattern = /[A-Z]{3,}/;
+  const uppercasePattern = /[A-Z]{11,}/; // Modifie le pattern pour détecter plus de 10 majuscules consécutives
   const repeatedLettersPattern = /(.)\1{3,}/;
   const regex = emojiRegex();
 
@@ -22,7 +22,7 @@ export const validateMessage = (message: string, forbiddenWords: string[]) => {
   // Vérifie la présence de mots interdits, de majuscules excessives ou de lettres répétées
   if (
     forbiddenWords.some((word) => sanitizedMessage.toLowerCase().includes(word)) ||
-    uppercasePattern.test(sanitizedMessage) ||
+    uppercasePattern.test(sanitizedMessage) || // Vérifie plus de 10 majuscules consécutives
     repeatedLettersPattern.test(sanitizedMessage)
   ) {
     return { isValid: false, placeholder: 'Message non autorisé' };
