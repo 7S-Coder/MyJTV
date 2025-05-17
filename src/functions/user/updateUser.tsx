@@ -3,7 +3,13 @@ import { db, auth } from '../../utils/firebase/firebaseConfig';
 import { User } from '../../types';
 import { setUserCookies } from '../../utils/cookies';
 
+// Génère dynamiquement l'URL complète du badge
+const getCertifBadgeUrl = (): string => {
+  const baseUrl = window.location.origin; // Récupère l'URL de base du site (ex: https://jeezzy-tv.com)
+  return `${baseUrl}/certif.png`; // Construit l'URL complète
+};
 
+const certifBadge = getCertifBadgeUrl(); // Utilise la fonction pour obtenir l'URL dynamique
 
 // Assigne un rôle à un utilisateur (admin, moderator, user)
 export const assignRole = async (userId: string, role: string): Promise<string> => {
@@ -36,7 +42,7 @@ export const assignRole = async (userId: string, role: string): Promise<string> 
       if (role !== 'admin') {
         const userData = userDoc.data() as User;
         const badges = userData.badges || [];
-        const adminBadge = '/src/assets/badges/certif.png';
+        const adminBadge = certifBadge;
         if (badges.includes(adminBadge)) {
           const updatedBadges = badges.filter((badge) => badge !== adminBadge);
           await updateDoc(userRef, { badges: updatedBadges });
@@ -78,7 +84,7 @@ export const addAdminBadge = async (userId: string): Promise<void> => {
       const badges: string[] = userData.badges || []; // Récupère les badges existants ou initialise un tableau vide
 
       // Vérifie si le badge "certified" est déjà présent
-      const certifiedBadge = '/src/assets/badges/certif.png'; // Revert to PNG path
+      const certifiedBadge = certifBadge; // Chemin mis à jour pour le dossier public
       if (!badges.includes(certifiedBadge)) {
         badges.push(certifiedBadge); // Ajoute le chemin de l'image du badge "certified"
         await updateDoc(userRef, { badges });

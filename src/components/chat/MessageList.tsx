@@ -1,6 +1,5 @@
 import React, { useRef, useEffect } from 'react';
 import { Message, User, MessageListProps } from '../../types';
-import { Pencil } from 'lucide-react';
 const MessageList: React.FC<MessageListProps> = ({
   messages,
   onMessageClick,
@@ -11,6 +10,12 @@ const MessageList: React.FC<MessageListProps> = ({
 }) => {
   const currentUserPseudo = currentUser?.pseudo || ''; // Définit une chaîne vide si le pseudo est undefined
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Génère dynamiquement l'URL complète du badge
+  const getCertifBadgeUrl = (): string => {
+    const baseUrl = window.location.origin; // Récupère l'URL de base du site
+    return `${baseUrl}/certif.png`; // Construit l'URL complète
+  };
 
   useEffect(() => {
     // Scroll automatiquement vers le dernier message
@@ -46,9 +51,9 @@ const MessageList: React.FC<MessageListProps> = ({
               color: message.color || '#fff',
             }}
           >
-            {message.badges?.includes('/src/assets/badges/certif.png') && (
+            {message.badges?.includes(getCertifBadgeUrl()) && (
               <img
-                src="/src/assets/badges/certif.png"
+                src={getCertifBadgeUrl()}
                 alt="Certifié"
                 style={{ width: '12px', marginRight: '4px' }}
               />
