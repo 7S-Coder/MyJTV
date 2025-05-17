@@ -66,13 +66,10 @@ export const addAdminBadge = async (userId: string): Promise<void> => {
       const badges: string[] = userData.badges || []; // Récupère les badges existants ou initialise un tableau vide
 
       // Vérifie si le badge "certified" est déjà présent
-      const certifiedBadge = '/src/assets/badges/certif.png'; // Correction du chemin pour le badge certifié
-      console.log('Chemin du badge certifié utilisé:', certifiedBadge);
+      const certifiedBadge = '/src/assets/badges/certif.svg'; // Correction du chemin pour le badge certifié
       if (!badges.includes(certifiedBadge)) {
-        console.log('Badges avant mise à jour:', badges);
         badges.push(certifiedBadge); // Ajoute le chemin de l'image du badge "certified"
         await updateDoc(userRef, { badges });
-        console.log('Mise à jour des badges pour l’utilisateur:', userId);
       }
     } else {
       console.error("L'utilisateur n'existe pas.");
