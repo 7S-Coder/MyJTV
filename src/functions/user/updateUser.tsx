@@ -59,7 +59,6 @@ export const assignRole = async (userId: string, role: string): Promise<string> 
     const updatedUserDoc = await getDoc(userRef);
     if (updatedUserDoc.exists()) {
       const updatedUserData = updatedUserDoc.data();
-      console.log("Données utilisateur mises à jour :", updatedUserData); // Log des données mises à jour
       setUserCookies({ ...updatedUserData, uid: userId }); // Met à jour les cookies avec les données les plus récentes
     } else {
       console.error("Impossible de récupérer les données utilisateur mises à jour.");

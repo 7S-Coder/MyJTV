@@ -42,9 +42,10 @@ const MessageForm: React.FC<MessageFormProps> = ({
           const data = doc.data();
           return { pseudo: data.pseudo, color: data.color || '#fff' };
         });
-        setUsers(userList.map((user) => user.pseudo));
+        const validUsers = userList.filter((user) => user.pseudo); // Filtre les utilisateurs sans pseudo
+        setUsers(validUsers.map((user) => user.pseudo));
         setUserColors(
-          userList.reduce((acc, user) => {
+          validUsers.reduce((acc, user) => {
             acc[user.pseudo] = user.color;
             return acc;
           }, {} as { [key: string]: string })
@@ -83,7 +84,8 @@ const MessageForm: React.FC<MessageFormProps> = ({
     const mentionMatch = value.match(/@(\w*)$/);
     if (mentionMatch) {
       const searchTerm = mentionMatch[1].toLowerCase();
-      const matches = users
+      const validUsers = users.filter((user) => user); // Filtre les valeurs nulles ou undefined
+      const matches = validUsers
         .filter((user) => user.toLowerCase().startsWith(searchTerm))
         .filter((user) => user !== currentUserPseudo);
 
@@ -91,7 +93,6 @@ const MessageForm: React.FC<MessageFormProps> = ({
       setFilteredUsers(combinedSuggestions);
       setShowSuggestions(combinedSuggestions.length > 0);
 
-      // Auto-complète si une seule suggestion correspond
       if (combinedSuggestions.length === 1) {
         const updatedMessage = value.replace(/@\w*$/, `@${combinedSuggestions[0]} `);
         setNewMessage(updatedMessage);
