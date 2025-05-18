@@ -102,6 +102,7 @@ export const assignRole = async (userId: string, role: string): Promise<string> 
 
     // Ajoute ou supprime les badges en fonction du rôle
     if (role === 'admin') {
+      await removeModeratorBadge(userId); // Utilisation de await
       await addAdminBadge(userId);
     } else if (role === 'moderator') {
       await removeAdminBadge(userId); // Utilisation de await
