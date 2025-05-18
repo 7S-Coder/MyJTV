@@ -4,7 +4,6 @@ import { db } from '../../utils/firebase/firebaseConfig';
 import { auth } from '../../utils/firebase/firebaseConfig';
 import { getUserFromCookies } from '../../utils/cookies';
 import Wallet from './Emotes/Wallet';
-import emojiRegex from 'emoji-regex';
 import { Gift, SendHorizontal, Smile } from 'lucide-react';
 import { validateMessage } from '../../functions/ChatRules'; // Import moderation rules
 

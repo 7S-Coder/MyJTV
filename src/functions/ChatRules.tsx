@@ -1,7 +1,11 @@
 import emojiRegex from 'emoji-regex';
 
-export const validateMessage = (message: string, forbiddenWords: string[]) => {
-  const uppercasePattern = /[A-Z]{11,}/; // Modifie le pattern pour détecter plus de 10 majuscules consécutives
+export const validateMessage = (message: string, forbiddenWords: string[], isAdmin: boolean) => {
+  if (isAdmin) {
+    return { isValid: true, placeholder: '' }; // Les admins ne sont pas soumis aux règles
+  }
+
+  const uppercasePattern = /[A-Z]{5,}/; // Modifie le pattern pour détecter plus de 10 majuscules consécutives
   const repeatedLettersPattern = /(.)\1{3,}/;
   const regex = emojiRegex();
 
