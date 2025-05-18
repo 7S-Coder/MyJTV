@@ -8,6 +8,7 @@ const MessageList: React.FC<MessageListProps> = ({
   currentUser,
   onTogglePinnedStatus,
 }) => {
+  console.log('Messages passed to MessageList:', messages); // Vérifiez ici
   const currentUserPseudo = currentUser?.pseudo || ''; // Définit une chaîne vide si le pseudo est undefined
   const messagesEndRef = useRef<HTMLDivElement>(null);
 

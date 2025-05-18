@@ -26,6 +26,7 @@ export const MessageProvider = ({ children }) => {
           };
         })
       );
+      console.log('Messages with badges in MessageContext:', fetchedMessages); // Vérifiez ici
       setMessages(fetchedMessages);
     });
 
