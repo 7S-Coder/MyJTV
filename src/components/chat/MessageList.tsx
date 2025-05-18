@@ -51,13 +51,14 @@ const MessageList: React.FC<MessageListProps> = ({
               color: message.color || '#fff',
             }}
           >
-            {message.badges?.includes(getCertifBadgeUrl()) && (
+            {message.badges?.map((badgeUrl, index) => (
               <img
-                src={getCertifBadgeUrl()}
-                alt="Certifié"
+                key={index}
+                src={badgeUrl}
+                alt="Badge"
                 style={{ width: '12px', marginRight: '4px' }}
               />
-            )}
+            ))}
             {message.pseudo || 'User'}
           </strong>:{' '}
           {message.text.split(' ').map((word, index) =>

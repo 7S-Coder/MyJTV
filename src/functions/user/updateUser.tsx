@@ -3,13 +3,65 @@ import { db, auth } from '../../utils/firebase/firebaseConfig';
 import { User } from '../../types';
 import { setUserCookies } from '../../utils/cookies';
 
-// Génère dynamiquement l'URL complète du badge
+// Génère dynamiquement l'URL complète du badge certif
 const getCertifBadgeUrl = (): string => {
   const baseUrl = window.location.origin; // Récupère l'URL de base du site (ex: https://jeezzy-tv.com)
   return `${baseUrl}/certif.png`; // Construit l'URL complète
 };
 
 const certifBadge = getCertifBadgeUrl(); // Utilise la fonction pour obtenir l'URL dynamique
+
+// Génère dynamiquement l'URL complète du badge modérateur
+const getModeratorBadgeUrl = (): string => {
+  const baseUrl = window.location.origin; // Récupère l'URL de base du site (ex: https://jeezzy-tv.com)
+  return `${baseUrl}/moderator.png`; // Construit l'URL complète
+};
+
+const moderatorBadge = getModeratorBadgeUrl(); // Utilise la fonction pour obtenir l'URL dynamique
+
+// Fonction utilitaire pour ajouter un badge
+const addBadge = async (userId: string, badgeUrl: string): Promise<void> => {
+  try {
+    const userRef = doc(db, 'users', userId);
+    const userDoc = await getDoc(userRef);
+
+    if (userDoc.exists()) {
+      const userData = userDoc.data() as User;
+      const badges: string[] = userData.badges || [];
+
+      if (!badges.includes(badgeUrl)) {
+        badges.push(badgeUrl);
+        await updateDoc(userRef, { badges });
+      }
+    } else {
+      console.error("L'utilisateur n'existe pas.");
+    }
+  } catch (error) {
+    console.error(`Erreur lors de l'ajout du badge (${badgeUrl}) :`, error);
+  }
+};
+
+// Fonction utilitaire pour supprimer un badge
+const removeBadge = async (userId: string, badgeUrl: string): Promise<void> => {
+  try {
+    const userRef = doc(db, 'users', userId);
+    const userDoc = await getDoc(userRef);
+
+    if (userDoc.exists()) {
+      const userData = userDoc.data() as User;
+      const badges: string[] = userData.badges || [];
+
+      if (badges.includes(badgeUrl)) {
+        const updatedBadges = badges.filter((badge) => badge !== badgeUrl);
+        await updateDoc(userRef, { badges: updatedBadges });
+      }
+    } else {
+      console.error("L'utilisateur n'existe pas.");
+    }
+  } catch (error) {
+    console.error(`Erreur lors de la suppression du badge (${badgeUrl}) :`, error);
+  }
+};
 
 // Assigne un rôle à un utilisateur (admin, moderator, user)
 export const assignRole = async (userId: string, role: string): Promise<string> => {
@@ -29,13 +81,11 @@ export const assignRole = async (userId: string, role: string): Promise<string> 
     }
 
     const userRef = doc(db, 'users', userId);
-
-    // Vérifie si le document existe
     const userDoc = await getDoc(userRef);
+
     if (!userDoc.exists()) {
-      await setDoc(userRef, { role }, { merge: true }); // Utilise merge pour éviter d'écraser les champs existants
+      await setDoc(userRef, { role }, { merge: true });
     } else {
-      // Met à jour le rôle de l'utilisateur
       await updateDoc(userRef, { role });
 
       // Supprime le badge admin si le rôle n'est plus admin
@@ -50,52 +100,50 @@ export const assignRole = async (userId: string, role: string): Promise<string> 
       }
     }
 
-    // Ajoute le badge certifié si le rôle est admin
+    // Ajoute ou supprime les badges en fonction du rôle
     if (role === 'admin') {
       await addAdminBadge(userId);
+    } else if (role === 'moderator') {
+      await removeAdminBadge(userId); // Utilisation de await
+      await addModeratorBadge(userId);
+    } else if (role === 'user') {
+      await removeAdminBadge(userId); // Utilisation de await
+      await removeModeratorBadge(userId); // Utilisation de await
     }
-
-    // Ajouter le badge modérateur si le rôle est admn, est retiré le badge admin si il est présent
-
-    //Si le rôle edst user, retirer le badge admin et le badge modérateur si ils sont présents
 
     // Récupérer les données utilisateur mises à jour
     const updatedUserDoc = await getDoc(userRef);
     if (updatedUserDoc.exists()) {
       const updatedUserData = updatedUserDoc.data();
-      setUserCookies({ ...updatedUserData, uid: userId }); // Met à jour les cookies avec les données les plus récentes
+      setUserCookies({ ...updatedUserData, uid: userId });
     } else {
       console.error("Impossible de récupérer les données utilisateur mises à jour.");
     }
 
-    message = `Rôle ${role} attribué avec succès à l'utilisateur ${userId}`; // Message de confirmation
-    return message; // Retourne le message
+    message = `Rôle ${role} attribué avec succès à l'utilisateur ${userId}`;
+    return message;
   } catch (error) {
     console.error(`Erreur lors de l’attribution du rôle ${role} :`, error);
-    throw error; // Relance l'erreur pour permettre une gestion en amont
+    throw error;
   }
 };
 
-//Ajoute automatique le badge certifié aux administrateurs
+// Ajoute automatique le badge certifié aux administrateurs
 export const addAdminBadge = async (userId: string): Promise<void> => {
-  try {
-    const userRef = doc(db, 'users', userId);
-    const userDoc = await getDoc(userRef);
+  await addBadge(userId, certifBadge);
+};
 
-    if (userDoc.exists()) {
-      const userData = userDoc.data() as User;
-      const badges: string[] = userData.badges || []; // Récupère les badges existants ou initialise un tableau vide
+// Ajoute automatique le badge modérateur aux modérateurs
+export const addModeratorBadge = async (userId: string): Promise<void> => {
+  await addBadge(userId, moderatorBadge);
+};
 
-      // Vérifie si le badge "certified" est déjà présent
-      const certifiedBadge = certifBadge; // Chemin mis à jour pour le dossier public
-      if (!badges.includes(certifiedBadge)) {
-        badges.push(certifiedBadge); // Ajoute le chemin de l'image du badge "certified"
-        await updateDoc(userRef, { badges });
-      }
-    } else {
-      console.error("L'utilisateur n'existe pas.");
-    }
-  } catch (error) {
-    console.error("Erreur lors de l'ajout du badge administrateur :", error);
-  }
+// Supprime le badge administrateur
+export const removeAdminBadge = async (userId: string): Promise<void> => {
+  await removeBadge(userId, certifBadge);
+};
+
+// Supprime le badge modérateur
+export const removeModeratorBadge = async (userId: string): Promise<void> => {
+  await removeBadge(userId, moderatorBadge);
 }
