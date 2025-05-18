@@ -52,7 +52,6 @@ const Chat: React.FC = () => {
           };
         })
       ) as Message[];
-      console.log('Fetched messages with badges:', fetchedMessages); // Vérifiez ici
       setMessages(fetchedMessages);
 
       const pinned = fetchedMessages.find((msg) => msg.isPinned);
