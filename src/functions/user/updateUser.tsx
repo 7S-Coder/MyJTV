@@ -55,6 +55,10 @@ export const assignRole = async (userId: string, role: string): Promise<string> 
       await addAdminBadge(userId);
     }
 
+    // Ajouter le badge modérateur si le rôle est admn, est retiré le badge admin si il est présent
+
+    //Si le rôle edst user, retirer le badge admin et le badge modérateur si ils sont présents
+
     // Récupérer les données utilisateur mises à jour
     const updatedUserDoc = await getDoc(userRef);
     if (updatedUserDoc.exists()) {
