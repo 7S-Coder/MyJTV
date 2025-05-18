@@ -6,6 +6,7 @@ import { getUserFromCookies } from '../../utils/cookies';
 import Wallet from './Emotes/Wallet';
 import { Gift, SendHorizontal, Smile } from 'lucide-react';
 import { validateMessage } from '../../functions/ChatRules'; // Import moderation rules
+import { isAdmin } from '../../functions/user/getUser';
 
 interface MessageFormProps {
   onSendMessage: (message: string) => void;
@@ -124,7 +125,7 @@ const MessageForm: React.FC<MessageFormProps> = ({
   const handleSendMessage = async () => {
     if (newMessage.trim() === '') return;
 
-    const validationResult = validateMessage(newMessage, forbiddenWords);
+    const validationResult = validateMessage(newMessage, forbiddenWords, isAdmin(getUserFromCookies()));
     if (!validationResult.isValid) {
       setNewMessage('');
       setPlaceholder(validationResult.placeholder);
