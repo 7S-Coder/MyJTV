@@ -21,10 +21,13 @@ nav {
         border-radius: 50%;
     }
 
+    
+
     ul {
         display: flex;
         list-style-type: none;
         margin: 0;
+        padding-left: 0;
 
         li {
             margin: 0 10px;
@@ -42,13 +45,14 @@ nav {
     padding: 10px;
     background: vars.$black;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    display: block;
     box-sizing: border-box;
     border: 1px solid vars.$grey--smooth;
     border-top: none;
     border-radius: 5px;
     z-index: 9999;
     min-width: 180px;
+    display: none; /* Masquer par défaut */
+    transition: all 0.2s ease-in-out;
 }
 
 .dropdown-menu ul {
@@ -98,4 +102,19 @@ nav {
 
 svg {
     margin-right: 10px;
+}
+
+@media (max-width: 768px) {
+
+    .menu {
+        display: none; /* Masquer le menu par défaut */
+    }
+
+    
+   
+
+    .dropdown-menu {
+            display: block; /* Masquer par défaut */
+
+    }
 }

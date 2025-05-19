@@ -123,7 +123,19 @@ const Navbar = () => {
         <>
             <nav>
                 <Link to="/"><img src={logo} alt="Logo" /></Link>
+                <ul className='menu'>
+                    <li>
+                                <Link to="/" onClick={() => setMenuOpen(false)} className="dropdown-link">Live</Link>
+                            </li>
+                            {/* <li>
+                                <Link to="/profil" onClick={() => setMenuOpen(false)} className="dropdown-link">Profil</Link>
+                            </li> */}
+                            <li>
+                                <Link to="/football" onClick={() => setMenuOpen(false)} className="dropdown-link">Résultats Foot</Link>
+                            </li>
+                </ul>
                 <ul>
+                            
                     {user ? (
                         <li 
                             className={`user-menu ${menuOpen ? 'open' : ''}`} 
