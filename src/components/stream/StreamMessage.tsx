@@ -5,7 +5,7 @@ const StreamMessage: React.FC = () => (
   <div className="stream-message">
     {/* <h1>JeezyTV</h1> */}
   <img src={logo} alt="" width="255px" />
-    <p>La chaine n'est pas en direct pour le moment.</p>
+    <p>La chaîne n'est pas en direct pour le moment.</p>
     </div>
 );
 
