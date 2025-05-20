@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from '../../assets/jeezy.jpg'; // Correctly import the logo image
+import logo from '../../assets/jeezy.png'; // Correctly import the logo image
 
 const StreamMessage: React.FC = () => (
   <div className="stream-message">

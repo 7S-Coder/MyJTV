@@ -8,7 +8,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { doc, updateDoc } from 'firebase/firestore';
 import { setUserCookies, getUserFromCookies } from '../utils/cookies';
 
-import logo from '../assets/jeezy.jpg'; // Correctly import the logo image
+import logo from '../assets/jeezy.png'; // Correctly import the logo image
 import DropdownPortal from './DropdownPortal';
 
 const Navbar = () => {

@@ -1,18 +1,30 @@
 @use './_variables' as vars;
 
 .stream-message {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  
+}
+
+.stream-message img {
   color: #fff;
+  margin: 0 auto;;
   text-align: center;
-  font-size: 1.5rem;
   animation: rotateYAndColorChange 10s linear infinite;
   position: relative;
   overflow: hidden;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-  font-weight: bold;
   transform: scale(1.8); /* Enlarges the element on all axes, including Z */
   transition: filter 0.5s ease-in-out; /* Smooth transition for blur */
 }
 
+p {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: vars.$logo; /* Corrected syntax to use the variable */
+}
 
 
 @keyframes rotateYAndColorChange {
@@ -40,9 +52,13 @@
   .stream-message {
     font-size: 1rem; /* Adjust font size for smaller screens */
     img {
-      width: 75px; /* Adjust image size for smaller screens */
+      width: 95px; /* Adjust image size for smaller screens */
     }
     transform: scale(1.2); /* Adjust scale for smaller screens */
+
+    p {
+      font-size: 1rem; /* Adjust font size for smaller screens */
+    }
   }
     
 }
