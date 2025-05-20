@@ -21,6 +21,9 @@ nav {
         border-radius: 50%;
     }
 
+    .menu li a:hover {
+        color: vars.$logo; 
+    }
     
 
     ul {
