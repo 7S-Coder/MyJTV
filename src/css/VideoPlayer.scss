@@ -10,13 +10,10 @@
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   font-weight: bold;
   transform: scale(1.8); /* Enlarges the element on all axes, including Z */
-  filter: blur(1px); /* Adds a blur effect */
   transition: filter 0.5s ease-in-out; /* Smooth transition for blur */
 }
 
-.stream-message:hover {
-  filter: blur(0); /* Removes blur on hover */
-}
+
 
 @keyframes rotateYAndColorChange {
   0% {
