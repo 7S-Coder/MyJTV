@@ -3,8 +3,11 @@ import videojs from 'video.js'; // Importation correcte
 import 'video.js/dist/video-js.css';
 import StreamMessage from './StreamMessage';
 import VideoElement from './VideoElement';
+import '../../css/VideoPlayer.scss';
 
 type StreamStatus = 'loading' | 'ready' | 'not_available' | 'buffering';
+
+
 
 const VideoPlayer: React.FC = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
