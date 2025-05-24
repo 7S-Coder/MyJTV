@@ -142,7 +142,7 @@
 
 /* Style pour les mots mentionnés */
 .mention {
-  color: #ffd700; /* Jaune doré pour un meilleur contraste */
+  color: vars.$white; /* Jaune doré pour un meilleur contraste */
   font-weight: bold;
   background-color: rgba(0, 0, 0, 0.5); /* Fond semi-transparent pour améliorer la lisibilité */
   padding: 2px 4px;
