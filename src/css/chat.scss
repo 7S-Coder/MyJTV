@@ -144,7 +144,6 @@
 .mention {
   color: vars.$white; /* Jaune doré pour un meilleur contraste */
   font-weight: bold;
-  background-color: rgba(0, 0, 0, 0.5); /* Fond semi-transparent pour améliorer la lisibilité */
   padding: 2px 4px;
   border-radius: 4px;
 }
@@ -161,7 +160,6 @@
   color: vars.$logo; /* Rouge vif pour attirer l'attention */
   font-weight: bold;
   text-decoration: underline;
-  background-color: rgba(0, 0, 0, 0.5); /* Fond semi-transparent */
   padding: 2px 4px;
   border-radius: 4px;
 }
