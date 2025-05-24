@@ -16,10 +16,7 @@
     z-index: 10;
 
     p:nth-child(1),p:nth-child(2) {
-        color: vars.$grey;
         margin: 0;
-
-
     }
     
     p:nth-child(1) {
@@ -28,12 +25,16 @@
         font-size: 0.8em;
         text-align: right;
         margin-bottom: 2px;
+        color: vars.$grey;
+
     }
 
     p:nth-child(2) {
         max-height: 100px;
         overflow: hidden;
         font-size: 1.2em;
+        color: vars.$white;
+
     }
 }
 
