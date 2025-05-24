@@ -152,13 +152,13 @@
 /* Style pour les messages contenant une mention de l'utilisateur actuel */
 .highlight {
   background-color: #333333; /* Gris foncé pour un meilleur contraste */
-  border-left: 4px solid #ffd700; /* Indicateur visuel */
+  border-left: 4px solid vars.$logo; /* Indicateur visuel */
   padding-left: 8px;
 }
 
 /* Style spécial pour la mention de l'utilisateur actuel */
 .mention-current-user {
-  color: #ff6347; /* Rouge vif pour attirer l'attention */
+  color: vars.$logo; /* Rouge vif pour attirer l'attention */
   font-weight: bold;
   text-decoration: underline;
   background-color: rgba(0, 0, 0, 0.5); /* Fond semi-transparent */
