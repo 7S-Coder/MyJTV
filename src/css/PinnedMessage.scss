@@ -17,6 +17,8 @@
 
     p:nth-child(1),p:nth-child(2) {
         color: vars.$grey;
+        margin: 0;
+
 
     }
     
@@ -25,10 +27,10 @@
         align-items: center;
         font-size: 0.8em;
         text-align: right;
+        margin-bottom: 2px;
     }
 
     p:nth-child(2) {
-        margin: 0;
         max-height: 100px;
         overflow: hidden;
         font-size: 1.2em;
